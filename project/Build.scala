@@ -16,6 +16,9 @@ object ApplicationBuild extends Build {
 
 
   val main = play.Project(appName, appVersion, appDependencies).settings(
+    scalaVersion := "2.10.2",
+    resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
+    libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.2.1"
 //    resolvers += "ancelin" at "https://raw.github.com/mathieuancelin/play2-couchbase/master/repository/snapshots",
   )
 
