@@ -1,7 +1,5 @@
 package data.user.basic
 
-import play.data.validation.Constraints.Email
-
 /**
  * Object contains basic wrappers for dataTypes
  */
