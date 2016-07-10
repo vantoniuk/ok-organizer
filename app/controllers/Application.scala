@@ -1,24 +1,52 @@
 package controllers
+
+import models._
+import utils.silhouette._
 import play.api._
 import play.api.mvc._
+import play.api.Play.current
+import play.api.i18n.{ MessagesApi, Messages, Lang }
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits._
+import javax.inject.Inject
 
-import utils.imports._
-import utils.AppConfig
+class Application @Inject() (val env: AuthenticationEnvironment, val messagesApi: MessagesApi) extends AuthenticationController {
 
-object Application extends Controller {
+  def index = UserAwareAction.async { implicit request =>
+    Future.successful(Ok(views.html.index()))
+  }
 
-  def index = Action {
+  def myAccount = SecuredAction.async { implicit request =>
+    Future.successful(Ok(views.html.myAccount()))
+  }
 
-    val personal = PersonalData("vantoniuk", "vantoniuk@gmail.com", None, None)
-    val notRegistreredUser = NotRegisteredUser(personal, Services.UNKNOWN)
-    Async {
-      notRegistreredUser.save flatMap{ case DbSuccess(_, CreatedOk(id, _)) =>
-      NotRegisteredUser.get(id) map {
-        dbResult =>
-//          Ok(views.html.index("User maybe is still not saved!! " + AppConfig.usersDbUri))
-          Ok(views.html.index("User maybe is still not saved!!",  dbResult.toString))
-      }}
-//    val userData = UserDataString("random_id", None, None)
-  }}
+  // REQUIRED ROLES: serviceA (or master)
+  def serviceA = SecuredAction(WithService("serviceA")).async { implicit request =>
+    Future.successful(Ok(views.html.serviceA()))
+  }
+
+  // REQUIRED ROLES: serviceA OR serviceB (or master)
+  def serviceAorServiceB = SecuredAction(WithService("serviceA", "serviceB")).async { implicit request =>
+    Future.successful(Ok(views.html.serviceAorServiceB()))
+  }
+
+  // REQUIRED ROLES: serviceA AND serviceB (or master)
+  def serviceAandServiceB = SecuredAction(WithServices("serviceA", "serviceB")).async { implicit request =>
+    Future.successful(Ok(views.html.serviceAandServiceB()))
+  }
+
+  // REQUIRED ROLES: master
+  def settings = SecuredAction(WithService("master")).async { implicit request =>
+    Future.successful(Ok(views.html.settings()))
+  }
+
+  def selectLang(lang: String) = Action { implicit request =>
+    Logger.logger.debug("Change user lang to : " + lang)
+    request.headers.get(REFERER).map { referer =>
+      Redirect(referer).withLang(Lang(lang))
+    }.getOrElse {
+      Redirect(routes.Application.index).withLang(Lang(lang))
+    }
+  }
 
 }
