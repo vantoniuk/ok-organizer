@@ -1,10 +1,10 @@
-name := """play-silhouette-credentials-seed"""
+name := """ok-note"""
 
 version := "1.0-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
-scalaVersion := "2.11.7"
+scalaVersion := "2.11.8"
 
 scalacOptions ++= Seq("-feature", "-deprecation", "-unchecked", "-language:reflectiveCalls", "-language:postfixOps", "-language:implicitConversions")
 
@@ -16,13 +16,7 @@ resolvers ++= Seq(
 
 routesGenerator := InjectedRoutesGenerator
 
-includeFilter in (Assets, LessKeys.less) := "*.less"
-
-excludeFilter in (Assets, LessKeys.less) := "_*.less"
-
-pipelineStages := Seq(rjs, digest, gzip)
-
-RjsKeys.mainModule := "main"
+pipelineStages := Seq(gzip)
 
 doc in Compile <<= target.map(_ / "none")
 

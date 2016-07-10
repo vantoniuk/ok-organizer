@@ -26,7 +26,6 @@ npm/node_modules/node-gyp/node_modules/path-array/node_modules/array-index/node_
 npm/node_modules/request/node_modules/har-validator/node_modules/bluebird/js/main/catch_filter.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/har-validator/node_modules/bluebird/js/main/catch_filter.js
 npm/node_modules/request/node_modules/hawk/lib/utils.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/hawk/lib/utils.js
 npm/node_modules/node-gyp/gyp/tools/pretty_gyp.py:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/node-gyp/gyp/tools/pretty_gyp.py
-coffee-script/lib/coffee-script/grammar.js:1391059176000:META-INF/resources/webjars/coffee-script-node/1.7.1/lib/coffee-script/grammar.js
 clean-css/lib/properties/override-compactor.js:1405029884000:META-INF/resources/webjars/clean-css/2.2.7/lib/properties/override-compactor.js
 npm/node_modules/chmodr/LICENSE:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/chmodr/LICENSE
 npm/node_modules/request/node_modules/mime-types/LICENSE:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/mime-types/LICENSE
@@ -95,7 +94,6 @@ npm/node_modules/config-chain/test/ignore-unfound-file.js:1433467846000:META-INF
 npm/node_modules/osenv/test/unix.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/osenv/test/unix.js
 npm/node_modules/request/node_modules/http-signature/node_modules/asn1/tst/ber/reader.test.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/http-signature/node_modules/asn1/tst/ber/reader.test.js
 npm/node_modules/columnify/node_modules/wcwidth/docs/index.md:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/columnify/node_modules/wcwidth/docs/index.md
-coffee-script/lib/coffee-script/rewriter.js:1391059176000:META-INF/resources/webjars/coffee-script-node/1.7.1/lib/coffee-script/rewriter.js
 npm/node_modules/mkdirp/index.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/mkdirp/index.js
 npm/node_modules/node-gyp/node_modules/glob/node_modules/minimatch/node_modules/brace-expansion/node_modules/balanced-match/example.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/node-gyp/node_modules/glob/node_modules/minimatch/node_modules/brace-expansion/node_modules/balanced-match/example.js
 npm/node_modules/request/node_modules/har-validator/node_modules/bluebird/js/main/call_get.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/har-validator/node_modules/bluebird/js/main/call_get.js
@@ -161,7 +159,6 @@ npm/node_modules/fs-write-stream-atomic/LICENSE:1433467846000:META-INF/resources
 npm/node_modules/normalize-package-data/lib/make_warning.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/normalize-package-data/lib/make_warning.js
 npm/node_modules/node-gyp/README.md:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/node-gyp/README.md
 npm/node_modules/request/node_modules/hawk/Makefile:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/hawk/Makefile
-console-browserify/index.js:1360040470000:META-INF/resources/webjars/console-browserify/0.1.6/index.js
 npm/node_modules/node-gyp/addon.gypi:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/node-gyp/addon.gypi
 npm/node_modules/request/node_modules/har-validator/node_modules/chalk/node_modules/escape-string-regexp/index.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/har-validator/node_modules/chalk/node_modules/escape-string-regexp/index.js
 npm/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/node_modules/jsonpointer/test.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/node_modules/jsonpointer/test.js
@@ -208,7 +205,6 @@ npm/bin/npm:1433467846000:META-INF/resources/webjars/npm/2.11.2/bin/npm
 npm/node_modules/mkdirp/test/umask_sync.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/mkdirp/test/umask_sync.js
 npm/node_modules/read-installed/node_modules/util-extend/README.md:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/read-installed/node_modules/util-extend/README.md
 npm/node_modules/node-gyp/node_modules/tar/test/00-setup-fixtures.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/node-gyp/node_modules/tar/test/00-setup-fixtures.js
-coffee-script/lib/coffee-script/parser.js:1391059176000:META-INF/resources/webjars/coffee-script-node/1.7.1/lib/coffee-script/parser.js
 npm/node_modules/request/node_modules/hawk/node_modules/hoek/test/index.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/hawk/node_modules/hoek/test/index.js
 npm/node_modules/read-package-json/test/fixtures/readmes/README.md:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/read-package-json/test/fixtures/readmes/README.md
 npm/node_modules/request/node_modules/node-uuid/.npmignore:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/node-uuid/.npmignore
@@ -226,7 +222,6 @@ npm/node_modules/request/node_modules/har-validator/node_modules/is-my-json-vali
 npm/node_modules/github-url-from-username-repo/.npmignore:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/github-url-from-username-repo/.npmignore
 npm/lib/unpublish.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/lib/unpublish.js
 npm/node_modules/realize-package-specifier/index.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/realize-package-specifier/index.js
-coffee-script/lib/coffee-script/index.js:1391059176000:META-INF/resources/webjars/coffee-script-node/1.7.1/lib/coffee-script/index.js
 npm/node_modules/mkdirp/node_modules/minimist/package.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/mkdirp/node_modules/minimist/package.json
 npm/node_modules/node-gyp/gyp/pylib/gyp/generator/xcode.py:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/node-gyp/gyp/pylib/gyp/generator/xcode.py
 npm/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/test/json-schema-draft4/enum.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/test/json-schema-draft4/enum.json
@@ -318,10 +313,8 @@ npm/node_modules/npm-registry-client/test/00-setup.js:1433467846000:META-INF/res
 npm/node_modules/request/node_modules/bl/node_modules/readable-stream/lib/_stream_transform.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/bl/node_modules/readable-stream/lib/_stream_transform.js
 npm/node_modules/dezalgo/node_modules/asap/asap.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/dezalgo/node_modules/asap/asap.js
 npm/node_modules/node-gyp/gyp/pylib/gyp/generator/analyzer.py:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/node-gyp/gyp/pylib/gyp/generator/analyzer.py
-requirejs/package.json:1410141220000:META-INF/resources/webjars/rjs/2.1.15/package.json
 npm/node_modules/node-gyp/gyp/buildbot/commit_queue/README:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/node-gyp/gyp/buildbot/commit_queue/README
 npm/node_modules/fstream-npm/README.md:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/fstream-npm/README.md
-jshint/data/non-ascii-identifier-start.js:1390707054000:META-INF/resources/webjars/jshint-node/2.4.3/data/non-ascii-identifier-start.js
 npm/node_modules/request/node_modules/http-signature/node_modules/asn1/lib/index.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/http-signature/node_modules/asn1/lib/index.js
 npm/node_modules/request/node_modules/hawk/test/client.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/hawk/test/client.js
 npm/node_modules/npm-registry-client/test/request-gzip-content.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/npm-registry-client/test/request-gzip-content.js
@@ -352,7 +345,6 @@ npm/node_modules/npmlog/node_modules/gauge/node_modules/lodash.padleft/index.js:
 less/lib/less/tree/color.js:1409727890000:META-INF/resources/webjars/less-node/1.7.5/lib/less/tree/color.js
 npm/node_modules/node-gyp/0002-gyp-apply-https-codereview.chromium.org-11361103.patch:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/node-gyp/0002-gyp-apply-https-codereview.chromium.org-11361103.patch
 npm/node_modules/request/lib/querystring.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/lib/querystring.js
-underscore/underscore.js:1378558700000:META-INF/resources/webjars/underscorejs/1.5.2/underscore.js
 npm/node_modules/node-gyp/node_modules/minimatch/minimatch.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/node-gyp/node_modules/minimatch/minimatch.js
 npm/node_modules/fstream/.npmignore:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/fstream/.npmignore
 npm/node_modules/node-gyp/src/win_delay_load_hook.c:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/node-gyp/src/win_delay_load_hook.c
@@ -414,7 +406,6 @@ npm/node_modules/npm-registry-client/test/zz-cleanup.js:1433467846000:META-INF/r
 npm/node_modules/npmlog/node_modules/gauge/node_modules/has-unicode/.npmignore:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/npmlog/node_modules/gauge/node_modules/has-unicode/.npmignore
 npm/node_modules/read-installed/node_modules/debuglog/debuglog.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/read-installed/node_modules/debuglog/debuglog.js
 npm/node_modules/node-gyp/node_modules/tar/lib/pack.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/node-gyp/node_modules/tar/lib/pack.js
-jshint/src/style.js:1390707054000:META-INF/resources/webjars/jshint-node/2.4.3/src/style.js
 npm/node_modules/fs-vacuum/.eslintrc:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/fs-vacuum/.eslintrc
 npm/node_modules/request/node_modules/node-uuid/uuid.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/node-uuid/uuid.js
 npm/node_modules/request/node_modules/http-signature/node_modules/asn1/lib/ber/index.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/http-signature/node_modules/asn1/lib/ber/index.js
@@ -496,9 +487,7 @@ npm/node_modules/node-gyp/node_modules/tar/examples/reader.js:1433467846000:META
 npm/node_modules/request/node_modules/json-stringify-safe/.npmignore:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/json-stringify-safe/.npmignore
 npm/node_modules/columnify/LICENSE:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/columnify/LICENSE
 npm/node_modules/realize-package-specifier/test/npa-windows.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/realize-package-specifier/test/npa-windows.js
-coffee-script/lib/coffee-script/coffee-script.js:1391059176000:META-INF/resources/webjars/coffee-script-node/1.7.1/lib/coffee-script/coffee-script.js
 npm/node_modules/request/node_modules/har-validator/node_modules/bluebird/js/main/direct_resolve.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/har-validator/node_modules/bluebird/js/main/direct_resolve.js
-coffee-script/lib/coffee-script/browser.js:1391059176000:META-INF/resources/webjars/coffee-script-node/1.7.1/lib/coffee-script/browser.js
 npm/node_modules/hosted-git-info/test/gist.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/hosted-git-info/test/gist.js
 npm/node_modules/chownr/package.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/chownr/package.json
 npm/node_modules/normalize-package-data/lib/warning_messages.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/normalize-package-data/lib/warning_messages.json
@@ -623,7 +612,6 @@ npm/node_modules/block-stream/test/nopad-thorough.js:1433467846000:META-INF/reso
 npm/node_modules/fstream-npm/example/tar.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/fstream-npm/example/tar.js
 npm/node_modules/request/node_modules/har-validator/node_modules/bluebird/js/main/queue.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/har-validator/node_modules/bluebird/js/main/queue.js
 npm/node_modules/request/node_modules/http-signature/node_modules/ctype/CHANGELOG:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/http-signature/node_modules/ctype/CHANGELOG
-coffee-script/lib/coffee-script/sourcemap.js:1391059176000:META-INF/resources/webjars/coffee-script-node/1.7.1/lib/coffee-script/sourcemap.js
 npm/node_modules/npm-user-validate/test/pw.test.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/npm-user-validate/test/pw.test.js
 npm/node_modules/request/node_modules/har-validator/node_modules/chalk/node_modules/supports-color/cli.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/har-validator/node_modules/chalk/node_modules/supports-color/cli.js
 npm/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/.travis.yml:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/.travis.yml
@@ -636,7 +624,6 @@ npm/node_modules/sha/LICENSE:1433467846000:META-INF/resources/webjars/npm/2.11.2
 npm/node_modules/spdx/node_modules/spdx-license-ids/spdx-license-ids.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/spdx/node_modules/spdx-license-ids/spdx-license-ids.json
 npm/node_modules/semver/semver.browser.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/semver/semver.browser.js
 npm/node_modules/tar/lib/extended-header.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/tar/lib/extended-header.js
-underscore/package.json:1378558700000:META-INF/resources/webjars/underscorejs/1.5.2/package.json
 npm/node_modules/retry/lib/retry_operation.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/retry/lib/retry_operation.js
 npm/node_modules/request/node_modules/har-validator/node_modules/chalk/node_modules/.bin/has-ansi:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/har-validator/node_modules/chalk/node_modules/.bin/has-ansi
 npm/node_modules/npm-registry-client/node_modules/concat-stream/package.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/npm-registry-client/node_modules/concat-stream/package.json
@@ -707,7 +694,6 @@ npm/node_modules/npm-registry-client/LICENSE:1433467846000:META-INF/resources/we
 npm/node_modules/normalize-package-data/test/consistency.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/normalize-package-data/test/consistency.js
 npm/node_modules/node-gyp/node_modules/path-array/node_modules/array-index/package.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/node-gyp/node_modules/path-array/node_modules/array-index/package.json
 npm/node_modules/editor/LICENSE:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/editor/LICENSE
-coffee-script/lib/coffee-script/lexer.js:1391059176000:META-INF/resources/webjars/coffee-script-node/1.7.1/lib/coffee-script/lexer.js
 npm/node_modules/npm-registry-client/test/stars.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/npm-registry-client/test/stars.js
 npm/node_modules/fs-vacuum/test/other-directories-no-purge.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/fs-vacuum/test/other-directories-no-purge.js
 npm/node_modules/minimatch/node_modules/brace-expansion/README.md:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/minimatch/node_modules/brace-expansion/README.md
@@ -718,7 +704,6 @@ npm/node_modules/mkdirp/test/clobber.js:1433467846000:META-INF/resources/webjars
 npm/node_modules/config-chain/.npmignore:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/config-chain/.npmignore
 npm/lib/bin.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/lib/bin.js
 npm/node_modules/read-installed/LICENSE:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/read-installed/LICENSE
-jshint/src/messages.js:1390707054000:META-INF/resources/webjars/jshint-node/2.4.3/src/messages.js
 npm/node_modules/cmd-shim/.travis.yml:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/cmd-shim/.travis.yml
 npm/lib/cache/cached-package-root.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/lib/cache/cached-package-root.js
 npm/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/test/json-schema-draft4/maxLength.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/test/json-schema-draft4/maxLength.json
@@ -784,7 +769,6 @@ npm/node_modules/retry/test/runner.js:1433467846000:META-INF/resources/webjars/n
 npm/node_modules/npmlog/node_modules/gauge/node_modules/lodash._createpadding/node_modules/lodash.repeat/README.md:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/npmlog/node_modules/gauge/node_modules/lodash._createpadding/node_modules/lodash.repeat/README.md
 clean-css/lib/images/url-rebase.js:1405029884000:META-INF/resources/webjars/clean-css/2.2.7/lib/images/url-rebase.js
 npm/node_modules/request/node_modules/form-data/node_modules/async/component.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/form-data/node_modules/async/component.json
-strip-json-comments/package.json:1413465870000:META-INF/resources/webjars/strip-json-comments/1.0.2-1/package.json
 npm/node_modules/read-package-json/.npmignore:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/read-package-json/.npmignore
 npm/node_modules/node-gyp/node_modules/path-array/node_modules/array-index/README.md:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/node-gyp/node_modules/path-array/node_modules/array-index/README.md
 npm/node_modules/minimatch/node_modules/brace-expansion/node_modules/balanced-match/Makefile:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/minimatch/node_modules/brace-expansion/node_modules/balanced-match/Makefile
@@ -792,7 +776,6 @@ npm/node_modules/request/node_modules/har-validator/node_modules/chalk/node_modu
 npm/node_modules/node-gyp/node_modules/glob/node_modules/minimatch/node_modules/brace-expansion/.travis.yml:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/node-gyp/node_modules/glob/node_modules/minimatch/node_modules/brace-expansion/.travis.yml
 npm/node_modules/read-package-json/package.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/read-package-json/package.json
 npm/node_modules/graceful-fs/README.md:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/graceful-fs/README.md
-strip-json-comments/strip-json-comments.js:1413465870000:META-INF/resources/webjars/strip-json-comments/1.0.2-1/strip-json-comments.js
 npm/node_modules/request/node_modules/bl/node_modules/readable-stream/passthrough.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/bl/node_modules/readable-stream/passthrough.js
 npm/lib/help-search.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/lib/help-search.js
 npm/node_modules/editor/example/edit.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/editor/example/edit.js
@@ -813,7 +796,6 @@ npm/node_modules/request/node_modules/stringstream/.npmignore:1433467846000:META
 npm/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/test/json-schema-draft4/not.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/test/json-schema-draft4/not.json
 npm/node_modules/validate-npm-package-name/node_modules/builtins/builtins.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/validate-npm-package-name/node_modules/builtins/builtins.json
 npm/node_modules/request/request.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/request.js
-coffee-script/lib/coffee-script/helpers.js:1391059176000:META-INF/resources/webjars/coffee-script-node/1.7.1/lib/coffee-script/helpers.js
 npm/node_modules/tar/test/dir-normalization.tar:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/tar/test/dir-normalization.tar
 npm/node_modules/char-spinner/spin.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/char-spinner/spin.js
 clean-css/lib/text/comma-splitter.js:1405029884000:META-INF/resources/webjars/clean-css/2.2.7/lib/text/comma-splitter.js
@@ -837,7 +819,6 @@ npm/node_modules/node-gyp/node_modules/minimatch/node_modules/sigmund/package.js
 npm/node_modules/inherits/inherits_browser.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/inherits/inherits_browser.js
 npm/node_modules/path-is-inside/LICENSE.txt:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/path-is-inside/LICENSE.txt
 npm/node_modules/request/node_modules/har-validator/node_modules/chalk/node_modules/ansi-styles/readme.md:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/har-validator/node_modules/chalk/node_modules/ansi-styles/readme.md
-jshint/src/state.js:1390707054000:META-INF/resources/webjars/jshint-node/2.4.3/src/state.js
 npm/node_modules/request/node_modules/har-validator/node_modules/chalk/readme.md:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/har-validator/node_modules/chalk/readme.md
 npm/node_modules/request/node_modules/hawk/test/browser.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/hawk/test/browser.js
 npm/node_modules/npm-user-validate/test/username.test.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/npm-user-validate/test/username.test.js
@@ -895,11 +876,9 @@ npm/node_modules/read/rs.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/
 npm/node_modules/slide/lib/chain.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/slide/lib/chain.js
 npm/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/node_modules/generate-function/test.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/node_modules/generate-function/test.js
 npm/lib/config/find-prefix.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/lib/config/find-prefix.js
-underscore/underscore-min.map:1378558700000:META-INF/resources/webjars/underscorejs/1.5.2/underscore-min.map
 npm/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/test/fixtures/cosmic.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/test/fixtures/cosmic.js
 npm/lib/repo.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/lib/repo.js
 npm/node_modules/request/node_modules/tough-cookie/test/cookie_jar_test.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/tough-cookie/test/cookie_jar_test.js
-jshint/data/ascii-identifier-data.js:1390707054000:META-INF/resources/webjars/jshint-node/2.4.3/data/ascii-identifier-data.js
 npm/node_modules/minimatch/node_modules/brace-expansion/node_modules/balanced-match/.npmignore:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/minimatch/node_modules/brace-expansion/node_modules/balanced-match/.npmignore
 npm/node_modules/which/LICENSE:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/which/LICENSE
 npm/node_modules/node-gyp/node_modules/tar/lib/extended-header.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/node-gyp/node_modules/tar/lib/extended-header.js
@@ -924,10 +903,8 @@ npm/node_modules/request/node_modules/hawk/.travis.yml:1433467846000:META-INF/re
 npm/node_modules/npm-registry-client/test/initialize.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/npm-registry-client/test/initialize.js
 npm/node_modules/fstream-npm/node_modules/fstream-ignore/LICENSE:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/fstream-npm/node_modules/fstream-ignore/LICENSE
 npm/node_modules/npm-package-arg/package.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/npm-package-arg/package.json
-coffee-script/lib/coffee-script/command.js:1391059176000:META-INF/resources/webjars/coffee-script-node/1.7.1/lib/coffee-script/command.js
 npm/bin/npm.cmd:1433467846000:META-INF/resources/webjars/npm/2.11.2/bin/npm.cmd
 npm/node_modules/readable-stream/.npmignore:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/readable-stream/.npmignore
-console-browserify/package.json:1360040470000:META-INF/resources/webjars/console-browserify/0.1.6/package.json
 npm/node_modules/read-package-json/node_modules/json-parse-helpfulerror/node_modules/jju/.npmignore:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/read-package-json/node_modules/json-parse-helpfulerror/node_modules/jju/.npmignore
 npm/node_modules/realize-package-specifier/package.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/realize-package-specifier/package.json
 npm/node_modules/node-gyp/gyp/pylib/gyp/generator/gypsh.py:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/node-gyp/gyp/pylib/gyp/generator/gypsh.py
@@ -956,7 +933,6 @@ npm/node_modules/npm-registry-client/node_modules/concat-stream/node_modules/typ
 npm/node_modules/request/node_modules/hawk/node_modules/hoek/Makefile:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/hawk/node_modules/hoek/Makefile
 npm/node_modules/request/node_modules/hawk/node_modules/sntp/.travis.yml:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/hawk/node_modules/sntp/.travis.yml
 npm/node_modules/readable-stream/node_modules/string_decoder/index.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/readable-stream/node_modules/string_decoder/index.js
-coffee-script/lib/coffee-script/repl.js:1391059176000:META-INF/resources/webjars/coffee-script-node/1.7.1/lib/coffee-script/repl.js
 npm/node_modules/block-stream/LICENCE:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/block-stream/LICENCE
 npm/lib/set.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/lib/set.js
 npm/node_modules/init-package-json/node_modules/promzard/README.md:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/init-package-json/node_modules/promzard/README.md
@@ -987,7 +963,6 @@ npm/node_modules/retry/Readme.md:1433467846000:META-INF/resources/webjars/npm/2.
 npm/node_modules/read-installed/test/fixtures/extraneous-detected/package.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/read-installed/test/fixtures/extraneous-detected/package.json
 npm/node_modules/npm-install-checks/test/check-engine.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/npm-install-checks/test/check-engine.js
 npm/node_modules/node-gyp/node_modules/tar/lib/global-header-writer.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/node-gyp/node_modules/tar/lib/global-header-writer.js
-coffee-script/lib/coffee-script/optparse.js:1391059176000:META-INF/resources/webjars/coffee-script-node/1.7.1/lib/coffee-script/optparse.js
 npm/node_modules/read/lib/read.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/read/lib/read.js
 npm/node_modules/lockfile/test/basic.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/lockfile/test/basic.js
 npm/node_modules/request/node_modules/form-data/License:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/form-data/License
@@ -1013,7 +988,6 @@ npm/node_modules/github-url-from-username-repo/LICENSE:1433467846000:META-INF/re
 npm/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/test/json-schema-draft4/additionalItems.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/test/json-schema-draft4/additionalItems.json
 npm/node_modules/request/node_modules/bl/node_modules/readable-stream/node_modules/core-util-is/util.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/bl/node_modules/readable-stream/node_modules/core-util-is/util.js
 npm/node_modules/path-is-inside/README.md:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/path-is-inside/README.md
-jshint/src/lex.js:1390707054000:META-INF/resources/webjars/jshint-node/2.4.3/src/lex.js
 npm/node_modules/node-gyp/node_modules/minimatch/package.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/node-gyp/node_modules/minimatch/package.json
 npm/node_modules/uid-number/uid-number.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/uid-number/uid-number.js
 npm/node_modules/request/node_modules/combined-stream/node_modules/delayed-stream/License:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/combined-stream/node_modules/delayed-stream/License
@@ -1028,7 +1002,6 @@ npm/node_modules/slide/lib/bind-actor.js:1433467846000:META-INF/resources/webjar
 npm/node_modules/init-package-json/node_modules/promzard/example/index.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/init-package-json/node_modules/promzard/example/index.js
 npm/node_modules/read/LICENCE:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/read/LICENCE
 npm/node_modules/request/node_modules/form-data/node_modules/combined-stream/node_modules/delayed-stream/package.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/form-data/node_modules/combined-stream/node_modules/delayed-stream/package.json
-coffee-script/lib/coffee-script/nodes.js:1391059176000:META-INF/resources/webjars/coffee-script-node/1.7.1/lib/coffee-script/nodes.js
 npm/node_modules/tar/lib/buffer-entry.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/tar/lib/buffer-entry.js
 npm/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/test/json-schema-draft4/dependencies.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/test/json-schema-draft4/dependencies.json
 npm/node_modules/request/node_modules/.bin/har-validator:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/.bin/har-validator
@@ -1096,7 +1069,6 @@ npm/node_modules/semver/semver.browser.js.gz:1433467846000:META-INF/resources/we
 npm/node_modules/npm-registry-client/test/get-error-403.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/npm-registry-client/test/get-error-403.js
 npm/node_modules/strip-ansi/cli.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/strip-ansi/cli.js
 npm/node_modules/request/node_modules/hawk/lib/browser.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/hawk/lib/browser.js
-coffee-script/lib/coffee-script/cake.js:1391059176000:META-INF/resources/webjars/coffee-script-node/1.7.1/lib/coffee-script/cake.js
 npm/node_modules/npm-registry-client/node_modules/concat-stream/node_modules/typedarray/test/server/undef_globals.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/npm-registry-client/node_modules/concat-stream/node_modules/typedarray/test/server/undef_globals.js
 npm/node_modules/osenv/test/windows.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/osenv/test/windows.js
 npm/node_modules/read-installed/node_modules/util-extend/package.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/read-installed/node_modules/util-extend/package.json
@@ -1258,7 +1230,6 @@ npm/node_modules/archy/package.json:1433467846000:META-INF/resources/webjars/npm
 npm/node_modules/config-chain/test/env.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/config-chain/test/env.js
 npm/node_modules/tar/lib/extended-header-writer.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/tar/lib/extended-header-writer.js
 npm/node_modules/request/lib/redirect.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/lib/redirect.js
-coffee-script/lib/coffee-script/register.js:1391059176000:META-INF/resources/webjars/coffee-script-node/1.7.1/lib/coffee-script/register.js
 npm/lib/test.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/lib/test.js
 npm/node_modules/abbrev/CONTRIBUTING.md:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/abbrev/CONTRIBUTING.md
 npm/node_modules/npm-user-validate/.npmignore:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/npm-user-validate/.npmignore
@@ -1338,9 +1309,7 @@ npm/node_modules/ini/LICENSE:1433467846000:META-INF/resources/webjars/npm/2.11.2
 npm/node_modules/block-stream/test/two-stream.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/block-stream/test/two-stream.js
 npm/node_modules/request/node_modules/har-validator/node_modules/chalk/license:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/har-validator/node_modules/chalk/license
 npm/node_modules/init-package-json/test/yes-defaults.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/init-package-json/test/yes-defaults.js
-coffee-script/lib/coffee-script/scope.js:1391059176000:META-INF/resources/webjars/coffee-script-node/1.7.1/lib/coffee-script/scope.js
 npm/node_modules/semver/Makefile:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/semver/Makefile
-jshint/src/jshint.js:1390707054000:META-INF/resources/webjars/jshint-node/2.4.3/src/jshint.js
 npm/node_modules/readable-stream/lib/_stream_transform.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/readable-stream/lib/_stream_transform.js
 npm/node_modules/readable-stream/node_modules/isarray/README.md:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/readable-stream/node_modules/isarray/README.md
 npm/node_modules/spdx/README.md:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/spdx/README.md
@@ -1423,7 +1392,6 @@ npm/node_modules/node-gyp/lib/remove.js:1433467846000:META-INF/resources/webjars
 npm/node_modules/request/node_modules/isstream/package.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/isstream/package.json
 npm/node_modules/node-gyp/node_modules/glob/common.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/node-gyp/node_modules/glob/common.js
 npm/node_modules/normalize-package-data/.npmignore:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/normalize-package-data/.npmignore
-coffee-script/package.json:1391059176000:META-INF/resources/webjars/coffee-script-node/1.7.1/package.json
 npm/node_modules/init-package-json/node_modules/promzard/test/exports.input:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/init-package-json/node_modules/promzard/test/exports.input
 npm/node_modules/dezalgo/test/basic.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/dezalgo/test/basic.js
 npm/node_modules/node-gyp/node_modules/tar/LICENCE:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/node-gyp/node_modules/tar/LICENCE
@@ -1555,7 +1523,6 @@ npm/node_modules/ansicolors/README.md:1433467846000:META-INF/resources/webjars/n
 npm/node_modules/hosted-git-info/LICENSE:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/hosted-git-info/LICENSE
 source-map/lib/source-map/base64-vlq.js:1383331166000:META-INF/resources/webjars/source-map/0.1.31/lib/source-map/base64-vlq.js
 npm/node_modules/request/node_modules/http-signature/node_modules/asn1/lib/ber/reader.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/http-signature/node_modules/asn1/lib/ber/reader.js
-requirejs/bin/r.js:1410141248000:META-INF/resources/webjars/rjs/2.1.15/bin/r.js
 clean-css/lib/selectors/optimizer.js:1405029884000:META-INF/resources/webjars/clean-css/2.2.7/lib/selectors/optimizer.js
 npm/node_modules/request/LICENSE:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/LICENSE
 npm/node_modules/node-gyp/gyp/tools/Xcode/Specifications/gyp.xclangspec:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/node-gyp/gyp/tools/Xcode/Specifications/gyp.xclangspec
@@ -1694,7 +1661,6 @@ less/lib/less/tree/keyword.js:1409727890000:META-INF/resources/webjars/less-node
 npm/node_modules/readable-stream/node_modules/isarray/index.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/readable-stream/node_modules/isarray/index.js
 npm/node_modules/request/node_modules/hawk/node_modules/cryptiles/README.md:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/hawk/node_modules/cryptiles/README.md
 npm/node_modules/config-chain/test/chain-class.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/config-chain/test/chain-class.js
-jshint/src/vars.js:1390707054000:META-INF/resources/webjars/jshint-node/2.4.3/src/vars.js
 npm/node_modules/npm-cache-filename/package.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/npm-cache-filename/package.json
 npm/node_modules/node-gyp/node_modules/glob/node_modules/minimatch/browser.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/node-gyp/node_modules/glob/node_modules/minimatch/browser.js
 npm/node_modules/fs-write-stream-atomic/test/basic.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/fs-write-stream-atomic/test/basic.js
@@ -1724,7 +1690,6 @@ npm/node_modules/columnify/node_modules/wcwidth/test/index.js:1433467846000:META
 npm/node_modules/glob/LICENSE:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/glob/LICENSE
 npm/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/node_modules/generate-object-property/node_modules/is-property/package.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/node_modules/generate-object-property/node_modules/is-property/package.json
 npm/node_modules/normalize-package-data/test/fixtures/npm.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/normalize-package-data/test/fixtures/npm.json
-jshint/package.json:1390707054000:META-INF/resources/webjars/jshint-node/2.4.3/package.json
 npm/node_modules/npm-cache-filename/index.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/npm-cache-filename/index.js
 npm/node_modules/osenv/osenv.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/osenv/osenv.js
 npm/node_modules/read-installed/test/extraneous.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/read-installed/test/extraneous.js
@@ -1734,7 +1699,6 @@ npm/node_modules/request/node_modules/form-data/node_modules/combined-stream/nod
 npm/node_modules/validate-npm-package-name/node_modules/builtins/package.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/validate-npm-package-name/node_modules/builtins/package.json
 npm/node_modules/npm-user-validate/.travis.yml:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/npm-user-validate/.travis.yml
 npm/node_modules/request/node_modules/bl/test/basic-test.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/bl/test/basic-test.js
-underscore/underscore-min.js:1378558700000:META-INF/resources/webjars/underscorejs/1.5.2/underscore-min.js
 npm/node_modules/nopt/examples/my-program.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/nopt/examples/my-program.js
 npm/node_modules/request/node_modules/mime-types/README.md:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/mime-types/README.md
 npm/node_modules/npmlog/node_modules/gauge/LICENSE:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/npmlog/node_modules/gauge/LICENSE
@@ -1906,7 +1870,6 @@ npm/node_modules/request/node_modules/hawk/test/utils.js:1433467846000:META-INF/
 npm/node_modules/read-installed/node_modules/readdir-scoped-modules/test/fixtures/b/y/.keep:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/read-installed/node_modules/readdir-scoped-modules/test/fixtures/b/y/.keep
 npm/node_modules/abbrev/package.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/abbrev/package.json
 npm/node_modules/read-installed/test/extraneous-dev.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/read-installed/test/extraneous-dev.js
-jshint/src/reg.js:1390707054000:META-INF/resources/webjars/jshint-node/2.4.3/src/reg.js
 npm/node_modules/request/node_modules/hawk/images/hawk.png:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/hawk/images/hawk.png
 npm/node_modules/fs-vacuum/test/no-entries-with-link-purge.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/fs-vacuum/test/no-entries-with-link-purge.js
 npm/node_modules/request/node_modules/caseless/test.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/caseless/test.js
@@ -1979,7 +1942,6 @@ npm/node_modules/request/node_modules/har-validator/node_modules/is-my-json-vali
 npm/node_modules/which/node_modules/is-absolute/README.md:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/which/node_modules/is-absolute/README.md
 npm/node_modules/node-gyp/gyp/OWNERS:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/node-gyp/gyp/OWNERS
 npm/node_modules/npm-registry-client/lib/whoami.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/npm-registry-client/lib/whoami.js
-jshint/data/non-ascii-identifier-part-only.js:1390707054000:META-INF/resources/webjars/jshint-node/2.4.3/data/non-ascii-identifier-part-only.js
 npm/node_modules/request/node_modules/har-validator/src/index.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/har-validator/src/index.js
 npm/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/test/json-schema-draft4/allOf.json:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/test/json-schema-draft4/allOf.json
 npm/node_modules/request/node_modules/bl/node_modules/readable-stream/node_modules/string_decoder/index.js:1433467846000:META-INF/resources/webjars/npm/2.11.2/node_modules/request/node_modules/bl/node_modules/readable-stream/node_modules/string_decoder/index.js
