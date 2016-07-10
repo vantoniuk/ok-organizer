@@ -1,0 +1,6 @@
+@(role: UserRole)(body: Html)(orElseBody: Html)(implicit loggedUser: User)
+@if(utils.silhouette.ForRole.isAuthorized(loggedUser, role)) {
+	@body
+} else {
+	@orElseBody
+}

@@ -1,0 +1,4 @@
+@(role: UserRole)(body: Html)(implicit loggedUser: User)
+@if(utils.silhouette.ForRole.isAuthorized(loggedUser, role)) {
+	@body
+}

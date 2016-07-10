@@ -5,7 +5,7 @@
 
 @displayToggleLang = {
 	@if(messages.lang.code == "en") {
-		<li><a href="@routes.Application.selectLang("es")">Español</a></li>
+		<li><a href="@routes.Application.selectLang("ru")">Русский</a></li>
 	} else {
 		<li><a href="@routes.Application.selectLang("en")">English</a></li>
 	}
@@ -16,16 +16,13 @@
 		<ul class="nav navbar-nav">
 			<li class="@("active".when(tab == "index"))"><a href="@routes.Application.index">@Messages("topbar.index")</a></li>
 			@loggedUser.map { implicit user =>
-				@withService("serviceA") {
+				@forRole(UserRole.USER) {
 					<li class="@("active".when(tab == "serviceA"))"><a href="@routes.Application.serviceA">A</a></li>
 				}
-				@withService("serviceA", "serviceB") {
+				@forRole(UserRole.ADMIN) {
 					<li class="@("active".when(tab == "serviceA_or_serviceB"))"><a href="@routes.Application.serviceAorServiceB">A || B</a></li>
 				}
-				@withServices("serviceA", "serviceB") {
-					<li class="@("active".when(tab == "serviceA_and_serviceB"))"><a href="@routes.Application.serviceAandServiceB">A && B</a></li>
-				}
-				@withService("master") {
+				@forRole(UserRole.MASTER) {
 					<li class="@("active".when(tab == "settings"))"><a href="@routes.Application.settings">Settings</a></li>
 				}
 				<li class="@("active".when(tab == "myaccount"))"><a href="@routes.Application.myAccount">@Messages("topbar.myaccount")</a></li>
@@ -35,7 +32,7 @@
 	<ul class="nav navbar-nav navbar-right">
 		@loggedUser.map { user =>
 			<li class="navbar-text text-right" style="margin: 5px 15px">
-				@Html(Messages("topbar.hello", s"""<span class="text-success">${user.nick}</span>""", s"""<span class="text-info">${user.services.mkString(", ")}</span>"""))
+				@Html(Messages("topbar.hello", s"""<span class="text-success">${user.nick}</span>""", s"""<span class="text-info">${user.role}</span>"""))
 			</li>
 			@displayToggleLang
 			<li><a href="@routes.Auth.signOut">@Messages("signout")</a></li>

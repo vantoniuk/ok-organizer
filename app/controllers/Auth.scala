@@ -22,15 +22,11 @@ import javax.inject.{ Inject, Singleton }
 import views.html.{ auth => viewsAuth }
 
 class Auth @Inject() (val env: AuthenticationEnvironment, val messagesApi: MessagesApi, val mailService: MailService) extends AuthenticationController {
-
   // UTILITIES
 
   implicit val ms = mailService
   val passwordValidation = nonEmptyText(minLength = 6)
   def notFoundDefault(implicit request: RequestHeader) = Future.successful(NotFound(views.html.errors.notFound(request)))
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
-  // SIGN UP
 
   val signUpForm = Form(
     mapping(
@@ -41,7 +37,7 @@ class Auth @Inject() (val env: AuthenticationEnvironment, val messagesApi: Messa
       "nick" -> nonEmptyText,
       "firstName" -> nonEmptyText,
       "lastName" -> nonEmptyText,
-			"services" -> list(nonEmptyText)
+			"services" -> ignored(UserRole.USER)
     )(User.apply)(User.unapply)
   )
 

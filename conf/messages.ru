@@ -8,7 +8,7 @@ field.nick=Nick
 field.email=Email
 field.password=Contraseña
 field.password.repeat=Repite la contraseña
-field.services=Servicios
+field.role=Servicios
 
 submit=Enviar
 reset=Restablecer
