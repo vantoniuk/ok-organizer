@@ -26,7 +26,7 @@ GET		/serviceA_and_ServiceB	controllers.Application.serviceAandServiceB
 GET		/settings								controllers.Application.settings
 GET		/myaccount							controllers.Application.myAccount
 
-GET		/lang/$lang<(en|es)>		controllers.Application.selectLang(lang: String)
+GET		/lang/$lang<(en|ru)>		controllers.Application.selectLang(lang: String)
 
 
 # Map static resources from the /public folder to the /assets URL path

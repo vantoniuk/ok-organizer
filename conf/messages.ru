@@ -10,10 +10,10 @@ field.password=Contraseña
 field.password.repeat=Repite la contraseña
 field.role=Servicios
 
-submit=Enviar
-reset=Restablecer
-back=Atrás
-go.index=Ir al índice
+submit=отправить
+reset=сбросить
+back=назад
+go.index=на главную
 
 ################################################################################################
 # TOPBAR
@@ -25,15 +25,15 @@ topbar.hello=¡Hola {0}!<br>Tus servicios son: {1}
 ################################################################################################
 # INDEX
 
-index.title=Ejemplo de Autorización
-index.intro.logged=Estás registrado como <span class="text-success">{0}</span>, así que puedes ir a la sección \
-<a href="{1}">Mi cuenta</a> para ver tu información de contacto.<br>\
-Por supuesto puedes <a href="{2}">salir</a>.
-index.intro.notlogged=Ahora, no has iniciado ninguna sesión, así que puedes intentar <a href="{0}">entrar</a> or <a href="{1}">registrarte</a> y crear una nueva cuenta.<br>\
-Si no recuerdas tu contraseña, puedes también <a href="{2}">restrablecerla</a> con el tradicional mecanismo de confirmación de email.
-index.explanation=Cada usuario tiene uno o más servicios, y cada uno indica un área específica o nivel jerárquico.<br>\
-Puedes restringir secciones para aquellos usuarios que tengan unos servicios determinados (usando lógica OR o AND, tú dedices).<br>\
-El rol <span class="text-warning">master</span> tiene siempre acceso total.
+index.title=Добро пожаловать
+index.intro.logged=Вы вошли как <span class="text-success">{0}</span>, так что вы можете пойти в \
+<a href="{1}">Мой аккаунт</a> чтобы увидеть контактную информацию.<br>\
+Конечно вы можете <a href="{2}">выйти</a>.
+index.intro.notlogged=Now, you aren''t logged, so you can try to <a href="{0}">sign in</a> or <a href="{1}">sign up</a> and create your own account.<br>\
+If you don''t remember your password, you also can <a href="{2}">reset your password</a> with the traditional email mechanism.
+index.explanation=Each user has one or more services that indicate a specific area or hierarchical level.<br>\
+You can restrict sections to those users who match with a set of services (using logic OR or AND, you can choose).<br>\
+The <span class="text-warning">master</span> role has always full access to everywhere.
 index.example=Por ejemplo:
 index.example.serviceA=el usuario tiene acceso al área del ''serviceA''.
 index.example.serviceA_serviceB=el usuario tiene acceso a las áreas de ''service A'' and ''service B''.
