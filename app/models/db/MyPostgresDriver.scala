@@ -3,6 +3,7 @@ package models.db
 
 import com.github.tminglei.slickpg._
 import play.api.libs.json.{JsValue, Json}
+import slick.lifted.Rep
 
 trait MyPostgresDriver extends ExPostgresDriver
   with PgArraySupport
@@ -13,7 +14,7 @@ trait MyPostgresDriver extends ExPostgresDriver
     implicit val strListTypeMapper = new SimpleArrayJdbcType[String]("text").to(_.toList)
     implicit val playJsonArrayTypeMapper =
       new AdvancedArrayJdbcType[JsValue](pgjson,
-        (s) => utils.SimpleArrayUtils.fromString[JsValue](Json.parse(_))(s).orNull,
+        (s) => utils.SimpleArrayUtils.fromString[JsValue](Json.parse)(s).orNull,
         (v) => utils.SimpleArrayUtils.mkString[JsValue](_.toString())(v)
       ).to(_.toList)
   }
@@ -22,6 +23,8 @@ trait MyPostgresDriver extends ExPostgresDriver
   def pgjson = "jsonb"
 
   override val api = MyAPI
+
+  type Column[T] = Rep[T]
 }
 
 object MyPostgresDriver extends MyPostgresDriver

@@ -2,7 +2,6 @@ package controllers
 
 import models._
 import utils.silhouette._
-import utils.silhouette.Implicits._
 import com.mohiva.play.silhouette.api.{ LoginInfo, SignUpEvent, LoginEvent, LogoutEvent }
 import com.mohiva.play.silhouette.api.util.Credentials
 import com.mohiva.play.silhouette.api.exceptions.ProviderException
@@ -58,7 +57,7 @@ class Auth @Inject() (val env: AuthenticationEnvironment, val messagesApi: Messa
     signUpForm.bindFromRequest.fold(
       formWithErrors => Future.successful(BadRequest(viewsAuth.signUp(formWithErrors))),
       user => {
-        val loginInfo: LoginInfo = user.email
+        val loginInfo: LoginInfo = Helpers.email2loginInfo(user.email)
         env.identityService.retrieve(loginInfo).flatMap {
           case Some(_) => Future.successful(BadRequest(viewsAuth.signUp(signUpForm.withError("email", Messages("auth.user.notunique")))))
           case None => {
@@ -83,9 +82,9 @@ class Auth @Inject() (val env: AuthenticationEnvironment, val messagesApi: Messa
   def signUp(tokenId: String) = Action.async { implicit request =>
     env.tokenService.retrieve(tokenId).flatMap {
       case Some(token) if (token.isSignUp && !token.isExpired) => {
-        env.identityService.retrieve(token.email).flatMap {
+        env.identityService.retrieve(Helpers.email2loginInfo(token.email)).flatMap {
           case Some(user) => {
-            env.authenticatorService.create(user.email).flatMap { authenticator =>
+            env.authenticatorService.create(Helpers.email2loginInfo(user.email)).flatMap { authenticator =>
               if (!user.emailConfirmed) {
                 env.identityService.save(user.copy(emailConfirmed = true)).map { newUser =>
                   env.publish(SignUpEvent(newUser, request, request2Messages))
@@ -190,7 +189,7 @@ class Auth @Inject() (val env: AuthenticationEnvironment, val messagesApi: Messa
   def handleForgotPassword = Action.async { implicit request =>
     emailForm.bindFromRequest.fold(
       formWithErrors => Future.successful(BadRequest(viewsAuth.forgotPassword(formWithErrors))),
-      email => env.identityService.retrieve(email).flatMap {
+      email => env.identityService.retrieve(Helpers.email2loginInfo(email)).flatMap {
         case Some(_) => {
           val token = MailTokenUser(email, isSignUp = false)
           env.tokenService.create(token).map { _ =>
@@ -233,12 +232,12 @@ class Auth @Inject() (val env: AuthenticationEnvironment, val messagesApi: Messa
       passwords => {
         env.tokenService.retrieve(tokenId).flatMap {
           case Some(token) if (!token.isSignUp && !token.isExpired) => {
-            val loginInfo: LoginInfo = token.email
+            val loginInfo: LoginInfo = Helpers.email2loginInfo(token.email)
             env.identityService.retrieve(loginInfo).flatMap {
               case Some(user) => {
                 for {
                   _ <- env.authInfoRepository.update(loginInfo, env.authInfo(passwords._1))
-                  authenticator <- env.authenticatorService.create(user.email)
+                  authenticator <- env.authenticatorService.create(Helpers.email2loginInfo(user.email))
                   result <- env.authenticatorService.renew(authenticator, Ok(viewsAuth.resetedPassword(user)))
                 } yield {
                   env.tokenService.consume(tokenId)

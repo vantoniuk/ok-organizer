@@ -1,25 +1,32 @@
 package utils.silhouette
 
+import com.google.inject.{Inject, Singleton}
+import com.mohiva.play.silhouette.impl.util.BCryptPasswordHasher
 import models.User
 import com.mohiva.play.silhouette.api.util.PasswordInfo
 import com.mohiva.play.silhouette.impl.daos.DelegableAuthInfoDAO
 import com.mohiva.play.silhouette.api.LoginInfo
+import models.db.DAOProvider
+import play.api.Configuration
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
-import Implicits._
 
-class PasswordInfoDAO extends DelegableAuthInfoDAO[PasswordInfo] {
+@Singleton
+class PasswordInfoDAO @Inject() (daoProvider: DAOProvider, configuration: Configuration) extends DelegableAuthInfoDAO[PasswordInfo] {
 
   def add(loginInfo: LoginInfo, authInfo: PasswordInfo): Future[PasswordInfo] =
     update(loginInfo, authInfo)
 
   def find(loginInfo: LoginInfo): Future[Option[PasswordInfo]] =
-    User.findByEmail(loginInfo).map {
-      case Some(user) if user.emailConfirmed => Some(user.password)
+    daoProvider.userDAO.findByEmail(loginInfo.providerKey).map {
+      case Some(user) if user.emailConfirmed =>
+        Some(PasswordInfo(BCryptPasswordHasher.ID, user.password, salt = configuration.getString("play.crypto.secret")))
       case _ => None
     }
 
-  def remove(loginInfo: LoginInfo): Future[Unit] = User.remove(loginInfo)
+  def remove(loginInfo: LoginInfo): Future[Unit] = {
+    daoProvider.userDAO.delete(loginInfo.providerKey).map(_ => ())
+  }
 
   def save(loginInfo: LoginInfo, authInfo: PasswordInfo): Future[PasswordInfo] =
     find(loginInfo).flatMap {
@@ -28,9 +35,9 @@ class PasswordInfoDAO extends DelegableAuthInfoDAO[PasswordInfo] {
     }
 
   def update(loginInfo: LoginInfo, authInfo: PasswordInfo): Future[PasswordInfo] =
-    User.findByEmail(loginInfo).map {
+    daoProvider.userDAO.findByEmail(loginInfo.providerKey).map {
       case Some(user) => {
-        User.save(user.copy(password = authInfo))
+        User.save(user.copy(password = authInfo.password))
         authInfo
       }
       case _ => throw new Exception("PasswordInfoDAO - update : the user must exists to update its password")

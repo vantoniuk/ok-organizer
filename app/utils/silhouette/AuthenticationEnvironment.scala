@@ -1,7 +1,9 @@
 package utils.silhouette
 
+import com.mohiva.play.silhouette.api.services.IdentityService
+import models.db.DAOProvider
 import models.{User, MailTokenUser}
-import com.mohiva.play.silhouette.api.{ Environment, EventBus, SilhouetteEvent }
+import com.mohiva.play.silhouette.api.{LoginInfo, Environment, EventBus, SilhouetteEvent}
 import com.mohiva.play.silhouette.api.util.{ PasswordInfo, Clock }
 import com.mohiva.play.silhouette.impl.authenticators.{ CookieAuthenticator, CookieAuthenticatorService, CookieAuthenticatorSettings }
 import com.mohiva.play.silhouette.impl.providers.{ CredentialsProvider }
@@ -9,14 +11,19 @@ import com.mohiva.play.silhouette.impl.repositories.{ DelegableAuthInfoRepositor
 import com.mohiva.play.silhouette.impl.daos.{ DelegableAuthInfoDAO }
 import com.mohiva.play.silhouette.impl.util.{ DefaultFingerprintGenerator, SecureRandomIDGenerator, BCryptPasswordHasher }
 import play.api.Configuration
+import scala.concurrent.Future
 import scala.concurrent.duration._
 import javax.inject.{ Singleton, Inject }
 
 @Singleton
-class AuthenticationEnvironment @Inject() (val conf: Configuration) extends Environment[User, CookieAuthenticator] with utils.ConfigSupport {
+class UserAuthService @Inject()(daoProvider: DAOProvider) extends IdentityService[User] {
+  def retrieve(loginInfo: LoginInfo): Future[Option[User]] = daoProvider.userDAO.findByEmail(loginInfo.providerKey)
+  def save(user: User): Future[User] = daoProvider.userDAO.save(user)
+}
+
+@Singleton
+class AuthenticationEnvironment @Inject() (val conf: Configuration, val identityService: UserAuthService, passwordInfoDAO: PasswordInfoDAO) extends Environment[User, CookieAuthenticator] with utils.ConfigSupport {
 	
-  val identityService = new UserService
-  val passwordInfoDAO = new PasswordInfoDAO()
   val tokenService = new MailTokenUserService()
 
   override implicit val executionContext = play.api.libs.concurrent.Execution.Implicits.defaultContext

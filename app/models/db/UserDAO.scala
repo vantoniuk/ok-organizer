@@ -1,12 +1,12 @@
 package models.db
 
 import models.{UserId, UserRole, User}
-import slick.driver.PostgresDriver.api._
-import slick.jdbc.JdbcBackend.Database
 import Implicits._
 import MyPostgresDriver.api.{Tag => DBTag, _}
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits._
 
-class Users(tag: Tag) extends Table[User](tag, "users") {
+class Users(tag: DBTag) extends Table[User](tag, "users") {
   def id = column[UserId]("id", O.PrimaryKey, O.AutoInc)
   def email = column[String]("email")
   def emailConfirmed = column[Boolean]("confirmed")
@@ -21,9 +21,24 @@ class Users(tag: Tag) extends Table[User](tag, "users") {
 
 object Users {
   val query = TableQuery[Users]
-  query.schema.create
 }
 
-object UserDAO {
-  val a = Database.forConfig("database")
+class PostgresUserDAO(database: Database) extends UserDAO {
+  private def findByEmailQueryRaw(email: Rep[String]) = {
+    Users.query.filter(_.email === email)
+  }
+
+  private val findByEmailQuery = Compiled(findByEmailQueryRaw _)
+
+  def findByEmail(email: String): Future[Option[User]] = {
+    database.run(findByEmailQuery(email).result).map(_.headOption)
+  }
+
+  def delete(email: String): Future[Int] = database.run(findByEmailQuery(email).delete)
+
+  def save(user: User): Future[User] = {
+    val insertAction = (Users.query returning Users.query.map(_.id) into ((user, id) => user.copy(id = id))) += user
+
+    database.run(insertAction)
+  }
 }
