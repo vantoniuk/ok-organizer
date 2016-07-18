@@ -42,8 +42,6 @@ class PostgresUserDAO(database: Database) extends UserDAO {
     Users.query.insertOrUpdate(user)
     val insertAction = (Users.query returning Users.query.map(_.id) into ((user, id) => user.copy(id = id))) insertOrUpdate user
 
-    val r = database.run(insertAction)
-    r.map(x => println("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr" + x.head))
-    r.map(x => x.head)
+    database.run(insertAction).map(_.getOrElse(throw new IllegalStateException("Failed to save user!! " + user)))
   }
 }
