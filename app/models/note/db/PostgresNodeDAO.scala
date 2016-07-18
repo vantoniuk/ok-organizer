@@ -26,6 +26,9 @@ class Nodes(tag: DBTag) extends Table[Node](tag, "nodes") {
   def * = (id, parentId, nodeType, title, description, icon, priority, rating, author, created) <> (Node.apply _ tupled, Node.unapply)
 
   def userFK = foreignKey("user_id_fk", author, Users.query)(_.id, onUpdate = ForeignKeyAction.Cascade, onDelete = ForeignKeyAction.Cascade)
+
+  def authorNodeTypeIdx = index("author_type_idx", (author, nodeType))
+  def parentIdIdx = index("parent_id_idx", parentId)
 }
 
 object Nodes {
