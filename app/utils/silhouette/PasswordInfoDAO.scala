@@ -37,7 +37,7 @@ class PasswordInfoDAO @Inject() (daoProvider: DAOProvider, configuration: Config
   def update(loginInfo: LoginInfo, authInfo: PasswordInfo): Future[PasswordInfo] =
     daoProvider.userDAO.findByEmail(loginInfo.providerKey).map {
       case Some(user) => {
-        User.save(user.copy(password = authInfo.password))
+        daoProvider.userDAO.save(user.copy(password = authInfo.password))
         authInfo
       }
       case _ => throw new Exception("PasswordInfoDAO - update : the user must exists to update its password")

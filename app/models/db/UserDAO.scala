@@ -17,6 +17,8 @@ class Users(tag: DBTag) extends Table[User](tag, "users") {
   def role = column[UserRole]("role")
 
   def * = (id, email, emailConfirmed, password, nick, firstName, lastName, role) <> (User.apply _ tupled, User.unapply)
+
+  def emailIdx = index("email_idx", email, unique = true)
 }
 
 object Users {
@@ -37,8 +39,11 @@ class PostgresUserDAO(database: Database) extends UserDAO {
   def delete(email: String): Future[Int] = database.run(findByEmailQuery(email).delete)
 
   def save(user: User): Future[User] = {
-    val insertAction = (Users.query returning Users.query.map(_.id) into ((user, id) => user.copy(id = id))) += user
+    Users.query.insertOrUpdate(user)
+    val insertAction = (Users.query returning Users.query.map(_.id) into ((user, id) => user.copy(id = id))) insertOrUpdate user
 
-    database.run(insertAction)
+    val r = database.run(insertAction)
+    r.map(x => println("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr" + x.head))
+    r.map(x => x.head)
   }
 }

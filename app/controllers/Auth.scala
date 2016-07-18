@@ -54,6 +54,7 @@ class Auth @Inject() (val env: AuthenticationEnvironment, val messagesApi: Messa
    * Handles the form filled by the user. The user and its password are saved and it sends him an email with a link to confirm his email address.
    */
   def handleStartSignUp = Action.async { implicit request =>
+    println("SIGN UP STUFF")
     signUpForm.bindFromRequest.fold(
       formWithErrors => Future.successful(BadRequest(viewsAuth.signUp(formWithErrors))),
       user => {

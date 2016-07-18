@@ -2,13 +2,13 @@
 ################################################################################################
 # COMMON
 
-field.firstname=Nombre
-field.lastname=Apellidos
-field.nick=Nick
-field.email=Email
-field.password=Contraseña
-field.password.repeat=Repite la contraseña
-field.role=Servicios
+field.firstname=Имя
+field.lastname=Фамилия
+field.nick=Ник
+field.email=Электронная почта
+field.password=Пароль
+field.password.repeat=Повторите пароль
+field.role=Роль
 
 submit=отправить
 reset=сбросить
@@ -18,9 +18,9 @@ go.index=на главную
 ################################################################################################
 # TOPBAR
 
-topbar.index=Índice
-topbar.myaccount=Mi cuenta
-topbar.hello=¡Hola {0}!<br>Tus servicios son: {1}
+topbar.index=Главная
+topbar.myaccount=Мой аккаунт
+topbar.hello=Здравствуйте {0}!<br>Ваши полномочия: {1}
 
 ################################################################################################
 # INDEX
@@ -53,25 +53,25 @@ myaccount.title=Mi cuenta
 ################################################################################################
 # AUTH
 
-signup=Registro
-signup.title=Regístrate para tener tu cuenta
-signup.signin.question=¿Ya eres miembro?
-signup.signin=Entra ahora
-signup.thanks=¡Gracias {0} por registrate!
-signup.sent=Acabamos de enviarte un email a {0}. Por favor, sigue sus instrucciones para completar tu nueva cuenta.
-signup.ready=Ya tienes tu nueva cuenta disponible
+signup=Регистрация
+signup.title=Создать новый аккаунт
+signup.signin.question=Есть аккаунт?
+signup.signin=Войти
+signup.thanks=Спасибо {0} за регистрацию!
+signup.sent=Мы послали письмо на {0}. Пожалуйста следуйте инструкциям чтобы закончить регистрацию.
+signup.ready=Ваш аккаунт готов
 
-signin=Entrar
-signin.title=Introduce tus credenciales
-signin.rememberme=Recuérdame
-signin.signup.question=¿No tienes cuenta?
-signin.signup=Regístrate ahora
-signin.forgot.question=¿Has olvidado tu contraseña?
-signin.forgot=Restablécela ahora
+signin=Войти
+signin.title=Войти с вашими данными
+signin.rememberme=Запомнить
+signin.signup.question=Нет аккаунта?
+signin.signup=Зарегистрироваться
+signin.forgot.question=Забыли пароль?
+signin.forgot=Сбросить пароль
 
-signout=Salir
+signout=Выйти
 
-forgot.title=¿Has olvidado tu contraseña?
+forgot.title=Забыли пароль?
 forgot.sent=Acabamos de enviarte un email a {0} con las instrucciones para restablecer tu contraseña
 forgot.reset.title=Restablece tu contraseña
 forgot.reseted=Tu contraseña ha sido restablecida
