@@ -35,7 +35,7 @@ object Nodes {
   val query = TableQuery[Nodes]
 }
 
-class PostgresUserDAO(database: Database) extends NodeDAO {
+class PostgresNodeDAO(database: Database) extends NodeDAO {
   private def findById(id: Rep[NodeId]) = {
     Nodes.query.filter(_.id === id)
   }
