@@ -1,9 +1,9 @@
 package models.note.db
 
 import models.db.MyPostgresDriver.api.{Tag => DBTag, _}
-import models.db.Users
+import models.db.{Services, Users}
 import models.note.{Node, NodeId, NodePriority, NodeType}
-import models.{User, UserId}
+import models.{ServiceId, User, UserId}
 import org.joda.time.DateTime
 import models.db.Implicits._
 import Implicits._
@@ -22,10 +22,12 @@ class Nodes(tag: DBTag) extends Table[Node](tag, "nodes") {
   def rating = column[Int]("rating")
   def author = column[UserId]("author")
   def created = column[DateTime]("created")
+  def service = column[ServiceId]("service")
 
-  def * = (id, parentId, nodeType, title, description, icon, priority, rating, author, created) <> (Node.apply _ tupled, Node.unapply)
+  def * = (id, parentId, nodeType, title, description, icon, priority, rating, author, created, service) <> (Node.apply _ tupled, Node.unapply)
 
   def userFK = foreignKey("user_id_fk", author, Users.query)(_.id, onUpdate = ForeignKeyAction.Cascade, onDelete = ForeignKeyAction.Cascade)
+  def serviceFK = foreignKey("service_id_fk", service, Services.query)(_.id, onUpdate = ForeignKeyAction.Cascade, onDelete = ForeignKeyAction.Cascade)
 
   def authorNodeTypeIdx = index("author_type_idx", (author, nodeType))
   def parentIdIdx = index("parent_id_idx", parentId)

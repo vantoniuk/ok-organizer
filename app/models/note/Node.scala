@@ -1,6 +1,6 @@
 package models.note
 
-import models.UserId
+import models.{ServiceId, UserId}
 import org.joda.time.DateTime
 
 case class NodeId(id: Int) extends AnyVal
@@ -14,5 +14,6 @@ case class Node(id: NodeId,
                 priority: NodePriority,
                 rating: Int,
                 author: UserId,
-                created: DateTime
+                created: DateTime,
+                service: ServiceId
                )

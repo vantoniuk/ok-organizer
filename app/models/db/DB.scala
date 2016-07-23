@@ -14,8 +14,9 @@ object DB {
     def this() = this(PostgresDAOProvider.database)
     def withTransaction[T](doWork: (DAOProvider) => T): T = ???
 
-    def userDAO: UserDAO = new PostgresUserDAO(db)
-    def nodeDAO: NodeDAO = new PostgresNodeDAO(db)
+    lazy val userDAO: UserDAO = new PostgresUserDAO(db)
+    lazy val nodeDAO: NodeDAO = new PostgresNodeDAO(db)
+    lazy val serviceDAO: ServiceDAO = new PostgresServiceDAO(db)
   }
 
   object PostgresDAOProvider {

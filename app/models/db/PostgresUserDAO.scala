@@ -39,7 +39,6 @@ class PostgresUserDAO(database: Database) extends UserDAO {
   def delete(email: String): Future[Int] = database.run(findByEmailQuery(email).delete)
 
   def save(user: User): Future[User] = {
-    Users.query.insertOrUpdate(user)
     val insertAction = (Users.query returning Users.query.map(_.id) into ((user, id) => user.copy(id = id))) insertOrUpdate user
 
     database.run(insertAction).map(_.getOrElse(throw new IllegalStateException("Failed to save user!! " + user)))

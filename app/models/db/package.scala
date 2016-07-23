@@ -14,6 +14,7 @@ package object db {
 
     def userDAO: UserDAO
     def nodeDAO: NodeDAO
+    def serviceDAO: ServiceDAO
   }
 
   trait UserDAO {
@@ -22,6 +23,14 @@ package object db {
     def save(user: User): Future[User]
 
     def delete(email: String): Future[Int]
+  }
+
+  trait ServiceDAO {
+    def find(id: ServiceId): Future[Option[Service]]
+
+    def save(service: Service): Future[Service]
+
+    def delete(id: ServiceId): Future[Int]
   }
 
 }
