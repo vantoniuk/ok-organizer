@@ -19,9 +19,6 @@
 				@forRole(UserRole.USER) {
 					<li class="@("active".when(tab == "serviceA"))"><a href="@routes.Application.serviceA">A</a></li>
 				}
-				@forRole(UserRole.ADMIN) {
-					<li class="@("active".when(tab == "serviceA_or_serviceB"))"><a href="@routes.Application.serviceAorServiceB">A || B</a></li>
-				}
 				@forRole(UserRole.MASTER) {
 					<li class="@("active".when(tab == "settings"))"><a href="@routes.Application.settings">Settings</a></li>
 				}

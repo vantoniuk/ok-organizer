@@ -21,13 +21,14 @@ GET		/denied									controllers.Auth.accessDenied
 # Home page
 GET		/												controllers.Application.index
 GET		/serviceA								controllers.Application.serviceA
-GET		/serviceA_or_ServiceB		controllers.Application.serviceAorServiceB
-GET		/serviceA_and_ServiceB	controllers.Application.serviceAandServiceB
 GET		/settings								controllers.Application.settings
 GET		/myaccount							controllers.Application.myAccount
 
 GET		/lang/$lang<(en|ru)>		controllers.Application.selectLang(lang: String)
 
+# Editor
+
+GET   /edit/menu              controllers.Editor.menuEditor
 
 # Map static resources from the /public folder to the /assets URL path
 GET		/public/*file						controllers.MyAssets.public(path="/public", file: Asset)

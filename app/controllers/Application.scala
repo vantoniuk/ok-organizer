@@ -25,16 +25,6 @@ class Application @Inject() (val env: AuthenticationEnvironment, val messagesApi
     Future.successful(Ok(views.html.serviceA()))
   }
 
-  // REQUIRED ROLES: serviceA OR serviceB (or master)
-  def serviceAorServiceB = SecuredAction(ForRole(UserRole.USER)).async { implicit request =>
-    Future.successful(Ok(views.html.serviceAorServiceB()))
-  }
-
-  // REQUIRED ROLES: serviceA AND serviceB (or master)
-  def serviceAandServiceB = SecuredAction(ForRole(UserRole.ADMIN)).async { implicit request =>
-    Future.successful(Ok(views.html.serviceAandServiceB()))
-  }
-
   // REQUIRED ROLES: master
   def settings = SecuredAction(ForRole(UserRole.MASTER)).async { implicit request =>
     Future.successful(Ok(views.html.settings()))
