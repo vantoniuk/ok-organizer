@@ -26,6 +26,8 @@ package object db {
   }
 
   trait ServiceDAO {
+    def getAll: Future[Seq[Service]]
+
     def find(id: ServiceId): Future[Option[Service]]
 
     def save(service: Service): Future[Service]

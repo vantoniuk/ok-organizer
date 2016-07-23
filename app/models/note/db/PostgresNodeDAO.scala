@@ -30,6 +30,7 @@ class Nodes(tag: DBTag) extends Table[Node](tag, "nodes") {
   def serviceFK = foreignKey("service_id_fk", service, Services.query)(_.id, onUpdate = ForeignKeyAction.Cascade, onDelete = ForeignKeyAction.Cascade)
 
   def authorNodeTypeIdx = index("author_type_idx", (author, nodeType))
+  def serviceNodeTypeIdx = index("author_type_idx", (service, nodeType))
   def parentIdIdx = index("parent_id_idx", parentId)
 }
 
@@ -44,9 +45,13 @@ class PostgresNodeDAO(database: Database) extends NodeDAO {
   private def findAuthorAndType(author: Rep[UserId], nodeType: Rep[NodeType]) = {
     Nodes.query.filter(_.author === author).filter(_.nodeType === nodeType)
   }
+  private def findServiceAndType(service: Rep[ServiceId], nodeType: Rep[NodeType]) = {
+    Nodes.query.filter(_.service === service).filter(_.nodeType === nodeType)
+  }
 
   private val findByIdCompiled = Compiled(findById _)
   private val findByAuthorAndTypeCompiled = Compiled(findAuthorAndType _)
+  private val findByServiceAndTypeCompiled = Compiled(findServiceAndType _)
 
   def find(id: NodeId): Future[Option[Node]] = {
     database.run(findByIdCompiled(id).result).map(_.headOption)
@@ -66,7 +71,11 @@ class PostgresNodeDAO(database: Database) extends NodeDAO {
     database.run(insertAction).map(_.getOrElse(throw new IllegalStateException("Failed to save user!! " + node)))
   }
 
-  def find(author: UserId, nodeType: NodeType): Future[List[Node]] = {
+  def findByUser(author: UserId, nodeType: NodeType): Future[List[Node]] = {
     database.run(findByAuthorAndTypeCompiled(author, nodeType).result).map(_.toList)
+  }
+
+  def findByService(serviceId: ServiceId, nodeType: NodeType): Future[List[Node]] = {
+    database.run(findByServiceAndTypeCompiled(serviceId, nodeType).result).map(_.toList)
   }
 }

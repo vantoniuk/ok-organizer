@@ -42,4 +42,6 @@ class PostgresServiceDAO(database: Database) extends ServiceDAO {
 
     database.run(insertAction).map(_.getOrElse(throw new IllegalStateException("Failed to save service!! " + service)))
   }
+
+  override def getAll: Future[Seq[Service]] = database.run(Services.query.result)
 }
