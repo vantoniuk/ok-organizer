@@ -4,19 +4,36 @@
   <h3>Menu list:</h3>
   <ul id="elements">
   @for( menu <- menus ) {
-    <li>
-      <h3>@Messages("title"): <a href="@{menu.url}">@Messages(menu.title)</a></h3>
-      <p><b>@Messages("display.order"):</b> @menu.order</p>
-      <p><b>@Messages("url"):</b> @menu.url</p>
-      <p><b>@Messages("created.by"):</b> @menu.author.fullName</p>
+    <li class="editor-block">
+      <div class="editable hidden">
+        <span class="editable-original id">@menu.id.id</span>
+        <h3>ID: <a href="@{menu.url}">@menu.id</a></h3>
+      </div>
+      <div class="editable">
+        <span class="editable-original title">@menu.title</span>
+        <h3>@Messages("title"): <a href="@{menu.url}">@Messages(menu.title)</a></h3>
+      </div>
+      <div class="editable">
+        <span class="editable-original order">@menu.order</span>
+        <p><b>@Messages("display.order"):</b> @menu.order</p>
+      </div>
+      <div class="editable">
+        <span class="editable-original url">@menu.url</span>
+        <p><b>@Messages("url"):</b> @menu.url</p>
+      </div>
+      <div class="non-editable"><p><b>@Messages("created.by"):</b> @menu.author.fullName</p></div>
+      <a class="editor-edit" href="#">@Messages("edit")</a>
     </li>
   }
   </ul>
 
   <a id="editor-new" href="#new">@Messages("editor.new")</a>
 
+  <hr/>
+
   <div id="editor-wrapper" style="display: none">
     <form name="menu-from" id="menu-form">
+      <p class="hidden"><label for="id">ID</label> <input required="required" type="text" id="id" disabled="disabled" placeholder="id"/></p>
       <p id="order-wrapper"><label for="order">@Messages("display.order")</label> <input required="required" type="number" id="order" placeholder="@Messages("display.order")"/></p>
       <p><label for="title">@Messages("title")</label> <input required="required" type="text" id="title" placeholder="@Messages("title")"/></p>
       <p><label for="url">@Messages("url")</label> <input required="required" type="text" id="url" placeholder="@Messages("url")"/></p>

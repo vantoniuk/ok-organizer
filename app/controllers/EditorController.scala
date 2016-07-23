@@ -18,8 +18,9 @@ import play.api.data._
 import play.api.data.Forms._
 
 object EditorForms {
-  case class MenuForValue(order: Int, url: String, title: String)
+  case class MenuForValue(id: NodeId, order: Int, url: String, title: String)
   val menuForm = Form(mapping(
+      "id" -> number.transform[NodeId](NodeId.apply, _.id),
       "order" -> number,
       "url" -> text,
       "title" -> text
@@ -41,7 +42,7 @@ class EditorController @Inject()(val env: AuthenticationEnvironment, val message
     val menuFormValue = menuForm.bindFromRequest().get
     menuService.addMenu(
       Menu(
-        NodeId.noId,
+        menuFormValue.id,
         None,
         menuFormValue.title,
         menuFormValue.url,
@@ -57,6 +58,20 @@ class EditorController @Inject()(val env: AuthenticationEnvironment, val message
   }
 
   def updateMenu() = SecuredAction(ForRole(UserRole.ADMIN)).async { implicit request =>
+    val menuFormValue = menuForm.bindFromRequest().get
+    menuService.updateMenu(
+      Menu(
+        menuFormValue.id,
+        None,
+        menuFormValue.title,
+        menuFormValue.url,
+        None,
+        menuFormValue.order,
+        request.identity,
+        DateTime.now
+      ),
+      Global.service
+    )
     Future.successful(Ok(""))
   }
 }

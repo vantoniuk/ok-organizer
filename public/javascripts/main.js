@@ -1,13 +1,19 @@
 $(document).ready(function(){
   $("#editor-new").on("click", function(e){
     $("#editor-wrapper form input").each(function(i, el){$(el).val("")});
+    $("#editor-wrapper form input#id").val(-1);
     $("#editor-wrapper #order-wrapper input").val($("#elements li").length + 1);
     $("#editor-wrapper #order-wrapper input").attr("disabled", "disabled");
     $("#editor-wrapper").fadeIn();
     $("#editor-submit").addClass("new");
   });
-  $("#editor-edit").on("click", function(e){
-//    $("#editor-wrapper form input").each(function(i, el){$(el).val("")});
+
+  $(".editor-edit").on("click", function(e){
+    $("#editor-wrapper #order-wrapper input").removeAttr("disabled");
+    $(this).parent(".editor-block").find(".editable-original").each(function(i, el){
+      var id = $(el).attr("class").replace("editable-original ", "");
+      $("#" + id).val($(el).text());
+    });
     $("#editor-wrapper").fadeIn();
     $("#editor-submit").removeClass("new");
   });
@@ -22,12 +28,12 @@ $(document).ready(function(){
       dataObj[$el.attr("id")] = $el.val();
     });
 
+
     $.post(
       "/edit/menu/"+actionUrl,
       dataObj,
       function(r) {
         $("#editor-wrapper").fadeOut();
-        console.log("server post response", dataObj);
       }
     );
 
