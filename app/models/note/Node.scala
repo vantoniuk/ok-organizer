@@ -4,6 +4,9 @@ import models.{ServiceId, UserId}
 import org.joda.time.DateTime
 
 case class NodeId(id: Int) extends AnyVal
+object NodeId {
+  val noId = NodeId(Int.MinValue)
+}
 
 case class Node(id: NodeId,
                 parentId: Option[NodeId],

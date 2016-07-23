@@ -1,4 +1,27 @@
-@()(implicit user: User, messages: Messages)
+@(menus: List[utils.services.data.Menu])(implicit user: User, messages: Messages)
+
 @views.html.templates.logged(title = "menu editor", tab = "menu") {
-  <h1>HELLOW!!!</h1>
+  <h3>Menu list:</h3>
+  <ul id="elements">
+  @for( menu <- menus ) {
+    <li>
+      <h3>@Messages("title"): <a href="@{menu.url}">@Messages(menu.title)</a></h3>
+      <p><b>@Messages("display.order"):</b> @menu.order</p>
+      <p><b>@Messages("url"):</b> @menu.url</p>
+      <p><b>@Messages("created.by"):</b> @menu.author.fullName</p>
+    </li>
+  }
+  </ul>
+
+  <a id="editor-new" href="#new">@Messages("editor.new")</a>
+
+  <div id="editor-wrapper" style="display: none">
+    <form name="menu-from" id="menu-form">
+      <p id="order-wrapper"><label for="order">@Messages("display.order")</label> <input required="required" type="number" id="order" placeholder="@Messages("display.order")"/></p>
+      <p><label for="title">@Messages("title")</label> <input required="required" type="text" id="title" placeholder="@Messages("title")"/></p>
+      <p><label for="url">@Messages("url")</label> <input required="required" type="text" id="url" placeholder="@Messages("url")"/></p>
+    </form>
+    <a id="editor-submit">@Messages("editor.submit")</a>
+  </div>
+
 }

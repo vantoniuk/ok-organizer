@@ -16,11 +16,21 @@ back=Back
 go.index=Go to index
 
 ################################################################################################
-# TOPBAR
+# MENU
 
-topbar.index=Index
+index.page=Index
 topbar.myaccount=My account
 topbar.hello=Hello {0}!<br>Your services are: {1}
+
+################################################################################################
+# EDITOR
+
+created.by=Created by
+display.order=Display order
+url=Url
+title=Title
+editor.new=add new
+editor.submit=Submit
 
 ################################################################################################
 # INDEX

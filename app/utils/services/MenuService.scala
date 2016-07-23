@@ -17,8 +17,18 @@ trait MenuService {
 
 class MenuServiceImpl @Inject() (daoProvider: DAOProvider) extends MenuService {
   private val nodeDAO = daoProvider.nodeDAO
+  private val userDao = daoProvider.userDAO
   override def getMenus(service: ServiceId): Future[List[Menu]] = {
-    nodeDAO.findByService(service, NodeType.MENU_NODE).map(_.map(Menu.apply))
+    for {
+      nodes <- nodeDAO.findByService(service, NodeType.MENU_NODE)
+      users <- Future.traverse(nodes.map(_.author))(userDao.findById)
+    } yield {
+      val userMap = users.flatMap(_.map(u => u.id -> u)).toMap
+      for {
+        node <- nodes
+        user <- userMap.get(node.author)
+      } yield Menu(node, user)
+    }
   }
 
   override def addMenu(menu: Menu, service: ServiceId): Unit = {

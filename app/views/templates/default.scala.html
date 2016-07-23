@@ -14,7 +14,7 @@
 @navbarContent = {
 	@if(withMainTabs) {
 		<ul class="nav navbar-nav">
-			<li class="@("active".when(tab == "index"))"><a href="@routes.Application.index">@Messages("topbar.index")</a></li>
+			<li class="@("active".when(tab == "index"))"><a href="@routes.Application.index">@Messages("index.page")</a></li>
 			@loggedUser.map { implicit user =>
 				@forRole(UserRole.USER) {
 					<li class="@("active".when(tab == "serviceA"))"><a href="@routes.Application.serviceA">A</a></li>

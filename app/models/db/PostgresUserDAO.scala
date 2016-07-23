@@ -26,14 +26,22 @@ object Users {
 }
 
 class PostgresUserDAO(database: Database) extends UserDAO {
+  private def findByIdQueryRaw(userId: Rep[UserId]) = {
+    Users.query.filter(_.id === userId)
+  }
   private def findByEmailQueryRaw(email: Rep[String]) = {
     Users.query.filter(_.email === email)
   }
 
   private val findByEmailQuery = Compiled(findByEmailQueryRaw _)
+  private val findByIdQuery = Compiled(findByIdQueryRaw _)
 
   def findByEmail(email: String): Future[Option[User]] = {
     database.run(findByEmailQuery(email).result).map(_.headOption)
+  }
+
+  def findById(userId: UserId): Future[Option[User]] = {
+    database.run(findByIdQuery(userId).result).map(_.headOption)
   }
 
   def delete(email: String): Future[Int] = database.run(findByEmailQuery(email).delete)

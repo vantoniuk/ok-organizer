@@ -1,29 +1,29 @@
 package utils.services.data
 
-import models.{ServiceId, UserId}
+import models.{User, ServiceId, UserId}
 import models.note._
 import org.joda.time.DateTime
 
 case class Menu(id: NodeId,
     parentId: Option[NodeId],
     title: String,
-    description: String,
+    url: String,
     icon: Option[String],
     order: Int,
-    author: UserId,
+    author: User,
     created: DateTime
 )
 
 object Menu {
-  def apply(node: Node): Menu = {
+  def apply(node: Node, author: User): Menu = {
     Menu(
       id = node.id,
       parentId = node.parentId,
       title = node.title,
-      description = node.description,
+      url = node.description,
       icon = node.icon,
       order = node.rating,
-      author = node.author,
+      author = author,
       created = node.created
     )
   }
@@ -35,11 +35,11 @@ object Menu {
         parentId = menu.parentId,
         nodeType = NodeType.MENU_NODE,
         title = menu.title,
-        description = menu.description,
+        description = menu.url,
         icon = menu.icon,
         priority = NodePriority.NO_PRIORITY,
         rating = menu.order,
-        author = menu.author,
+        author = menu.author.id,
         created = menu.created,
         service = service
       )

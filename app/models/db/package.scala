@@ -18,6 +18,8 @@ package object db {
   }
 
   trait UserDAO {
+    def findById(userId: UserId): Future[Option[User]]
+
     def findByEmail(email: String): Future[Option[User]]
 
     def save(user: User): Future[User]

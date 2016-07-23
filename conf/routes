@@ -28,7 +28,9 @@ GET		/lang/$lang<(en|ru)>		controllers.Application.selectLang(lang: String)
 
 # Editor
 
-GET   /edit/menu              controllers.Editor.menuEditor
+GET   /edit/menu              controllers.EditorController.menuEditor
+POST  /edit/menu/new          controllers.EditorController.addMenu()
+POST  /edit/menu/update       controllers.EditorController.updateMenu()
 
 # Map static resources from the /public folder to the /assets URL path
 GET		/public/*file						controllers.MyAssets.public(path="/public", file: Asset)
