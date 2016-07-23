@@ -3,7 +3,7 @@ package utils.services
 import com.google.inject.{Inject, ImplementedBy}
 import models.ServiceId
 import models.db.DAOProvider
-import models.note.NodeType
+import models.note.{NodeId, NodeType}
 import utils.services.data.Menu
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits._
@@ -13,6 +13,7 @@ trait MenuService {
   def getMenus(service: ServiceId): Future[List[Menu]]
   def addMenu(menu: Menu, service: ServiceId)
   def updateMenu(menu: Menu, service: ServiceId)
+  def delete(id: NodeId): Future[Boolean]
 }
 
 class MenuServiceImpl @Inject() (daoProvider: DAOProvider) extends MenuService {
@@ -37,5 +38,9 @@ class MenuServiceImpl @Inject() (daoProvider: DAOProvider) extends MenuService {
 
   override def updateMenu(menu: Menu, service: ServiceId): Unit = {
     nodeDAO.update(menu.toNode(service))
+  }
+
+  def delete(id: NodeId): Future[Boolean] = {
+    nodeDAO.delete(id)
   }
 }

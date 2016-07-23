@@ -33,6 +33,7 @@ title=Title
 editor.new=add new
 editor.submit=Submit
 editor.edit=Edit
+editor.delete=Delete
 
 ################################################################################################
 # INDEX

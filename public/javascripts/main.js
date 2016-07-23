@@ -15,7 +15,18 @@ $(document).ready(function(){
       $("#" + id).val($(el).text());
     });
     $("#editor-wrapper").fadeIn();
-    $("#editor-submit").removeClass("new");
+    $("#editor-submit").attr("class", "edit");
+  });
+
+  $(".editor-delete").on("click", function(e){
+    var id =  $(this).parent(".editor-block").find(".editable-original.id").text();
+    $(this).parent(".editor-block").fadeOut();
+    $.ajax({
+          url: "/edit/menu/" + id,
+          type: 'DELETE',
+          success: function(r) {
+          }
+        });
   });
 
   $("#editor-submit").on("click", function(e){

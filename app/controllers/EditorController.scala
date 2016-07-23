@@ -74,4 +74,9 @@ class EditorController @Inject()(val env: AuthenticationEnvironment, val message
     )
     Future.successful(Ok(""))
   }
+
+  def deleteMenu(id: Int) =  SecuredAction(ForRole(UserRole.ADMIN)).async { implicit request =>
+    menuService.delete(NodeId(id))
+    Future.successful(Ok(""))
+  }
 }
