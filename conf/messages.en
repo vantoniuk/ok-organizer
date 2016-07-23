@@ -21,6 +21,7 @@ go.index=Go to index
 index.page=Index
 topbar.myaccount=My account
 topbar.hello=Hello {0}!<br>Your services are: {1}
+menu.items=Menu items
 
 ################################################################################################
 # EDITOR

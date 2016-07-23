@@ -1,7 +1,7 @@
 @(menus: List[utils.services.data.Menu])(implicit user: User, messages: Messages)
 
 @views.html.templates.logged(title = "menu editor", tab = "menu") {
-  <h3>Menu list:</h3>
+  <h3>@Messages("menu.items"):</h3>
   <ul id="elements">
   @for( menu <- menus ) {
     <li class="editor-block">
@@ -22,7 +22,7 @@
         <p><b>@Messages("url"):</b> @menu.url</p>
       </div>
       <div class="non-editable"><p><b>@Messages("created.by"):</b> @menu.author.fullName</p></div>
-      <a class="editor-edit" href="#">@Messages("edit")</a>
+      <a class="editor-edit" href="#">@Messages("editor.edit")</a>
     </li>
   }
   </ul>
