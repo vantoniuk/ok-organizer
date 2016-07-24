@@ -3,7 +3,7 @@ package controllers
 import javax.inject.Inject
 
 import global.Global
-import models.UserRole
+import models.{User, UserRole}
 import models.db.DAOProvider
 import models.note.NodeId
 import org.joda.time.DateTime
@@ -18,7 +18,20 @@ import play.api.data._
 import play.api.data.Forms._
 
 object EditorForms {
-  case class MenuForValue(id: NodeId, order: Int, url: String, title: String)
+  case class MenuForValue(id: NodeId, order: Int, url: String, title: String)  {
+    def toMenu(author: User): Menu = {
+      Menu(
+        id = id,
+        parentId = None,
+        title = title,
+        url = url,
+        icon = None,
+        order = order,
+        author = author,
+        created = DateTime.now
+      )
+    }
+  }
   val menuForm = Form(mapping(
       "id" -> number.transform[NodeId](NodeId.apply, _.id),
       "order" -> number,
@@ -40,43 +53,21 @@ class EditorController @Inject()(val env: AuthenticationEnvironment, val message
 
   def addMenu() = SecuredAction(ForRole(UserRole.ADMIN)).async { implicit request =>
     val menuFormValue = menuForm.bindFromRequest().get
-    menuService.addMenu(
-      Menu(
-        menuFormValue.id,
-        None,
-        menuFormValue.title,
-        menuFormValue.url,
-        None,
-        menuFormValue.order,
-        request.identity,
-        DateTime.now
-      ),
-      Global.service
-    )
-
-    Future.successful(Ok(""))
+    menuService.addMenu(menuFormValue.toMenu(request.identity), Global.service).map{ _ =>
+      Ok("success")
+    }
   }
 
   def updateMenu() = SecuredAction(ForRole(UserRole.ADMIN)).async { implicit request =>
     val menuFormValue = menuForm.bindFromRequest().get
-    menuService.updateMenu(
-      Menu(
-        menuFormValue.id,
-        None,
-        menuFormValue.title,
-        menuFormValue.url,
-        None,
-        menuFormValue.order,
-        request.identity,
-        DateTime.now
-      ),
-      Global.service
-    )
-    Future.successful(Ok(""))
+    menuService.updateMenu(menuFormValue.toMenu(request.identity), Global.service).map{ _ =>
+      Ok("success")
+    }
   }
 
   def deleteMenu(id: Int) =  SecuredAction(ForRole(UserRole.ADMIN)).async { implicit request =>
-    menuService.delete(NodeId(id))
-    Future.successful(Ok(""))
+    menuService.delete(NodeId(id)).map{ result =>
+      Ok(result.toString)
+    }
   }
 }

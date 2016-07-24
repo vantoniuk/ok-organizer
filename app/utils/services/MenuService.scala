@@ -11,8 +11,8 @@ import scala.concurrent.ExecutionContext.Implicits._
 @ImplementedBy(classOf[MenuServiceImpl])
 trait MenuService {
   def getMenus(service: ServiceId): Future[List[Menu]]
-  def addMenu(menu: Menu, service: ServiceId)
-  def updateMenu(menu: Menu, service: ServiceId)
+  def addMenu(menu: Menu, service: ServiceId): Future[Menu]
+  def updateMenu(menu: Menu, service: ServiceId): Future[Menu]
   def delete(id: NodeId): Future[Boolean]
 }
 
@@ -32,12 +32,12 @@ class MenuServiceImpl @Inject() (daoProvider: DAOProvider) extends MenuService {
     }
   }
 
-  override def addMenu(menu: Menu, service: ServiceId): Unit = {
-    nodeDAO.save(menu.toNode(service))
+  override def addMenu(menu: Menu, service: ServiceId): Future[Menu] = {
+    nodeDAO.save(menu.toNode(service)).map(Menu.apply(_, menu.author))
   }
 
-  override def updateMenu(menu: Menu, service: ServiceId): Unit = {
-    nodeDAO.update(menu.toNode(service))
+  override def updateMenu(menu: Menu, service: ServiceId): Future[Menu] = {
+    nodeDAO.update(menu.toNode(service)).map(Menu.apply(_, menu.author))
   }
 
   def delete(id: NodeId): Future[Boolean] = {
