@@ -1,16 +1,14 @@
 package utils.services
 
-import com.google.inject.{Inject, ImplementedBy}
+import com.google.inject.{ImplementedBy, Inject}
 import global.GlobalAppSettings
-import models.User
 import models.db.DAOProvider
-import models.note.{Node, NodeId}
-import org.joda.time.DateTime
+import models.note.NodeId
 import play.api.Logger
-import utils.services.data.{PageRecord, Page}
 import utils._
-import scala.concurrent.ExecutionContext.Implicits._
+import utils.services.data.{Page, PageRecord}
 
+import scala.concurrent.ExecutionContext.Implicits._
 import scala.concurrent.Future
 
 @ImplementedBy(classOf[PageServiceImpl])
