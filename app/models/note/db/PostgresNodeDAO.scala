@@ -30,31 +30,40 @@ class Nodes(tag: DBTag) extends Table[Node](tag, "nodes") {
   def serviceFK = foreignKey("service_id_fk", service, Services.query)(_.id, onUpdate = ForeignKeyAction.Cascade, onDelete = ForeignKeyAction.Cascade)
 
   def authorNodeTypeIdx = index("author_type_idx", (author, nodeType))
-  def serviceNodeTypeIdx = index("author_type_idx", (service, nodeType))
+  def serviceNodeTypeIdx = index("service_type_idx", (service, nodeType))
   def parentIdIdx = index("parent_id_idx", parentId)
 }
 
 object Nodes {
   val query = TableQuery[Nodes]
+  val ratingSortedQuery = query.sortBy(_.rating)
 }
 
 class PostgresNodeDAO(database: Database) extends NodeDAO {
   private def findById(id: Rep[NodeId]) = {
     Nodes.query.filter(_.id === id)
   }
+  private def findByParentId(id: Rep[Option[NodeId]]) = {
+    Nodes.ratingSortedQuery.filter(_.parentId === id)
+  }
   private def findAuthorAndType(author: Rep[UserId], nodeType: Rep[NodeType]) = {
-    Nodes.query.filter(_.author === author).filter(_.nodeType === nodeType)
+    Nodes.ratingSortedQuery.filter(_.author === author).filter(_.nodeType === nodeType)
   }
   private def findServiceAndType(service: Rep[ServiceId], nodeType: Rep[NodeType]) = {
-    Nodes.query.filter(_.service === service).filter(_.nodeType === nodeType)
+    Nodes.ratingSortedQuery.filter(_.service === service).filter(_.nodeType === nodeType)
   }
 
   private val findByIdCompiled = Compiled(findById _)
+  private val findByParentIdCompiled = Compiled(findByParentId _)
   private val findByAuthorAndTypeCompiled = Compiled(findAuthorAndType _)
   private val findByServiceAndTypeCompiled = Compiled(findServiceAndType _)
 
   def find(id: NodeId): Future[Option[Node]] = {
     database.run(findByIdCompiled(id).result).map(_.headOption)
+  }
+
+  def findSubNodes(id: NodeId): Future[List[Node]] = {
+    database.run(findByParentIdCompiled(Some(id)).result).map(_.toList)
   }
 
   def update(node: Node): Future[Node] = {

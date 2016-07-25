@@ -7,6 +7,7 @@ import scala.concurrent.Future
 package object db {
   trait NodeDAO {
     def find(id: NodeId): Future[Option[Node]]
+    def findSubNodes(id: NodeId): Future[List[Node]]
     def findByUser(author: UserId, nodeType: NodeType): Future[List[Node]]
     def findByService(author: ServiceId, nodeType: NodeType): Future[List[Node]]
 

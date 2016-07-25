@@ -4,7 +4,8 @@ import models.{User, ServiceId, UserId}
 import models.note._
 import org.joda.time.DateTime
 
-case class Menu(id: NodeId,
+case class Menu(
+    id: NodeId,
     parentId: Option[NodeId],
     title: String,
     url: String,

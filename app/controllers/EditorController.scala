@@ -2,7 +2,7 @@ package controllers
 
 import javax.inject.Inject
 
-import global.Global
+import global.GlobalAppSettings
 import models.{User, UserRole}
 import models.db.DAOProvider
 import models.note.NodeId
@@ -46,21 +46,21 @@ class EditorController @Inject()(val env: AuthenticationEnvironment, val message
 
   def menuEditor = SecuredAction(ForRole(UserRole.ADMIN)).async { implicit request =>
 
-    menuService.getMenus(Global.service).map { menus =>
+    menuService.getMenus(GlobalAppSettings.service).map { menus =>
       Ok(views.html.editor.menu(menus.sortBy(_.order)))
     }
   }
 
   def addMenu() = SecuredAction(ForRole(UserRole.ADMIN)).async { implicit request =>
     val menuFormValue = menuForm.bindFromRequest().get
-    menuService.addMenu(menuFormValue.toMenu(request.identity), Global.service).map{ _ =>
+    menuService.addMenu(menuFormValue.toMenu(request.identity), GlobalAppSettings.service).map{ _ =>
       Ok("success")
     }
   }
 
   def updateMenu() = SecuredAction(ForRole(UserRole.ADMIN)).async { implicit request =>
     val menuFormValue = menuForm.bindFromRequest().get
-    menuService.updateMenu(menuFormValue.toMenu(request.identity), Global.service).map{ _ =>
+    menuService.updateMenu(menuFormValue.toMenu(request.identity), GlobalAppSettings.service).map{ _ =>
       Ok("success")
     }
   }
