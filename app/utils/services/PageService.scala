@@ -2,22 +2,21 @@ package utils.services
 
 import com.google.inject.{ImplementedBy, Inject}
 import global.GlobalAppSettings
-import models.UserId
+import models.{User, UserId}
 import models.db.DAOProvider
-import models.note.NodeId
+import models.note.{NodeType, NodeId, Node}
 import play.api.Logger
 import utils._
 import utils.services.data.{PagePart, Page, PageRecord}
 
 import scala.concurrent.ExecutionContext.Implicits._
 import scala.concurrent.Future
-import models.note.Node
-
 
 
 @ImplementedBy(classOf[PageServiceImpl])
 trait PageService {
   def getPage(id: NodeId): Future[Option[Page]]
+  def getPages(author: User): Future[List[Page]]
   def getSubPages(parentId: NodeId): Future[List[PagePart]]
   def getRecords(container: PagePart): Future[List[PageRecord]]
   def save(page: Page): Future[Page]
@@ -38,6 +37,14 @@ class PageServiceImpl @Inject() (daoProvider: DAOProvider) extends PageService {
       userOpt <- Future.traverse(nodeOpt.toList)(node => userDAO.findById(node.author)).map(_.flatten.headOption)
     } yield {
       nodeOpt.and(userOpt).map({case (node, user) => Page(node, user)})
+    }
+  }
+
+  def getPages(author: User): Future[List[Page]] = {
+    for {
+      nodes <- nodeDAO.findByUser(author.id, NodeType.PAGE_NODE)
+    } yield {
+      nodes.map(n => Page.apply(n, author))
     }
   }
 

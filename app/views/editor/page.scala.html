@@ -1,0 +1,45 @@
+@(pages: List[utils.services.data.Page])(implicit user: User, messages: Messages)
+
+@views.html.templates.logged(title = "page editor", tab = "page") {
+  <h3>@Messages("page.items"):</h3>
+  <ul id="elements">
+  @for( page <- pages ) {
+    <li class="editor-block">
+      <div class="editable hidden">
+        <span class="editable-original id">@page.id.id</span>
+        <h3>ID: @page.id</h3>
+      </div>
+      <div class="editable">
+        <span class="editable-original title">@page.title</span>
+        <h3>@Messages("title"): @Messages(page.title)</h3>
+      </div>
+      <div class="editable">
+        <span class="editable-original order">@page.order</span>
+        <p><b>@Messages("display.order"):</b> @page.order</p>
+      </div>
+      <div class="editable">
+        <span class="editable-original url">@page.previewIcon</span>
+        <p><b>@Messages("preview"):</b> @page.previewIcon</p>
+      </div>
+      <div class="non-editable"><p><b>@Messages("created.by"):</b> @page.author.fullName</p></div>
+      <a class="editor-edit" href="#">@Messages("editor.edit")</a>
+      <a class="editor-delete" href="#">@Messages("editor.delete")</a>
+    </li>
+  }
+  </ul>
+
+  <a id="editor-new" href="#new">@Messages("editor.new")</a>
+
+  <hr/>
+
+  <div id="editor-wrapper" style="display: none">
+    <form name="menu-from" id="menu-form">
+      <p class="hidden"><label for="id">ID</label> <input required="required" type="text" id="id" disabled="disabled" placeholder="id"/></p>
+      <p id="order-wrapper"><label for="order">@Messages("display.order")</label> <input required="required" type="number" id="order" placeholder="@Messages("display.order")"/></p>
+      <p><label for="title">@Messages("title")</label> <input required="required" type="text" id="title" placeholder="@Messages("title")"/></p>
+      <p><label for="url">@Messages("url")</label> <input required="required" type="text" id="url" placeholder="@Messages("url")"/></p>
+    </form>
+    <a id="editor-submit">@Messages("editor.submit")</a>
+  </div>
+
+}

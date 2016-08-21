@@ -28,10 +28,10 @@ GET		/lang/$lang<(en|ru)>		controllers.Application.selectLang(lang: String)
 
 # Editor
 
-GET   /edit/menu              controllers.EditorController.menuEditor
-POST  /edit/menu/new          controllers.EditorController.addMenu()
-POST  /edit/menu/update       controllers.EditorController.updateMenu()
-DELETE  /edit/menu/:id       controllers.EditorController.deleteMenu(id: Int)
+GET   /edit/:nodeType         controllers.EditorController.read(nodeType: String)
+POST  /edit/:nodeType/new     controllers.EditorController.create(nodeType: String)
+POST  /edit/:nodeType/update  controllers.EditorController.update(nodeType: String)
+DELETE  /edit/:nodeType/:id   controllers.EditorController.delete(nodeType: String, id: Int)
 
 # Map static resources from the /public folder to the /assets URL path
 GET		/public/*file						controllers.MyAssets.public(path="/public", file: Asset)

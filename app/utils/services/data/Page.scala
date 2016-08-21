@@ -9,15 +9,15 @@ import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits._
 
 case class Page(
-            id: NodeId,
-            parentId: Option[NodeId],
-            title: String,
-            content: String,
-            preview: String,
-            order: Int,
-            author: User,
-            created: DateTime
-          )
+                 id: NodeId,
+                 parentId: Option[NodeId],
+                 title: String,
+                 content: String,
+                 previewIcon: String,
+                 order: Int,
+                 author: User,
+                 created: DateTime
+               )
 
 object Page {
   val noId = NodeId(Int.MinValue)
@@ -35,7 +35,7 @@ object Page {
       parentId = node.parentId,
       title = node.title,
       content = node.description,
-      preview = node.icon.getOrElse(GlobalAppSettings.defaultPreview),
+      previewIcon = node.icon.getOrElse(GlobalAppSettings.defaultPreview),
       order = node.rating,
       author = author,
       created = node.created
@@ -49,7 +49,7 @@ object Page {
       nodeType = NodeType.PAGE_NODE,
       title = page.title,
       description = page.content,
-      icon = Some(page.preview),
+      icon = Some(page.previewIcon),
       priority = NodePriority.NO_PRIORITY,
       rating = page.order,
       author = page.author.id,
