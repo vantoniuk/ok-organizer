@@ -58,7 +58,10 @@ class PageServiceImpl @Inject() (daoProvider: DAOProvider) extends PageService {
       containerOpt <- resolveRecordContainer(pageId)
       _ = if(containerOpt.isEmpty) logger.error(s"failed to get/create container for page $pageId")
       rs <- Future.sequence(containerOpt.toList.map(p =>
-        record.copy(container = p.recordContainer.id).exec(GlobalAppSettings.service, p.parentPage.author.id)(nodeDAO.save)
+        record.copy(
+          container = p.recordContainer.id,
+          order = p.records.map(_.order).min - 1
+        ).exec(GlobalAppSettings.service, p.parentPage.author.id)(nodeDAO.save)
       ))
     } yield rs.headOption
   }
@@ -92,18 +95,18 @@ class PageServiceImpl @Inject() (daoProvider: DAOProvider) extends PageService {
     } yield pages.headOption
   }
 
-  private def createSubpage(page: Page): Future[PageContainer] = {
-    savePagePart(Page.createSubPage(page), page.author.id)
+  private def createSubpage(page: Page, order: Int): Future[PageContainer] = {
+    savePagePart(Page.createSubPage(page, order), page.author.id)
       .map(part => PageContainer(page, part, Nil))
   }
 
   private def getRecordContainer(page: Page): Future[PageContainer] = {
     getSubPages(page.id).flatMap {
-      case Nil => createSubpage(page)
+      case Nil => createSubpage(page, GlobalAppSettings.pageLimit)
       case part :: _ => getRecords(part).flatMap {
         case records if records.length < GlobalAppSettings.pageCapacity =>
           Future.successful(PageContainer(page, part, records))
-        case _ => createSubpage(page)
+        case _ => createSubpage(page, part.order - 1)
       }
     }
   }

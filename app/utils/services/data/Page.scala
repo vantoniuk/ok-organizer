@@ -16,13 +16,12 @@ case class Page(
             preview: String,
             order: Int,
             author: User,
-            created: DateTime,
-            isContainer: Boolean
+            created: DateTime
           )
 
 object Page {
   val noId = NodeId(Int.MinValue)
-  def createSubPage(page: Page, order: Int = GlobalAppSettings.pageLimit): PagePart = PagePart(
+  def createSubPage(page: Page, order: Int): PagePart = PagePart(
     id = NodeId.noId,
     container = page.id,
     title = s"subpage-${page.id}-${GlobalAppSettings.pageLimit}",
@@ -39,8 +38,7 @@ object Page {
       preview = node.icon.getOrElse(GlobalAppSettings.defaultPreview),
       order = node.rating,
       author = author,
-      created = node.created,
-      isContainer = node.nodeType == NodeType.PAGE_NODE
+      created = node.created
     )
   }
 
@@ -48,7 +46,7 @@ object Page {
     def toNode(serviceId: ServiceId): Node = Node(
       id = page.id,
       parentId = page.parentId,
-      nodeType = if(page.isContainer) NodeType.PAGE_PART_NODE else NodeType.PAGE_NODE,
+      nodeType = NodeType.PAGE_NODE,
       title = page.title,
       description = page.content,
       icon = Some(page.preview),
