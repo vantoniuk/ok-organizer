@@ -44,7 +44,7 @@ class PostgresNodeDAO(database: Database) extends NodeDAO {
     Nodes.query.filter(_.id === id)
   }
   private def findByParentId(id: Rep[Option[NodeId]]) = {
-    Nodes.ratingSortedQuery.filter(_.parentId === id)
+    Nodes.ratingSortedQuery.sortBy(_.rating).filter(_.parentId === id)
   }
   private def findAuthorAndType(author: Rep[UserId], nodeType: Rep[NodeType]) = {
     Nodes.ratingSortedQuery.filter(_.author === author).filter(_.nodeType === nodeType)

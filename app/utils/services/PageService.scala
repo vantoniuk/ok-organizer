@@ -2,19 +2,24 @@ package utils.services
 
 import com.google.inject.{ImplementedBy, Inject}
 import global.GlobalAppSettings
+import models.UserId
 import models.db.DAOProvider
 import models.note.NodeId
 import play.api.Logger
 import utils._
-import utils.services.data.{Page, PageRecord}
+import utils.services.data.{PagePart, Page, PageRecord}
 
 import scala.concurrent.ExecutionContext.Implicits._
 import scala.concurrent.Future
+import models.note.Node
+
+
 
 @ImplementedBy(classOf[PageServiceImpl])
 trait PageService {
   def getPage(id: NodeId): Future[Option[Page]]
-  def getSubPages(parentId: NodeId): Future[List[Page]]
+  def getSubPages(parentId: NodeId): Future[List[PagePart]]
+  def getRecords(container: PagePart): Future[List[PageRecord]]
   def save(page: Page): Future[Page]
   def addRecord(record: PageRecord, pageId: NodeId): Future[Option[PageRecord]]
   def updateRecord(record: PageRecord): Future[Option[PageRecord]]
@@ -25,6 +30,8 @@ class PageServiceImpl @Inject() (daoProvider: DAOProvider) extends PageService {
   private val nodeDAO = daoProvider.nodeDAO
   private val userDAO = daoProvider.userDAO
   private val logger = Logger.logger
+  private case class PageContainer(parentPage: Page, recordContainer: PagePart, records: List[PageRecord])
+
   def getPage(id: NodeId): Future[Option[Page]] = {
     for {
       nodeOpt <- nodeDAO.find(id)
@@ -34,23 +41,16 @@ class PageServiceImpl @Inject() (daoProvider: DAOProvider) extends PageService {
     }
   }
 
-  def getSubPages(parentId: NodeId): Future[List[Page]] = {
-    for {
-      nodes <- nodeDAO.findSubNodes(parentId)
-      users <- Future.traverse(nodes.map(_.author))(userDAO.findById).map(_.flatten)
-    } yield {
-      val userMap = users.map(u => u.id -> u).toMap
-      for {
-        node <- nodes
-        user <- userMap.get(node.author)
-      } yield {
-        Page(node, user)
-      }
-    }
+  def getSubPages(parentId: NodeId): Future[List[PagePart]] = {
+    getSubnodes(parentId)(PagePart.apply)
   }
 
   def save(page: Page): Future[Page] = {
     page.exec(GlobalAppSettings.service)(nodeDAO.save)
+  }
+
+  private def savePagePart(page: PagePart, author: UserId): Future[PagePart] = {
+    page.exec(GlobalAppSettings.service, author)(nodeDAO.save)
   }
 
   def addRecord(record: PageRecord, pageId: NodeId): Future[Option[PageRecord]] = {
@@ -58,7 +58,7 @@ class PageServiceImpl @Inject() (daoProvider: DAOProvider) extends PageService {
       containerOpt <- resolveRecordContainer(pageId)
       _ = if(containerOpt.isEmpty) logger.error(s"failed to get/create container for page $pageId")
       rs <- Future.sequence(containerOpt.toList.map(p =>
-        record.copy(container = p.id).exec(GlobalAppSettings.service, p.author.id)(nodeDAO.save)
+        record.copy(container = p.recordContainer.id).exec(GlobalAppSettings.service, p.parentPage.author.id)(nodeDAO.save)
       ))
     } yield rs.headOption
   }
@@ -72,7 +72,19 @@ class PageServiceImpl @Inject() (daoProvider: DAOProvider) extends PageService {
     page.exec(GlobalAppSettings.service)(nodeDAO.update)
   }
 
-  private def resolveRecordContainer(pageId: NodeId): Future[Option[Page]] = {
+  def getRecords(container: PagePart): Future[List[PageRecord]] = {
+    getSubnodes(container.id)(PageRecord.apply)
+  }
+
+  private def getSubnodes[T](nodeId: NodeId)(convert: Node => T): Future[List[T]] = {
+    for {
+      nodes <- nodeDAO.findSubNodes(nodeId)
+    } yield {
+      nodes.map(convert)
+    }
+  }
+
+  private def resolveRecordContainer(pageId: NodeId): Future[Option[PageContainer]] = {
     for {
       pageOpt <- getPage(pageId)
       _ = if(pageOpt.isEmpty) logger.error(s"No parent node for node $pageId")
@@ -80,11 +92,19 @@ class PageServiceImpl @Inject() (daoProvider: DAOProvider) extends PageService {
     } yield pages.headOption
   }
 
-  private def getRecordContainer(page: Page): Future[Page] = {
-    if(page.isContainer) Future.successful(page)
-    else getSubPages(page.id).flatMap {
-      case Nil => save(Page.createSubPage(page))
-      case p :: _ => Future.successful(p)
+  private def createSubpage(page: Page): Future[PageContainer] = {
+    savePagePart(Page.createSubPage(page), page.author.id)
+      .map(part => PageContainer(page, part, Nil))
+  }
+
+  private def getRecordContainer(page: Page): Future[PageContainer] = {
+    getSubPages(page.id).flatMap {
+      case Nil => createSubpage(page)
+      case part :: _ => getRecords(part).flatMap {
+        case records if records.length < GlobalAppSettings.pageCapacity =>
+          Future.successful(PageContainer(page, part, records))
+        case _ => createSubpage(page)
+      }
     }
   }
 }

@@ -7,39 +7,35 @@ import org.joda.time.DateTime
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits._
 
-case class PageRecord(
-    id: NodeId,
-    container: NodeId,
-    title: String,
-    content: String,
-    icon: Option[String],
-    order: Int,
-    created: DateTime
-)
+case class PagePart(
+                     id: NodeId,
+                     container: NodeId,
+                     title: String,
+                     order: Int,
+                     created: DateTime
+                   )
 
-object PageRecord {
+object PagePart {
   val noId = NodeId(Int.MinValue)
 
-  def apply(node: Node): PageRecord = {
-    PageRecord(
+  def apply(node: Node): PagePart = {
+    PagePart(
       id = node.id,
       container = node.parentId.getOrElse(NodeId.noId),
       title = node.title,
-      content = node.description,
-      icon = node.icon,
       order = node.rating,
       created = node.created
     )
   }
 
-  implicit class PageRecordOps(page: PageRecord) {
+  implicit class PagePartOps(page: PagePart) {
     def toNode(serviceId: ServiceId, authorId: UserId): Node = Node(
       id = page.id,
       parentId = Some(page.container),
-      nodeType = NodeType.RECORD_NODE,
+      nodeType = NodeType.PAGE_PART_NODE,
       title = page.title,
-      description = page.content,
-      icon = page.icon,
+      description = "",
+      icon = None,
       priority = NodePriority.NO_PRIORITY,
       rating = page.order,
       author = authorId,
@@ -47,7 +43,7 @@ object PageRecord {
       service = serviceId
     )
 
-    def exec(service: ServiceId, authorId: UserId)(action: Node => Future[Node]): Future[PageRecord] = {
+    def exec(service: ServiceId, authorId: UserId)(action: Node => Future[Node]): Future[PagePart] = {
       action(page.toNode(service, authorId)).map(node => page.copy(id = node.id))
     }
   }

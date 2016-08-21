@@ -8,7 +8,7 @@ import models.db.DAOProvider
 import models.note.NodeId
 import org.joda.time.DateTime
 import play.api.i18n.MessagesApi
-import utils.services.MenuService
+import utils.services.{PageService, MenuService}
 import utils.services.data.Menu
 import utils.silhouette._
 
@@ -41,7 +41,7 @@ object EditorForms {
   )
 }
 
-class EditorController @Inject()(val env: AuthenticationEnvironment, val messagesApi: MessagesApi, val daoProvider: DAOProvider, menuService: MenuService) extends AuthenticationController {
+class EditorController @Inject()(val env: AuthenticationEnvironment, val messagesApi: MessagesApi, val daoProvider: DAOProvider, menuService: MenuService, pageService: PageService) extends AuthenticationController {
   import EditorForms._
 
   def menuEditor = SecuredAction(ForRole(UserRole.ADMIN)).async { implicit request =>

@@ -22,16 +22,12 @@ case class Page(
 
 object Page {
   val noId = NodeId(Int.MinValue)
-  def createSubPage(page: Page): Page = Page(
+  def createSubPage(page: Page, order: Int = GlobalAppSettings.pageLimit): PagePart = PagePart(
     id = NodeId.noId,
-    parentId = Some(page.id),
-    title = s"subpage-${page.id}-${GlobalAppSettings.startingPage}",
-    content = "",
-    preview = "",
-    order = GlobalAppSettings.startingPage,
-    author = page.author,
-    created = DateTime.now,
-    isContainer = true
+    container = page.id,
+    title = s"subpage-${page.id}-${GlobalAppSettings.pageLimit}",
+    order = order,
+    created = DateTime.now
   )
 
   def apply(node: Node, author: User): Page = {
