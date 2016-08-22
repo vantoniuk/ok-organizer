@@ -29,11 +29,15 @@ menu.items=Menu items
 created.by=Created by
 display.order=Display order
 url=Url
+preview.content=Content preview
+preview.icon=Preview Icon
 title=Title
 editor.new=add new
 editor.submit=Submit
 editor.edit=Edit
 editor.delete=Delete
+page.items=Pages
+created.at=Created at
 
 ################################################################################################
 # INDEX

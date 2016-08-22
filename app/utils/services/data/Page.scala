@@ -12,7 +12,7 @@ case class Page(
                  id: NodeId,
                  parentId: Option[NodeId],
                  title: String,
-                 content: String,
+                 description: String,
                  previewIcon: String,
                  order: Int,
                  author: User,
@@ -21,6 +21,7 @@ case class Page(
 
 object Page {
   val noId = NodeId(Int.MinValue)
+  val defaultPreview = GlobalAppSettings.defaultPreview
   def createSubPage(page: Page, order: Int): PagePart = PagePart(
     id = NodeId.noId,
     container = page.id,
@@ -34,8 +35,8 @@ object Page {
       id = node.id,
       parentId = node.parentId,
       title = node.title,
-      content = node.description,
-      previewIcon = node.icon.getOrElse(GlobalAppSettings.defaultPreview),
+      description = node.description,
+      previewIcon = node.icon.getOrElse(defaultPreview),
       order = node.rating,
       author = author,
       created = node.created
@@ -48,7 +49,7 @@ object Page {
       parentId = page.parentId,
       nodeType = NodeType.PAGE_NODE,
       title = page.title,
-      description = page.content,
+      description = page.description,
       icon = Some(page.previewIcon),
       priority = NodePriority.NO_PRIORITY,
       rating = page.order,

@@ -23,6 +23,7 @@ trait PageService {
   def addRecord(record: PageRecord, pageId: NodeId): Future[Option[PageRecord]]
   def updateRecord(record: PageRecord): Future[Option[PageRecord]]
   def updatePage(page: Page): Future[Page]
+  def delete(id: NodeId): Future[Boolean]
 }
 
 class PageServiceImpl @Inject() (daoProvider: DAOProvider) extends PageService {
@@ -117,4 +118,6 @@ class PageServiceImpl @Inject() (daoProvider: DAOProvider) extends PageService {
       }
     }
   }
+
+  def delete(id: NodeId): Future[Boolean] = nodeDAO.delete(id)
 }

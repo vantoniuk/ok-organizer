@@ -23,7 +23,7 @@
       </div>
       <div class="non-editable"><p><b>@Messages("created.by"):</b> @menu.author.fullName</p></div>
       <a class="editor-edit" href="#">@Messages("editor.edit")</a>
-      <a class="editor-delete" href="#">@Messages("editor.delete")</a>
+      <a class="menu editor-delete" href="#">@Messages("editor.delete")</a>
     </li>
   }
   </ul>
@@ -34,12 +34,12 @@
 
   <div id="editor-wrapper" style="display: none">
     <form name="menu-from" id="menu-form">
-      <p class="hidden"><label for="id">ID</label> <input required="required" type="text" id="id" disabled="disabled" placeholder="id"/></p>
-      <p id="order-wrapper"><label for="order">@Messages("display.order")</label> <input required="required" type="number" id="order" placeholder="@Messages("display.order")"/></p>
-      <p><label for="title">@Messages("title")</label> <input required="required" type="text" id="title" placeholder="@Messages("title")"/></p>
-      <p><label for="url">@Messages("url")</label> <input required="required" type="text" id="url" placeholder="@Messages("url")"/></p>
+      <p class="hidden"><label for="id">ID</label> <input class="input" required="required" type="text" id="id" disabled="disabled" placeholder="id"/></p>
+      <p id="order-wrapper"><label for="order">@Messages("display.order")</label> <input class="input" required="required" type="number" id="order" placeholder="@Messages("display.order")"/></p>
+      <p><label for="title">@Messages("title")</label> <input class="input" required="required" type="text" id="title" placeholder="@Messages("title")"/></p>
+      <p><label for="url">@Messages("url")</label> <input class="input" required="required" type="text" id="url" placeholder="@Messages("url")"/></p>
     </form>
-    <a id="editor-submit">@Messages("editor.submit")</a>
+    <div class="menu"><a id="editor-submit" class="menu">@Messages("editor.submit")</a></div>
   </div>
 
 }

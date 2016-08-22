@@ -1,7 +1,7 @@
 $(document).ready(function(){
   $("#editor-new").on("click", function(e){
-    $("#editor-wrapper form input").each(function(i, el){$(el).val("")});
-    $("#editor-wrapper form input#id").val(-1);
+    $("#editor-wrapper form .input").each(function(i, el){$(el).val("")});
+    $("#editor-wrapper form .input#id").val(-1);
     $("#editor-wrapper #order-wrapper input").val($("#elements li").length + 1);
     $("#editor-wrapper #order-wrapper input").attr("disabled", "disabled");
     $("#editor-wrapper").fadeIn();
@@ -19,10 +19,11 @@ $(document).ready(function(){
   });
 
   $(".editor-delete").on("click", function(e){
+    var cls = $(this).attr("class").split(" ")[0];
     var id =  $(this).parent(".editor-block").find(".editable-original.id").text();
     $(this).parent(".editor-block").fadeOut();
     $.ajax({
-          url: "/edit/menu/" + id,
+          url: "/edit/" + cls + "/" + id,
           type: 'DELETE',
           success: function(r) {
           }
@@ -30,18 +31,22 @@ $(document).ready(function(){
   });
 
   $("#editor-submit").on("click", function(e){
-    var $inputList = $("#editor-wrapper form input");
+    var cls = $(this).parent().attr("class").split(" ")[0];
+    console.log("got  class", cls)
+    var $inputList = $("#editor-wrapper form .input");
     var actionUrl = $(this).is(".new") ? "new" : "update";
     var dataObj = {};
 
     $inputList.each(function(i, el){
       var $el = $(el);
-      dataObj[$el.attr("id")] = $el.val();
+      var d = new Date();
+      var value = $el.is('.date') && $el.val() == "" ? d.getTime() + d.getTimezoneOffset() * 60 * 1000 : $el.val();
+      if(value) dataObj[$el.attr("id")] = value;
     });
 
 
     $.post(
-      "/edit/menu/"+actionUrl,
+      "/edit/" + cls + "/" + actionUrl,
       dataObj,
       function(r) {
         $("#editor-wrapper").fadeOut();

@@ -28,11 +28,15 @@ menu.items=Пункты меню
 created.by=Создана
 display.order=Порядок
 url=Адрес ссылки
+preview.content=Краткое содержание
+preview.icon=Иконка страницы
 title=Титул
 editor.new=Добавить новый
 editor.submit=Подтвердить
 editor.edit=Редактировать
 editor.delete=Удалить
+page.items=Страницы
+created.at=Создана (дата)
 
 ################################################################################################
 # INDEX

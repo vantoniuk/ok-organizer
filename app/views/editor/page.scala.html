@@ -4,26 +4,34 @@
   <h3>@Messages("page.items"):</h3>
   <ul id="elements">
   @for( page <- pages ) {
+    <!--
+                 author: User,
+                 created: DateTime
+    -->
     <li class="editor-block">
       <div class="editable hidden">
         <span class="editable-original id">@page.id.id</span>
         <h3>ID: @page.id</h3>
       </div>
       <div class="editable">
-        <span class="editable-original title">@page.title</span>
-        <h3>@Messages("title"): @Messages(page.title)</h3>
-      </div>
-      <div class="editable">
         <span class="editable-original order">@page.order</span>
         <p><b>@Messages("display.order"):</b> @page.order</p>
       </div>
       <div class="editable">
-        <span class="editable-original url">@page.previewIcon</span>
-        <p><b>@Messages("preview"):</b> @page.previewIcon</p>
+        <span class="editable-original title">@page.title</span>
+        <h3>@Messages("title"): @Messages(page.title)</h3>
+      </div>
+      <div class="editable">
+        <span class="editable-original description">@page.description</span>
+        <div>@Messages("preview.content"): @page.description</div>
+      </div>
+      <div class="editable">
+        <span class="editable-original preview_icon">@page.previewIcon</span>
+        <img src="@page.previewIcon"/>
       </div>
       <div class="non-editable"><p><b>@Messages("created.by"):</b> @page.author.fullName</p></div>
       <a class="editor-edit" href="#">@Messages("editor.edit")</a>
-      <a class="editor-delete" href="#">@Messages("editor.delete")</a>
+      <a class="page editor-delete" href="#">@Messages("editor.delete")</a>
     </li>
   }
   </ul>
@@ -33,13 +41,17 @@
   <hr/>
 
   <div id="editor-wrapper" style="display: none">
-    <form name="menu-from" id="menu-form">
-      <p class="hidden"><label for="id">ID</label> <input required="required" type="text" id="id" disabled="disabled" placeholder="id"/></p>
-      <p id="order-wrapper"><label for="order">@Messages("display.order")</label> <input required="required" type="number" id="order" placeholder="@Messages("display.order")"/></p>
-      <p><label for="title">@Messages("title")</label> <input required="required" type="text" id="title" placeholder="@Messages("title")"/></p>
-      <p><label for="url">@Messages("url")</label> <input required="required" type="text" id="url" placeholder="@Messages("url")"/></p>
+    <form name="page-from" id="page-form">
+      <p class="hidden"><label for="id">ID</label> <input class="input" required="required" type="text" id="id" disabled="disabled" placeholder="id"/></p>
+      <p id="order-wrapper"><label for="order">@Messages("display.order")</label> <input class="input" required="required" type="number" id="order" placeholder="@Messages("display.order")"/></p>
+      <p><label for="created">@Messages("created.at")</label> <input disabled="disabled"  class="input date" required="required" type="text" id="created" placeholder="@Messages("created.at")"/></p>
+      <p><label for="title">@Messages("title")</label> <input class="input" required="required" type="text" id="title" placeholder="@Messages("title")"/></p>
+      <p><label for="preview_icon">@Messages("preview.icon")</label> <input class="input" required="required" type="text" id="preview_icon" placeholder="@Messages("preview.icon")"/></p>
+      <p><label for="description">@Messages("preview.content")</label> <textarea class="input" required="required" id="description" placeholder="@Messages("preview.content")"></textarea></p>
+
     </form>
-    <a id="editor-submit">@Messages("editor.submit")</a>
+    <div class="page"><a id="editor-submit">@Messages("editor.submit")</a></div>
+
   </div>
 
 }

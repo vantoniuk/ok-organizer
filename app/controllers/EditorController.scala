@@ -9,7 +9,7 @@ import models.note.{NodeType, NodeId}
 import org.joda.time.{DateTimeZone, DateTime}
 import play.api.http.Writeable
 import play.api.i18n.MessagesApi
-import play.api.mvc.Result
+import play.api.mvc.{AnyContent, Result}
 import utils.services.{PageService, MenuService}
 import utils.services.data.{PageRecord, Page, Menu}
 import utils.silhouette._
@@ -34,20 +34,25 @@ object EditorForms {
       )
     }
   }
-  val menuForm = Form(mapping(
-      "id" -> number.transform[NodeId](NodeId.apply, _.id),
-      "order" -> number,
-      "url" -> text,
-      "title" -> text
-    )(MenuForValue.apply)(MenuForValue.unapply)
+
+  def menuForm(user: User) = Form(mapping(
+    "id" -> number.transform[NodeId](NodeId.apply, _.id),
+    "parent_id" -> ignored[Option[NodeId]](None),
+    "title" -> text,
+    "url" -> text,
+    "icon" -> optional(text),
+    "order" -> number,
+    "author" -> ignored[User](user),
+    "created" -> longNumber.transform[DateTime](l => new DateTime(l, DateTimeZone.UTC), _.getMillis)
+    )(Menu.apply)(Menu.unapply)
   )
   def pageForm(user: User) = Form(mapping(
     "id" -> number.transform[NodeId](NodeId.apply, _.id),
-    "parent_id" -> optional(number.transform[NodeId](NodeId.apply, _.id)),
+    "parent_id" -> ignored[Option[NodeId]](None),
     "title" -> text,
-    "content" -> text,
-    "preview" -> text,
-    "order" -> ignored[Int](GlobalAppSettings.pageLimit),
+    "description" -> text,
+    "preview_icon" -> optional(text).transform(iconOpt => iconOpt.getOrElse(Page.defaultPreview), (icon: String) => Some(icon)),
+    "order" -> number,
     "author" -> ignored[User](user),
     "created" -> longNumber.transform[DateTime](l => new DateTime(l, DateTimeZone.UTC), _.getMillis)
   )(Page.apply)(Page.unapply)
@@ -71,6 +76,13 @@ class EditorController @Inject()(val env: AuthenticationEnvironment, val message
     read.map(toContent).map(Ok(_))
   }
 
+  private def abstractDBSave[T](form: Form[T], create: T => Future[T])(implicit req: SecuredRequest[AnyContent]): Future[Result] = {
+    val element = form.bindFromRequest().get
+    create(element).map{ _ =>
+      Ok("success")
+    }
+  }
+
   def read(nodeType: String) = SecuredAction(ForRole(UserRole.ADMIN)).async { implicit request =>
     NodeType.withName(nodeType) match {
       case NodeType.MENU_NODE =>
@@ -82,24 +94,31 @@ class EditorController @Inject()(val env: AuthenticationEnvironment, val message
   }
 
   def create(nodeType: String) = SecuredAction(ForRole(UserRole.ADMIN)).async { implicit request =>
-    val menuFormValue = menuForm.bindFromRequest().get
-    menuService.addMenu(menuFormValue.toMenu(request.identity), GlobalAppSettings.service).map{ _ =>
-      Ok("success")
+    NodeType.withName(nodeType) match {
+      case NodeType.MENU_NODE =>
+        abstractDBSave(menuForm(request.identity), (menu: Menu) => menuService.addMenu(menu, GlobalAppSettings.service))
+      case NodeType.PAGE_NODE =>
+        abstractDBSave(pageForm(request.identity), pageService.save)
     }
   }
 
   def update(nodeType: String) = SecuredAction(ForRole(UserRole.ADMIN)).async { implicit request =>
-    val menuFormValue = menuForm.bindFromRequest().get
-    menuService.updateMenu(menuFormValue.toMenu(request.identity), GlobalAppSettings.service).map{ _ =>
-      Ok("success")
+    NodeType.withName(nodeType) match {
+      case NodeType.MENU_NODE =>
+        abstractDBSave(menuForm(request.identity), (menu: Menu) => menuService.updateMenu(menu, GlobalAppSettings.service))
+      case NodeType.PAGE_NODE =>
+        abstractDBSave(pageForm(request.identity), pageService.updatePage)
     }
   }
 
   def delete(nodeType: String, id: Int) =  SecuredAction(ForRole(UserRole.ADMIN)).async { implicit request =>
-    menuService.delete(NodeId(id)).map{ result =>
-      Ok(result.toString)
+    val resultFuture =  NodeType.withName(nodeType) match {
+      case NodeType.MENU_NODE => menuService.delete(NodeId(id))
+      case NodeType.PAGE_NODE => pageService.delete(NodeId(id))
+      case NodeType.PAGE_PART_NODE => pageService.delete(NodeId(id))
+      case NodeType.RECORD_NODE => pageService.delete(NodeId(id))
     }
+    resultFuture.map{ result => Ok(result.toString) }
   }
-
 
 }
