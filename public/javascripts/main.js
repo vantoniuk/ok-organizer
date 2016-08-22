@@ -1,6 +1,6 @@
 $(document).ready(function(){
   $("#editor-new").on("click", function(e){
-    $("#editor-wrapper form .input").each(function(i, el){$(el).val("")});
+    $("#editor-wrapper form .input:not(.predef)").each(function(i, el){$(el).val("")});
     $("#editor-wrapper form .input#id").val(-1);
     $("#editor-wrapper #order-wrapper input").val($("#elements li").length + 1);
     $("#editor-wrapper #order-wrapper input").attr("disabled", "disabled");
@@ -32,7 +32,6 @@ $(document).ready(function(){
 
   $("#editor-submit").on("click", function(e){
     var cls = $(this).parent().attr("class").split(" ")[0];
-    console.log("got  class", cls)
     var $inputList = $("#editor-wrapper form .input");
     var actionUrl = $(this).is(".new") ? "new" : "update";
     var dataObj = {};

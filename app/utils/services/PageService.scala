@@ -18,7 +18,15 @@ trait PageService {
   def getPage(id: NodeId): Future[Option[Page]]
   def getPages(author: User): Future[List[Page]]
   def getSubPages(parentId: NodeId): Future[List[PagePart]]
-  def getRecords(container: PagePart): Future[List[PageRecord]]
+
+  /**
+    * Get records to display on current page
+    *
+    * @param pageId page ID
+    * @param subpage subpage number starts with 1
+    * @return List of [[PageRecord]]
+    */
+  def getRecords(pageId: NodeId, subpage: Int): Future[List[PageRecord]]
   def save(page: Page): Future[Page]
   def addRecord(record: PageRecord, pageId: NodeId): Future[Option[PageRecord]]
   def updateRecord(record: PageRecord): Future[Option[PageRecord]]
@@ -65,12 +73,13 @@ class PageServiceImpl @Inject() (daoProvider: DAOProvider) extends PageService {
     for {
       containerOpt <- resolveRecordContainer(pageId)
       _ = if(containerOpt.isEmpty) logger.error(s"failed to get/create container for page $pageId")
-      rs <- Future.sequence(containerOpt.toList.map(p =>
+      rs <- Future.sequence(containerOpt.toList.map { p =>
+        val newOrder = if(p.records.isEmpty) GlobalAppSettings.pageCapacity else p.records.map(_.order).min - 1
         record.copy(
           container = p.recordContainer.id,
-          order = p.records.map(_.order).min - 1
+          order = newOrder
         ).exec(GlobalAppSettings.service, p.parentPage.author.id)(nodeDAO.save)
-      ))
+      })
     } yield rs.headOption
   }
 
@@ -83,8 +92,8 @@ class PageServiceImpl @Inject() (daoProvider: DAOProvider) extends PageService {
     page.exec(GlobalAppSettings.service)(nodeDAO.update)
   }
 
-  def getRecords(container: PagePart): Future[List[PageRecord]] = {
-    getSubnodes(container.id)(PageRecord.apply)
+  def getRecordsForPagePart(container: PagePart, pageId: NodeId): Future[List[PageRecord]] = {
+    getSubnodes(container.id)(PageRecord.apply(_, pageId))
   }
 
   private def getSubnodes[T](nodeId: NodeId)(convert: Node => T): Future[List[T]] = {
@@ -111,7 +120,7 @@ class PageServiceImpl @Inject() (daoProvider: DAOProvider) extends PageService {
   private def getRecordContainer(page: Page): Future[PageContainer] = {
     getSubPages(page.id).flatMap {
       case Nil => createSubpage(page, GlobalAppSettings.pageLimit)
-      case part :: _ => getRecords(part).flatMap {
+      case part :: _ => getRecordsForPagePart(part, page.id).flatMap {
         case records if records.length < GlobalAppSettings.pageCapacity =>
           Future.successful(PageContainer(page, part, records))
         case _ => createSubpage(page, part.order - 1)
@@ -120,4 +129,11 @@ class PageServiceImpl @Inject() (daoProvider: DAOProvider) extends PageService {
   }
 
   def delete(id: NodeId): Future[Boolean] = nodeDAO.delete(id)
+
+  def getRecords(pageId: NodeId, subpage: Int): Future[List[PageRecord]] = {
+    for {
+      pageParts <- getSubPages(pageId)
+      recordList <- Future.traverse(pageParts.slice(subpage - 1, subpage + 1))(getRecordsForPagePart(_, pageId))
+    } yield recordList.flatten.take(GlobalAppSettings.pageCapacity)
+  }
 }

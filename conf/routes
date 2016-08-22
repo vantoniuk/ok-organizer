@@ -29,6 +29,7 @@ GET		/lang/$lang<(en|ru)>		controllers.Application.selectLang(lang: String)
 # Editor
 
 GET   /edit/:nodeType         controllers.EditorController.read(nodeType: String)
+GET   /edit/:nodeType/:patentId/:subpage controllers.EditorController.readSubNodes(nodeType: String, patentId: Int, subpage: Int)
 POST  /edit/:nodeType/new     controllers.EditorController.create(nodeType: String)
 POST  /edit/:nodeType/update  controllers.EditorController.update(nodeType: String)
 DELETE  /edit/:nodeType/:id   controllers.EditorController.delete(nodeType: String, id: Int)

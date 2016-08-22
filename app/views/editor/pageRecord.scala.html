@@ -1,0 +1,70 @@
+@(records: List[utils.services.data.PageRecord], pageId: Int)(implicit user: User, messages: Messages)
+
+@views.html.templates.logged(title = "page record editor", tab = "page records") {
+  <h3>@Messages("record.items"):</h3>
+  <ul id="elements">
+  @for( record <- records ) {
+    <!--
+                 author: User,
+                 created: DateTime
+    -->
+    <li class="editor-block">
+      <div class="editable hidden">
+        <span class="editable-original id">@record.id.id</span>
+        <h3>ID: @record.id</h3>
+      </div>
+      <div class="editable hidden">
+        <span class="editable-original page_id">@record.parentPage.id</span>
+        <h3>ID: @record.id</h3>
+      </div>
+      <div class="editable hidden">
+        <span class="editable-original container">@record.container.id</span>
+        <h3>ID: @record.id</h3>
+      </div>
+      <div class="editable">
+        <span class="editable-original order">@record.order</span>
+        <p><b>@Messages("display.order"):</b> @record.order</p>
+      </div>
+      <div class="editable">
+        <span class="editable-original title">@record.title</span>
+        <h3>@Messages("title"): @Messages(record.title)</h3>
+      </div>
+      <div class="editable">
+        <span class="editable-original content">@record.content</span>
+        <div>@Messages("preview.content"): @record.content</div>
+      </div>
+      @if(record.icon.isDefined) {
+        <div class="editable">
+          <span class="editable-original icon">@record.icon.get</span>
+          <img src="@record.icon.get"/>
+        </div>
+      } else {
+        <div></div>
+      }
+      <a class="editor-edit" href="#">@Messages("editor.edit")</a>
+      <a class="record editor-delete" href="#">@Messages("editor.delete")</a>
+    </li>
+  }
+  </ul>
+
+  <a id="editor-new" href="#new">@Messages("editor.new")</a>
+
+  <hr/>
+
+  <div id="editor-wrapper" style="display: none">
+    <form name="page-from" id="page-form">
+      <p class="hidden"><label for="id">ID</label> <input class="input" required="required" type="text" id="id" disabled="disabled" placeholder="id"/></p>
+      <p class=""><label for="page_id">Page ID</label> <input class="input predef" value="@pageId" required="required" type="text" id="page_id" disabled="disabled" placeholder="page_id"/></p>
+      <p class="hidden"><label for="container">Container ID</label> <input class="input predef" value="@pageId" required="required" type="text" id="container" disabled="disabled" placeholder="container"/></p>
+      <p id="order-wrapper"><label for="order">@Messages("display.order")</label> <input class="input" required="required" type="number" id="order" placeholder="@Messages("display.order")"/></p>
+      <p><label for="created">@Messages("created.at")</label> <input disabled="disabled"  class="input date" required="required" type="text" id="created" placeholder="@Messages("created.at")"/></p>
+      <p><label for="title">@Messages("title")</label> <input class="input" required="required" type="text" id="title" placeholder="@Messages("title")"/></p>
+      <p><label for="icon">@Messages("preview.icon")</label> <input class="input" required="required" type="text" id="icon" placeholder="@Messages("preview.icon")"/></p>
+      <p><label for="content">@Messages("preview.content")</label> <textarea class="input" required="required" id="content" placeholder="@Messages("preview.content")"></textarea></p>
+
+    </form>
+    <div class="record"><a id="editor-submit">@Messages("editor.submit")</a></div>
+
+  </div>
+
+}

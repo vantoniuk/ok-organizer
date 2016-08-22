@@ -6,8 +6,8 @@ package object note {
     val MENU_NODE = Value(1, "menu")
     val PAGE_NODE = Value(2, "page")
     val PAGE_PART_NODE = Value(3, "page-container")
-    val RECORD_NODE = Value(4, "note")
-    val RECORD_ELEMENT_NODE = Value(5, "note-element")
+    val RECORD_NODE = Value(4, "record")
+    val RECORD_ELEMENT_NODE = Value(5, "record-element")
 
     def byId(id: Int): NodeType = values.find(_.id == id).getOrElse(RAW_TEXT_NODE)
   }

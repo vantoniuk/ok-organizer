@@ -9,6 +9,7 @@ import scala.concurrent.ExecutionContext.Implicits._
 
 case class PageRecord(
     id: NodeId,
+    parentPage: NodeId,
     container: NodeId,
     title: String,
     content: String,
@@ -20,10 +21,11 @@ case class PageRecord(
 object PageRecord {
   val noId = NodeId(Int.MinValue)
 
-  def apply(node: Node): PageRecord = {
+  def apply(node: Node, pageId: NodeId): PageRecord = {
     PageRecord(
       id = node.id,
       container = node.parentId.getOrElse(NodeId.noId),
+      parentPage = pageId,
       title = node.title,
       content = node.description,
       icon = node.icon,

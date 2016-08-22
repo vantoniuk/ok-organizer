@@ -60,11 +60,12 @@ object EditorForms {
 
   val pageRecordForm = Form(mapping(
     "id" -> number.transform[NodeId](NodeId.apply, _.id),
-    "container" -> number.transform[NodeId](NodeId.apply, _.id),
+    "page_id" -> number.transform[NodeId](NodeId.apply, _.id),
+    "container" -> optional(number.transform[NodeId](NodeId.apply, _.id)).transform(_.getOrElse(NodeId.noId), (id: NodeId) => Some(id)),
     "title" -> text,
     "content" -> text,
     "icon" -> optional(text),
-    "order" -> ignored[Int](GlobalAppSettings.pageLimit),
+    "order" -> number,
     "created" -> longNumber.transform[DateTime](l => new DateTime(l, DateTimeZone.UTC), _.getMillis)
   )(PageRecord.apply)(PageRecord.unapply))
 }
@@ -90,7 +91,13 @@ class EditorController @Inject()(val env: AuthenticationEnvironment, val message
       case NodeType.PAGE_NODE =>
         abstractRead(pageService.getPages(request.identity), (pages: List[Page] )=> views.html.editor.page(pages))
     }
+  }
 
+  def readSubNodes(nodeType: String, parentId: Int, subpage: Int) = SecuredAction(ForRole(UserRole.ADMIN)).async { implicit request =>
+    NodeType.withName(nodeType) match {
+      case NodeType.RECORD_NODE =>
+        abstractRead(pageService.getRecords(NodeId(parentId), subpage), (records: List[PageRecord]) => views.html.editor.pageRecord(records, parentId))
+    }
   }
 
   def create(nodeType: String) = SecuredAction(ForRole(UserRole.ADMIN)).async { implicit request =>
@@ -99,6 +106,12 @@ class EditorController @Inject()(val env: AuthenticationEnvironment, val message
         abstractDBSave(menuForm(request.identity), (menu: Menu) => menuService.addMenu(menu, GlobalAppSettings.service))
       case NodeType.PAGE_NODE =>
         abstractDBSave(pageForm(request.identity), pageService.save)
+      case NodeType.RECORD_NODE =>
+        abstractDBSave(pageRecordForm, (record: PageRecord) =>
+          pageService
+            .addRecord(record, record.parentPage)
+            .map(_.getOrElse(throw new Error(s"Could not create record for page ${record.parentPage}")))
+        )
     }
   }
 
@@ -108,6 +121,12 @@ class EditorController @Inject()(val env: AuthenticationEnvironment, val message
         abstractDBSave(menuForm(request.identity), (menu: Menu) => menuService.updateMenu(menu, GlobalAppSettings.service))
       case NodeType.PAGE_NODE =>
         abstractDBSave(pageForm(request.identity), pageService.updatePage)
+      case NodeType.RECORD_NODE =>
+        abstractDBSave(pageRecordForm,
+          (record: PageRecord) =>
+            pageService.updateRecord(record)
+              .map(_.getOrElse(throw new Error(s"Could not update record for page ${record.parentPage}")))
+        )
     }
   }
 
