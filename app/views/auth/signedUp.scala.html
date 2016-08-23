@@ -1,4 +1,4 @@
-@(user: User)(implicit request: RequestHeader, messages: Messages)
+@(user: User)(implicit request: RequestHeader, messages: Messages, menus: List[utils.services.data.Menu])
 @default("Signed Up", loggedUser = Some(user)) {
 	<p>@Messages("signup.thanks", user.fullName)</p>
 	<p>@Messages("signup.ready")</p>

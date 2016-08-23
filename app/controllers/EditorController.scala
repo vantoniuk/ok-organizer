@@ -84,16 +84,18 @@ class EditorController @Inject()(val env: AuthenticationEnvironment, val message
     }
   }
 
-  def read(nodeType: String) = SecuredAction(ForRole(UserRole.ADMIN)).async { implicit request =>
+  def read(nodeType: String) = SecuredAction(ForRole(UserRole.ADMIN)) async withMenusSecured(menuService) { (request, menus) =>
+    implicit val (r,m) = (request, menus)
     NodeType.withName(nodeType) match {
       case NodeType.MENU_NODE =>
-        abstractRead(menuService.getMenus(GlobalAppSettings.service), (menus: List[Menu] )=> views.html.editor.menu(menus))
+        abstractRead(menuService.getMenus(GlobalAppSettings.service), (menus: List[Menu] )=> views.html.editor.menu())
       case NodeType.PAGE_NODE =>
         abstractRead(pageService.getPages(request.identity), (pages: List[Page] )=> views.html.editor.page(pages))
     }
   }
 
-  def readSubNodes(nodeType: String, parentId: Int, subpage: Int) = SecuredAction(ForRole(UserRole.ADMIN)).async { implicit request =>
+  def readSubNodes(nodeType: String, parentId: Int, subpage: Int) = SecuredAction(ForRole(UserRole.ADMIN)) async withMenusSecured(menuService) { (request, menus) =>
+    implicit val (r,m) = (request, menus)
     NodeType.withName(nodeType) match {
       case NodeType.RECORD_NODE =>
         abstractRead(pageService.getRecords(NodeId(parentId), subpage), (records: List[PageRecord]) => views.html.editor.pageRecord(records, parentId))

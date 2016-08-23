@@ -1,4 +1,4 @@
-@()(implicit loggedUser: Option[User], request: RequestHeader, messages: Messages)
+@()(implicit loggedUser: Option[User], request: RequestHeader, messages: Messages, menus: List[utils.services.data.Menu])
 @views.html.templates.default("Access Denied", loggedUser) {
 	@tags.alertFromRequest(request, "error")
 	<h1 class="text-primary">@Messages("denied.title")</h1>

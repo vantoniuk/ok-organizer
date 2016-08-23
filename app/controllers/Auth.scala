@@ -1,6 +1,8 @@
 package controllers
 
+import global.GlobalAppSettings
 import models._
+import utils.services.MenuService
 import utils.silhouette._
 import com.mohiva.play.silhouette.api.{ LoginInfo, SignUpEvent, LoginEvent, LogoutEvent }
 import com.mohiva.play.silhouette.api.util.Credentials
@@ -20,8 +22,9 @@ import scala.concurrent.ExecutionContext.Implicits._
 import javax.inject.{ Inject, Singleton }
 import views.html.{ auth => viewsAuth }
 
-class Auth @Inject() (val env: AuthenticationEnvironment, val messagesApi: MessagesApi, val mailService: MailService) extends AuthenticationController {
+class Auth @Inject() (val env: AuthenticationEnvironment, val messagesApi: MessagesApi, val mailService: MailService, menuService: MenuService) extends AuthenticationController {
   // UTILITIES
+  def getMenus = menuService.getMenus(GlobalAppSettings.service)
 
   implicit val ms = mailService
   val passwordValidation = nonEmptyText(minLength = 6)
@@ -43,7 +46,8 @@ class Auth @Inject() (val env: AuthenticationEnvironment, val messagesApi: Messa
   /**
    * Starts the sign up mechanism. It shows a form that the user have to fill in and submit.
    */
-  def startSignUp = UserAwareAction.async { implicit request =>
+  def startSignUp = UserAwareAction async withMenusUserAware(menuService){ (request, menus) =>
+    implicit val (r,m) = (request, menus)
     Future.successful(request.identity match {
       case Some(_) => Redirect(routes.Application.index)
       case None => Ok(viewsAuth.signUp(signUpForm))
@@ -53,8 +57,8 @@ class Auth @Inject() (val env: AuthenticationEnvironment, val messagesApi: Messa
   /**
    * Handles the form filled by the user. The user and its password are saved and it sends him an email with a link to confirm his email address.
    */
-  def handleStartSignUp = Action.async { implicit request =>
-    println("SIGN UP STUFF")
+  def handleStartSignUp = Action async withMenus(menuService){ (request, menus) =>
+    implicit val (r,m) = (request, menus)
     signUpForm.bindFromRequest.fold(
       formWithErrors => Future.successful(BadRequest(viewsAuth.signUp(formWithErrors))),
       user => {
@@ -80,7 +84,8 @@ class Auth @Inject() (val env: AuthenticationEnvironment, val messagesApi: Messa
   /**
    * Confirms the user's email address based on the token and authenticates him.
    */
-  def signUp(tokenId: String) = Action.async { implicit request =>
+  def signUp(tokenId: String) = Action async withMenus(menuService: MenuService){ (request, menus) =>
+    implicit val (r,m) = (request, menus)
     env.tokenService.retrieve(tokenId).flatMap {
       case Some(token) if (token.isSignUp && !token.isExpired) => {
         env.identityService.retrieve(Helpers.email2loginInfo(token.email)).flatMap {
@@ -124,7 +129,8 @@ class Auth @Inject() (val env: AuthenticationEnvironment, val messagesApi: Messa
   /**
    * Starts the sign in mechanism. It shows the login form.
    */
-  def signIn = UserAwareAction.async { implicit request =>
+  def signIn = UserAwareAction async withMenusUserAware(menuService){ (request, menus) =>
+    implicit val (r,m) = (request, menus)
     Future.successful(request.identity match {
       case Some(user) => Redirect(routes.Application.index)
       case None => Ok(viewsAuth.signIn(signInForm))
@@ -134,7 +140,8 @@ class Auth @Inject() (val env: AuthenticationEnvironment, val messagesApi: Messa
   /**
    * Authenticates the user based on his email and password
    */
-  def authenticate = Action.async { implicit request =>
+  def authenticate = Action async withMenus(menuService){ (request, menus) =>
+    implicit val (r,m) = (request, menus)
     signInForm.bindFromRequest.fold(
       formWithErrors => Future.successful(BadRequest(viewsAuth.signIn(formWithErrors))),
       formData => {
@@ -177,7 +184,8 @@ class Auth @Inject() (val env: AuthenticationEnvironment, val messagesApi: Messa
   /**
    * Starts the reset password mechanism if the user has forgot his password. It shows a form to insert his email address.
    */
-  def forgotPassword = UserAwareAction.async { implicit request =>
+  def forgotPassword = UserAwareAction async withMenusUserAware(menuService){ (request, menus) =>
+    implicit val (r,m) = (request, menus)
     Future.successful(request.identity match {
       case Some(_) => Redirect(routes.Application.index)
       case None => Ok(viewsAuth.forgotPassword(emailForm))
@@ -187,7 +195,8 @@ class Auth @Inject() (val env: AuthenticationEnvironment, val messagesApi: Messa
   /**
    * Sends an email to the user with a link to reset the password
    */
-  def handleForgotPassword = Action.async { implicit request =>
+  def handleForgotPassword = Action async withMenus(menuService){ (request, menus) =>
+    implicit val (r,m) = (request, menus)
     emailForm.bindFromRequest.fold(
       formWithErrors => Future.successful(BadRequest(viewsAuth.forgotPassword(formWithErrors))),
       email => env.identityService.retrieve(Helpers.email2loginInfo(email)).flatMap {
@@ -211,7 +220,8 @@ class Auth @Inject() (val env: AuthenticationEnvironment, val messagesApi: Messa
   /**
    * Confirms the user's link based on the token and shows him a form to reset the password
    */
-  def resetPassword(tokenId: String) = Action.async { implicit request =>
+  def resetPassword(tokenId: String) = Action async withMenus(menuService){ (request, menus) =>
+    implicit val (r,m) = (request, menus)
     env.tokenService.retrieve(tokenId).flatMap {
       case Some(token) if (!token.isSignUp && !token.isExpired) => {
         Future.successful(Ok(viewsAuth.resetPassword(tokenId, resetPasswordForm)))
@@ -227,7 +237,8 @@ class Auth @Inject() (val env: AuthenticationEnvironment, val messagesApi: Messa
   /**
    * Saves the new password and authenticates the user
    */
-  def handleResetPassword(tokenId: String) = Action.async { implicit request =>
+  def handleResetPassword(tokenId: String) = Action async withMenus(menuService){ (request, menus) =>
+    implicit val (r,m) = (request, menus)
     resetPasswordForm.bindFromRequest.fold(
       formWithErrors => Future.successful(BadRequest(viewsAuth.resetPassword(tokenId, formWithErrors))),
       passwords => {
@@ -271,14 +282,16 @@ class Auth @Inject() (val env: AuthenticationEnvironment, val messagesApi: Messa
   /**
    * Starts the change password mechanism. It shows a form to insert his current password and the new one.
    */
-  def changePassword = SecuredAction.async { implicit request =>
+  def changePassword = SecuredAction async withMenusSecured(menuService){ (request, menus) =>
+    implicit val (r,m) = (request, menus)
     Future.successful(Ok(viewsAuth.changePassword(changePasswordForm)))
   }
 
   /**
    * Saves the new password and renew the cookie
    */
-  def handleChangePassword = SecuredAction.async { implicit request =>
+  def handleChangePassword = SecuredAction async withMenusSecured(menuService){ (request, menus) =>
+    implicit val (r,m) = (request, menus)
     changePasswordForm.bindFromRequest.fold(
       formWithErrors => Future.successful(BadRequest(viewsAuth.changePassword(formWithErrors))),
       passwords => {
@@ -301,7 +314,8 @@ class Auth @Inject() (val env: AuthenticationEnvironment, val messagesApi: Messa
   /**
    * Shows an error page when the user tries to get to an area without the necessary roles.
    */
-  def accessDenied = UserAwareAction.async { implicit request =>
+  def accessDenied = UserAwareAction async withMenusUserAware(menuService){ (request, menus) =>
+    implicit val (m,r) = (menus, request)
     Future.successful(Ok(viewsAuth.accessDenied()))
   }
 

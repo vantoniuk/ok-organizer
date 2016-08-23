@@ -1,4 +1,4 @@
-@(user: User)(implicit messages: Messages)
+@(user: User)(implicit messages: Messages, menus: List[utils.services.data.Menu])
 @default("Almost Signed Up") {
 	<p>@Messages("signup.thanks", user.fullName)</p>
 	<p>@Messages("signup.sent", user.email)</p>
