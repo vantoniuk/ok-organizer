@@ -1,0 +1,22 @@
+@(page: utils.services.data.Page, records: List[utils.services.data.PageRecord])(implicit messages: Messages, menus: List[utils.services.data.Menu])
+
+@views.html.templates.notLogged(title = page.title, tab = page.title) {
+  <h2>@page.title</h2>
+  <div>@page.description</div>
+
+  @for( record <- records ) {
+    <div>
+      <h3>@record.title</h3>
+      @if(record.icon.isDefined) {
+      <div class="record-icon">
+        <img src="@record.icon.get"/>
+      </div>
+      } else {
+      <div></div>
+      }
+      <div>@Html(record.content)</div>
+    </div>
+    <hr/>
+  }
+
+}

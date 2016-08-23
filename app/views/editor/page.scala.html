@@ -23,7 +23,7 @@
       </div>
       <div class="editable">
         <span class="editable-original description">@page.description</span>
-        <div>@Messages("preview.content"): @page.description</div>
+        <div>@Messages("preview.content"): @Html(page.description)</div>
       </div>
       <div class="editable">
         <span class="editable-original preview_icon">@page.previewIcon</span>
@@ -33,6 +33,7 @@
       <a class="editor-edit" href="#">@Messages("editor.edit")</a>
       <a class="page editor-delete" href="#">@Messages("editor.delete")</a>
       <p><a class="editor-edit-subnodes" href="/edit/record/@page.id.id/1">@Messages("editor.edit") @Messages("record.items")</a></p>
+      <p><a class="preview" href="/page/@page.id.id/1">@Messages("index.table.go")</a></p>
     </li>
   }
   </ul>

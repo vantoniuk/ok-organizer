@@ -31,7 +31,7 @@
       </div>
       <div class="editable">
         <span class="editable-original content">@record.content</span>
-        <div>@Messages("preview.content"): @record.content</div>
+        <div>@Messages("preview.content"): @Html(record.content)</div>
       </div>
       @if(record.icon.isDefined) {
         <div class="editable">

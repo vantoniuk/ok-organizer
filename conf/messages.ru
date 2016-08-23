@@ -60,7 +60,7 @@ index.table.section=Sección
 index.table.authobject=Objeto Authorization
 index.table.services=Servicios requeridos
 index.table.allowed=¿Estás autorizado?
-index.table.go=Ve y compruébalo por tí mismo
+index.table.go=Посмотреть
 
 ################################################################################################
 # MY ACCOUNT

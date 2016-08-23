@@ -26,6 +26,9 @@ GET		/myaccount							controllers.Application.myAccount
 
 GET		/lang/$lang<(en|ru)>		controllers.Application.selectLang(lang: String)
 
+# Page
+GET   /page/:pageId/:subpage  controllers.DisplayController.records(pageId: Int, subpage: Int)
+
 # Editor
 
 GET   /edit/:nodeType         controllers.EditorController.read(nodeType: String)
