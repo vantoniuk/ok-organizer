@@ -30,10 +30,11 @@
         <img src="@page.previewIcon"/>
       </div>
       <div class="non-editable"><p><b>@Messages("created.by"):</b> @page.author.fullName</p></div>
-      <a class="editor-edit" href="#">@Messages("editor.edit")</a>
-      <a class="page editor-delete" href="#">@Messages("editor.delete")</a>
+      <p><a class="editor-edit" href="#">@Messages("editor.edit")</a></p>
+      <p><a class="page editor-delete" href="#">@Messages("editor.delete")</a></p>
       <p><a class="editor-edit-subnodes" href="/edit/record/@page.id.id/1">@Messages("editor.edit") @Messages("record.items")</a></p>
       <p><a class="preview" href="/page/@page.id.id/1">@Messages("index.table.go")</a></p>
+      <hr/>
     </li>
   }
   </ul>

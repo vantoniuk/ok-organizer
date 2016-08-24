@@ -31,6 +31,7 @@ GET   /page/:pageId/:subpage  controllers.DisplayController.records(pageId: Int,
 
 # Editor
 
+GET   /edit                   controllers.EditorController.editorPage
 GET   /edit/:nodeType         controllers.EditorController.read(nodeType: String)
 GET   /edit/:nodeType/:patentId/:subpage controllers.EditorController.readSubNodes(nodeType: String, patentId: Int, subpage: Int)
 POST  /edit/:nodeType/new     controllers.EditorController.create(nodeType: String)

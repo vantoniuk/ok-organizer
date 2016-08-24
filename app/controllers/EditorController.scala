@@ -84,6 +84,11 @@ class EditorController @Inject()(val env: AuthenticationEnvironment, val message
     }
   }
 
+  def editorPage = SecuredAction(ForRole(UserRole.ADMIN)) async withMenusSecured(menuService) { (request, menus) =>
+    implicit val (r, m) = (request, menus)
+    Future.successful(Ok(views.html.editor.editor()))
+  }
+
   def read(nodeType: String) = SecuredAction(ForRole(UserRole.ADMIN)) async withMenusSecured(menuService) { (request, menus) =>
     implicit val (r,m) = (request, menus)
     NodeType.withName(nodeType) match {
