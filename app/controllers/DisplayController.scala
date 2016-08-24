@@ -26,8 +26,8 @@ class DisplayController @Inject()(val env: AuthenticationEnvironment, val messag
     read.map(toContent).map(Ok(_))
   }
 
-  def records(pageId: Int, subpage: Int) = Action async withMenus(menuService) { (request, menus) =>
-    implicit val (m,r) = (menus, request)
+  def records(pageId: Int, subpage: Int) = Action async withMenusAndUser(menuService) { (request, menus, user) =>
+    implicit val (m,r,u) = (menus, request,user)
     for {
       pageOpt <- pageService.getPage(NodeId(pageId))
       records <- pageService.getRecords(NodeId(pageId), subpage)

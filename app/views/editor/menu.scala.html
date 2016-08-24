@@ -1,4 +1,4 @@
-@()(implicit user: User, messages: Messages, menus: List[utils.services.data.Menu])
+@(pages: List[utils.services.data.Page])(implicit user: User, messages: Messages, menus: List[utils.services.data.Menu])
 
 @views.html.templates.logged(title = "menu editor", tab = "menu") {
   <h3>@Messages("menu.items"):</h3>
@@ -34,11 +34,20 @@
 
   <div id="editor-wrapper" style="display: none">
     <form name="menu-from" id="menu-form">
-      <p class="hidden"><label for="id">ID</label> <input class="input" required="required" type="text" id="id" disabled="disabled" placeholder="id"/></p>
-      <p id="order-wrapper"><label for="order">@Messages("display.order")</label> <input class="input" required="required" type="number" id="order" placeholder="@Messages("display.order")"/></p>
-      <p><label for="created">@Messages("created.at")</label> <input disabled="disabled"  class="input date" required="required" type="text" id="created" placeholder="@Messages("created.at")"/></p>
-      <p><label for="title">@Messages("title")</label> <input class="input" required="required" type="text" id="title" placeholder="@Messages("title")"/></p>
-      <p><label for="url">@Messages("url")</label> <input class="input" required="required" type="text" id="url" placeholder="@Messages("url")"/></p>
+      <div class="hidden"><label for="id">ID</label> <input class="input" required="required" type="text" id="id" disabled="disabled" placeholder="id"/></div>
+      <div id="order-wrapper"><label for="order">@Messages("display.order")</label> <input class="input" required="required" type="number" id="order" placeholder="@Messages("display.order")"/></div>
+      <div><label for="created">@Messages("created.at")</label> <input disabled="disabled"  class="input date" required="required" type="text" id="created" placeholder="@Messages("created.at")"/></div>
+      <div><label for="title">@Messages("title")</label> <input class="input" required="required" type="text" id="title" placeholder="@Messages("title")"/></div>
+      <div>
+        <label for="url">@Messages("url")</label> <input class="input" required="required" type="text" id="url" placeholder="@Messages("url")"/>
+        <label for="for-url">@Messages("select.from.page.list")</label>
+        <select id="for-url" class="input-helper">
+          <option value=""> --------- </option>
+          @for( page <-pages ){
+            <option value="/page/@page.id.id/1">@Messages(page.title)</option>
+          }
+        </select>
+      </div>
     </form>
     <div class="menu"><a id="editor-submit" class="menu">@Messages("editor.submit")</a></div>
   </div>

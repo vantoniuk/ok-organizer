@@ -40,6 +40,7 @@ editor.delete=Delete
 page.items=Pages
 record.items=Records
 created.at=Created at
+select.from.page.list=Select from list of pages
 
 ################################################################################################
 # INDEX

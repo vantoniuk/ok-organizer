@@ -18,5 +18,5 @@ case class ForRole(role: UserRole) extends Authorization[User, CookieAuthenticat
   }
 }
 object ForRole {
-  def isAuthorized(user: User, role: UserRole): Boolean = user.role.id <= role.id
+  def isAuthorized(user: User, role: UserRole): Boolean = UserRole.GUEST == role || user.role.id <= role.id
 }

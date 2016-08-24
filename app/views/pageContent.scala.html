@@ -1,6 +1,6 @@
-@(page: utils.services.data.Page, records: List[utils.services.data.PageRecord])(implicit messages: Messages, menus: List[utils.services.data.Menu])
+@(page: utils.services.data.Page, records: List[utils.services.data.PageRecord])(implicit messages: Messages, menus: List[utils.services.data.Menu], user: Option[User])
 
-@views.html.templates.notLogged(title = page.title, tab = page.title) {
+@views.html.templates.default(title = page.title, loggedUser = user, tab = page.title) {
   <h2>@page.title</h2>
   <div>@page.description</div>
 

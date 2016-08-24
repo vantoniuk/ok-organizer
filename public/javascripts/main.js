@@ -8,6 +8,12 @@ $(document).ready(function(){
     $("#editor-submit").addClass("new");
   });
 
+  $(".input-helper").on("change", function(){
+    var $this = $(this);
+    var id = $this.attr("id").replace("for-", "#");
+    $(id).val($this.val());
+  })
+
   $(".editor-edit").on("click", function(e){
     $("#editor-wrapper #order-wrapper input").removeAttr("disabled");
     $(this).parent(".editor-block").find(".editable-original").each(function(i, el){

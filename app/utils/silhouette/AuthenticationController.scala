@@ -14,6 +14,14 @@ import scala.concurrent.Future
 
 trait AuthenticationController extends Silhouette[User, CookieAuthenticator] with I18nSupport {
   def env: AuthenticationEnvironment
+  def withMenusAndUser(menuService: MenuService)(body: (Request[AnyContent], List[Menu], Option[User]) => Future[Result]): Request[AnyContent] => Future[Result] = {
+    r => for {
+      authServiceOpt <- env.authenticatorService.retrieve(r)
+      userOpt <- authServiceOpt.fold[Future[Option[User]]](Future.successful(None))(auth => env.identityService.retrieve(auth.loginInfo))
+      menus <- menuService.getMenus(GlobalAppSettings.service)
+      result <- body(r, menus, userOpt)
+    } yield result
+  }
   def withMenus(menuService: MenuService)(body: (Request[AnyContent], List[Menu]) => Future[Result]): Request[AnyContent] => Future[Result] = {
     r => menuService.getMenus(GlobalAppSettings.service).flatMap(menus => body(r, menus))
   }

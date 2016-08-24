@@ -31,7 +31,7 @@ url=Адрес ссылки
 preview.content=Краткое содержание
 preview.icon=Иконка страницы
 title=Титул
-editor.title=Контент редактор
+editor.title=Редактор контента
 editor.new=Добавить новый
 editor.submit=Подтвердить
 editor.edit=Редактировать
@@ -39,6 +39,7 @@ editor.delete=Удалить
 page.items=Страницы
 record.items=Записи
 created.at=Создана (дата)
+select.from.page.list=Выбрать из списка страниц
 
 ################################################################################################
 # INDEX
