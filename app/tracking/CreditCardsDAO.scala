@@ -13,9 +13,15 @@ import MyPostgresDriver.api.{Tag => DBTag, _}
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits._
 
-case class CreditCard(userId: UserId, vendor: String, name: String, description: String, availableCredit: Int, total: Int, addedAt: DateTime)
+case class CreditCardId(id: Int) extends AnyVal
+object CreditCardId {
+  implicit val creditCardMapping = MappedColumnType.base[CreditCardId, Int](_.id, CreditCardId.apply)
+}
+
+case class CreditCard(creditCardId: CreditCardId, userId: UserId, vendor: String, name: String, description: String, availableCredit: Int, total: Int, addedAt: DateTime)
 
 class CreditCards(tag: DBTag) extends Table[CreditCard](tag, "credit_cards") {
+  def creditCardId = column[CreditCardId]("card_id", O.PrimaryKey, O.AutoInc)
   def userId = column[UserId]("user_id")
   def vendor = column[String]("vendor")
   def name = column[String]("name")
@@ -24,9 +30,9 @@ class CreditCards(tag: DBTag) extends Table[CreditCard](tag, "credit_cards") {
   def total = column[Int]("total")
   def addedAt = column[DateTime]("added_at")
 
-  def * = (userId, vendor, name, description, availableCredit, total, addedAt) <> (CreditCard.apply _ tupled, CreditCard.unapply)
+  def * = (creditCardId, userId, vendor, name, description, availableCredit, total, addedAt) <> (CreditCard.apply _ tupled, CreditCard.unapply)
 
-  def pk = primaryKey("credit_card_pk", (userId, vendor, name))
+  def pk = index("credit_card_pk", (userId, vendor, name), unique = true)
   def userIdFK = foreignKey("credit_card_uid_fk", userId, Users.query)(_.id, onUpdate = ForeignKeyAction.Cascade, onDelete = ForeignKeyAction.Cascade)
 }
 

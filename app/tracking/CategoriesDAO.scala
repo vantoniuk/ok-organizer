@@ -36,7 +36,7 @@ trait SpendCategoriesDAO {
   def saveSpendCategory(category: SpendCategory): Future[Boolean]
 }
 
-class PostgresCreditCardsDAO(database: Database) extends SpendCategoriesDAO {
+class PostgresSpendCategoriesDAO(database: Database) extends SpendCategoriesDAO {
   private def byUserName(userId: Rep[UserId], name: Rep[String]) = {
     for {
       category <- SpendCategories.query if category.userId === userId && category.name === name
