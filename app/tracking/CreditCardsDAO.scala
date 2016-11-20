@@ -1,17 +1,13 @@
 package tracking
 
-import models.db.MyPostgresDriver.MyAPI._
-import models.db.{Users, MyPostgresDriver, Implicits}
-import models.{User, UserId, UserRole}
+import models.UserId
+import models.db.Implicits._
+import models.db.MyPostgresDriver.api.{Tag => DBTag, _}
+import models.db.{Implicits, MyPostgresDriver, Users}
 import org.joda.time.DateTime
-import slick.dbio.DBIOAction
 
-import scala.concurrent.Future
-import models.{UserId, UserRole, User}
-import Implicits._
-import MyPostgresDriver.api.{Tag => DBTag, _}
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits._
+import scala.concurrent.Future
 
 case class CreditCardId(id: Int) extends AnyVal
 object CreditCardId {
@@ -68,7 +64,7 @@ class PostgresCreditCardsDAO(database: Database) extends CreditCardsDAO {
   def saveCreditCard(creditCard: CreditCard): Future[Boolean] = {
     val cardQuery = byUserVendorNameCompiled(creditCard.userId, creditCard.vendor, creditCard.name)
     val action = cardQuery.result.flatMap{
-      case r if r.nonEmpty => cardQuery.update(creditCard)
+      case r if r.nonEmpty => cardQuery.update(creditCard.copy(creditCardId = r.head.creditCardId))
       case _ => CreditCards.query.+=(creditCard)
     }
 

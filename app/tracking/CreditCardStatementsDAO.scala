@@ -1,17 +1,13 @@
 package tracking
 
-import models.db.MyPostgresDriver.MyAPI._
-import models.db.{Users, MyPostgresDriver, Implicits}
-import models.{User, UserId, UserRole}
-import org.joda.time.{Interval, DateTime}
-import slick.dbio.DBIOAction
+import models.UserId
+import models.db.Implicits._
+import models.db.MyPostgresDriver.api.{Tag => DBTag, _}
+import models.db.{Implicits, MyPostgresDriver, Users}
+import org.joda.time.{DateTime, Interval}
 
-import scala.concurrent.Future
-import models.{UserId, UserRole, User}
-import Implicits._
-import MyPostgresDriver.api.{Tag => DBTag, _}
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits._
+import scala.concurrent.Future
 
 case class CreditCardStatement(id: Int, userId: UserId, creditCardId: CreditCardId, availableCredit: Int, timestamp: DateTime)
 
