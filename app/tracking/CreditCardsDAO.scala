@@ -11,6 +11,7 @@ import scala.concurrent.Future
 
 case class CreditCardId(id: Int) extends AnyVal
 object CreditCardId {
+  val empty = CreditCardId(-1)
   implicit val creditCardMapping = MappedColumnType.base[CreditCardId, Int](_.id, CreditCardId.apply)
 }
 

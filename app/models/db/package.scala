@@ -3,6 +3,7 @@ package models
 import com.google.inject.ImplementedBy
 import models.db.DB.PostgresDAOProvider
 import models.note.db.NodeDAO
+import tracking.{SpendCategoriesDAO, CreditCardStatementsDAO, CreditCardsDAO}
 
 import scala.concurrent.Future
 
@@ -15,6 +16,9 @@ package object db {
     def userDAO: UserDAO
     def nodeDAO: NodeDAO
     def serviceDAO: ServiceDAO
+    def creditCardsDAO: CreditCardsDAO
+    def creditCardStatementsDAO: CreditCardStatementsDAO
+    def spendCategoriesDAO: SpendCategoriesDAO
   }
 
   trait UserDAO {

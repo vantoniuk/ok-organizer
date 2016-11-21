@@ -18,8 +18,8 @@ class SpendCategories(tag: DBTag) extends Table[SpendCategory](tag, "spend_categ
 
   def * = (userId, name, description, recommendedLimit) <> (SpendCategory.apply _ tupled, SpendCategory.unapply)
 
-  def pk = primaryKey("credit_card_pk", (userId, name))
-  def userIdFK = foreignKey("credit_card_uid_fk", userId, Users.query)(_.id, onUpdate = ForeignKeyAction.Cascade, onDelete = ForeignKeyAction.Cascade)
+  def pk = primaryKey("spend_category_pk", (userId, name))
+  def userIdFK = foreignKey("spend_category_uid_fk", userId, Users.query)(_.id, onUpdate = ForeignKeyAction.Cascade, onDelete = ForeignKeyAction.Cascade)
 }
 
 object SpendCategories {
