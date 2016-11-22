@@ -9,7 +9,7 @@ import org.joda.time.{DateTime, Interval}
 import scala.concurrent.ExecutionContext.Implicits._
 import scala.concurrent.Future
 
-case class CreditCardStatement(id: Int, userId: UserId, creditCardId: CreditCardId, availableCredit: Int, timestamp: DateTime)
+case class CreditCardStatement(id: Int, userId: UserId, creditCardId: CreditCardId, amount: Int, timestamp: DateTime)
 
 class CreditCardStatements(tag: DBTag) extends Table[CreditCardStatement](tag, "credit_card_statements") {
   def id = column[Int]("id")

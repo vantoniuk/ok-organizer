@@ -76,8 +76,9 @@ object SpendTrackingJsMapping {
 class SpendTrackingController @Inject()(val env: AuthenticationEnvironment, val messagesApi: MessagesApi, val daoProvider: DAOProvider, menuService: MenuService) extends AuthenticationController {
   import SpendTrackingJsMapping._
 
-  private def abstractRead[T, C](read : => Future[List[T]], toContent: List[T] => C)(implicit writeable: Writeable[C]): Future[Result] = {
-    read.map(toContent).map(Ok(_))
+  def mainTracking() = SecuredAction async withMenusSecured(menuService) { (request, menus) =>
+    implicit val (m, r) = (menus, request)
+    Future.successful(Ok(views.html.spendings.main_tracking()))
   }
 
   def categories() = Action async withMenusAndUser(menuService) { (request, menus, user) =>

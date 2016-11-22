@@ -1,0 +1,77 @@
+@()(implicit user: User, messages: Messages, menus: List[utils.services.data.Menu])
+
+@views.html.templates.logged(title = "Content editor", tab = "editor") {
+  <h2>@Messages("spendings.tracking")</h2>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <form id="add-category" method="POST" class="form-vertical " role="form">
+        <fieldset>
+          <legend>@Messages("spendings.add.category")</legend>
+          <div class="form-group  " id="category-name_field">
+            <label class="control-label sr-only" for="category-name">@Messages("spendings.category.name")</label>
+            <input type="text" id="category-name" value="" class="form-control" placeholder="@Messages("spendings.category.name")">
+          </div>
+          <div class="form-group  " id="category-description_field">
+            <label class="control-label sr-only" for="category-name">@Messages("spendings.category.description")</label>
+            <input type="text" id="category-description" value="" class="form-control" placeholder="@Messages("spendings.category.description")">
+          </div>
+          <div class="form-group  " id="category-limit_field">
+            <label class="control-label sr-only" for="category-name">@Messages("spendings.category.limit")</label>
+            <input type="text" id="category-limit" value="" class="form-control" placeholder="@Messages("spendings.category.limit")">
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block"> @Messages("submit")</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <form id="add-card" method="POST" class="form-vertical " role="form">
+        <fieldset>
+          <legend>@Messages("spendings.add.card")</legend>
+          <div class="form-group  " id="card-name_field">
+            <label class="control-label sr-only" for="category-name">@Messages("spendings.card.name")</label>
+            <input type="text" id="card-name" value="" class="form-control" placeholder="@Messages("spendings.card.name")">
+          </div>
+          <div class="form-group  " id="card-vendor_field">
+            <label class="control-label sr-only" for="category-name">@Messages("spendings.card.vendor")</label>
+            <input type="text" id="card-vendor" value="" class="form-control" placeholder="@Messages("spendings.card.vendor")">
+          </div>
+          <div class="form-group  " id="card-description_field">
+            <label class="control-label sr-only" for="category-name">@Messages("spendings.card.description")</label>
+            <input type="text" id="category-card" value="" class="form-control" placeholder="@Messages("spendings.card.description")">
+          </div>
+          <div class="form-group  " id="card-available_field">
+            <label class="control-label sr-only" for="category-name">@Messages("spendings.card.available")</label>
+            <input type="text" id="card-available" value="" class="form-control" placeholder="@Messages("spendings.card.available")">
+          </div>
+          <div class="form-group  " id="card-total_field">
+            <label class="control-label sr-only" for="category-name">@Messages("spendings.card.total")</label>
+            <input type="text" id="card-total" value="" class="form-control" placeholder="@Messages("spendings.card.total")">
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block"> @Messages("submit")</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <form id="add-statement" method="POST" class="form-vertical " role="form">
+        <fieldset>
+          <legend>@Messages("spendings.add.statement")</legend>
+          <div class="form-group  " id="statement-amount_field">
+            <label class="control-label sr-only" for="category-name">@Messages("spendings.statement.amount")</label>
+            <input type="text" id="statement-amount" value="" class="form-control" placeholder="@Messages("spendings.statement.amount")">
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block"> @Messages("submit")</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+}

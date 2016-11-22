@@ -22,6 +22,9 @@
 				<!--@forRole(UserRole.USER) {-->
 					<!--<li class="@("active".when(tab == "serviceA"))"><a href="@routes.Application.serviceA">A</a></li>-->
 				<!--}-->
+				@forRole(UserRole.USER) {
+					<li><a href="@routes.SpendTrackingController.mainTracking">@Messages("spendings.tracking")</a>
+				}
 				@forRole(UserRole.ADMIN) {
 					<li><a href="@routes.EditorController.editorPage">@Messages("editor.title")</a></li>
 				}

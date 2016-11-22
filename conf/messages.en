@@ -1,5 +1,21 @@
 
 ################################################################################################
+# SPENDING TRACKING
+spendings.tracking=Spending Tracking
+spendings.add.category=Add category
+spendings.category.name=Category name
+spendings.category.description=Category description
+spendings.category.limit=Recommended limit
+spendings.add.card=Add card
+spendings.card.name=Card name
+spendings.card.vendor=Card vendor
+spendings.card.description=Card description
+spendings.card.available=Available credit
+spendings.card.total=Card total
+spendings.add.statement=Add statement
+spendings.statement.amount=Statement amount
+
+################################################################################################
 # COMMON
 
 field.firstname=First name

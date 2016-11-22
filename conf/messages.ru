@@ -1,5 +1,21 @@
 
 ################################################################################################
+# SPENDING TRACKING
+spendings.tracking=Учет Расходов
+spendings.add.category=Добавить категорию
+spendings.category.name=Название категории
+spendings.category.description=Описание категории
+spendings.category.limit=Рекомендованный лимит
+spendings.add.card=Добавить карту
+spendings.card.name=Название карты
+spendings.card.vendor=Компания, выпустившая карту
+spendings.card.description=Описание карты
+spendings.card.available=Доступно средст на карте
+spendings.card.total=Лимит карты
+spendings.add.statement=Добавить расход
+spendings.statement.amount=Размер расхода
+
+################################################################################################
 # COMMON
 
 field.firstname=Имя
