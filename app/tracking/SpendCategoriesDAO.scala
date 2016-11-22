@@ -8,17 +8,23 @@ import models.db.{Implicits, MyPostgresDriver, Users}
 import scala.concurrent.ExecutionContext.Implicits._
 import scala.concurrent.Future
 
-case class SpendCategory(userId: UserId, name: String, description: String, recommendedLimit: Int)
+case class SpendCategoryId(id: Int) extends AnyVal
+object SpendCategoryId {
+  val empty = SpendCategoryId(-1)
+  implicit val spendCategoryMapping = MappedColumnType.base[SpendCategoryId, Int](_.id, SpendCategoryId.apply)
+}
+case class SpendCategory(id: SpendCategoryId, userId: UserId, name: String, description: String, recommendedLimit: Int)
 
 class SpendCategories(tag: DBTag) extends Table[SpendCategory](tag, "spend_categories") {
+  def id = column[SpendCategoryId]("id")
   def userId = column[UserId]("user_id")
   def name = column[String]("name")
   def description = column[String]("description")
   def recommendedLimit = column[Int]("recommended_limit")
 
-  def * = (userId, name, description, recommendedLimit) <> (SpendCategory.apply _ tupled, SpendCategory.unapply)
+  def * = (id, userId, name, description, recommendedLimit) <> (SpendCategory.apply _ tupled, SpendCategory.unapply)
 
-  def pk = primaryKey("spend_category_pk", (userId, name))
+  def userIdNameIndex = index("spend_category_user_name_idx", (userId, name), unique = true)
   def userIdFK = foreignKey("spend_category_uid_fk", userId, Users.query)(_.id, onUpdate = ForeignKeyAction.Cascade, onDelete = ForeignKeyAction.Cascade)
 }
 

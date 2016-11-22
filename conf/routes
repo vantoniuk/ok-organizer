@@ -50,3 +50,7 @@ GET		/common/img/*file				controllers.MyAssets.commonImg(path="/public/lib/commo
 
 # Spending Tracking
 GET   /spendings              controllers.SpendTrackingController.mainTracking()
+GET   /spendings/categories/save  controllers.SpendTrackingController.saveCategory(cat: String)
+GET   /spendings/categories   controllers.SpendTrackingController.categories()
+GET   /spendings/cards        controllers.SpendTrackingController.creditCards()
+GET   /spendings/statements   controllers.SpendTrackingController.statements(from: Long, to: Long)

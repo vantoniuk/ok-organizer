@@ -9,7 +9,7 @@ import org.joda.time.{Interval, DateTimeZone, DateTime}
 import play.api.http.Writeable
 import play.api.i18n.MessagesApi
 import play.api.mvc.{Action, Result}
-import tracking.{CreditCardStatement, CreditCard, CreditCardId, SpendCategory}
+import tracking._
 import utils.services.{MenuService, PageService}
 import utils.silhouette._
 
@@ -21,6 +21,7 @@ import play.api.libs.functional.syntax._
 object SpendTrackingJsMapping {
 
   implicit val categoriesReads = (
+    (JsPath \ "id").readNullable[Int].fmap[SpendCategoryId](x => x.map(SpendCategoryId.apply).getOrElse(SpendCategoryId.empty)) ~
     (JsPath \ "user_id").readNullable[Int].fmap(x => x.map(UserId.apply).getOrElse(UserId.empty)) ~
     (JsPath \ "name").read[String] ~
     (JsPath \ "description").read[String] ~
@@ -28,6 +29,7 @@ object SpendTrackingJsMapping {
   )(SpendCategory.apply _)
 
   implicit val categoriesWrites = (
+    (JsPath \ "id").write[Int].contramap[SpendCategoryId](_.id) ~
     (JsPath \ "user_id").write[Int].contramap[UserId](_.id) ~
     (JsPath \ "name").write[String] ~
     (JsPath \ "description").write[String] ~
@@ -60,6 +62,7 @@ object SpendTrackingJsMapping {
     (JsPath \ "id").readNullable[Int].map(_.getOrElse(0)) ~
     (JsPath \ "user_id").readNullable[Int].map(_.fold(UserId.empty)(UserId.apply)) ~
     (JsPath \ "card_id").read[Int].map(CreditCardId.apply) ~
+    (JsPath \ "category_id").read[Int].map(SpendCategoryId.apply) ~
     (JsPath \ "available").read[Int] ~
     (JsPath \ "added").readNullable[Long].map(_.fold(DateTime.now(DateTimeZone.UTC))(ms => new DateTime(ms, DateTimeZone.UTC)))
   )(CreditCardStatement.apply _)
@@ -68,9 +71,17 @@ object SpendTrackingJsMapping {
     (JsPath \ "id").write[Int] ~
     (JsPath \ "user_id").write[Int].contramap[UserId](_.id) ~
     (JsPath \ "card_id").write[Int].contramap[CreditCardId](_.id) ~
-    (JsPath \ "available").write[Int] ~
-    (JsPath \ "added").write[Long].contramap[DateTime](_.getMillis)
+    (JsPath \ "category_id").write[Int].contramap[SpendCategoryId](_.id) ~
+    (JsPath \ "amount").write[Int] ~
+    (JsPath \ "timestamp").write[Long].contramap[DateTime](_.getMillis)
   )(unlift(CreditCardStatement.unapply))
+
+  implicit val creditCardRichStatementWrites = (
+    (JsPath \ "card").write[String] ~
+    (JsPath \ "category").write[String] ~
+    (JsPath \ "amount").write[Int] ~
+    (JsPath \ "timestamp").write[Long].contramap[DateTime](_.getMillis)
+  )(unlift(RichCreditCardStatement.unapply))
 }
 
 class SpendTrackingController @Inject()(val env: AuthenticationEnvironment, val messagesApi: MessagesApi, val daoProvider: DAOProvider, menuService: MenuService) extends AuthenticationController {
@@ -95,6 +106,7 @@ class SpendTrackingController @Inject()(val env: AuthenticationEnvironment, val 
 
   def saveCategory(category: String) = Action async withMenusAndUser(menuService) { (request, menus, user) =>
     implicit val (m, r, u) = (menus, request, user)
+    logger.info("saving category " + category)
     user.fold(Future.successful(BadRequest("""no user logged in"""))) { loggedInUser =>
       Json.fromJson[SpendCategory](Json.parse(category)).map { categoryValue =>
         daoProvider.spendCategoriesDAO.saveSpendCategory(categoryValue.copy(
@@ -141,7 +153,7 @@ class SpendTrackingController @Inject()(val env: AuthenticationEnvironment, val 
     implicit val (m,r,u) = (menus, request, user)
     val interval = new Interval(start, end, DateTimeZone.UTC)
     for {
-      statements <- Future.traverse(user.toList)(u1 => daoProvider.creditCardStatementsDAO.findByUserId(u1.id, interval))
+      statements <- Future.traverse(user.toList)(u1 => daoProvider.creditCardStatementsDAO.findRichByUserId(u1.id, interval))
     } yield {
       statements.flatten match {
         case Nil => NotFound("not found credit card statements for user with id " + user.map(_.id))

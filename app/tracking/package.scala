@@ -6,16 +6,16 @@ package object tracking {
   val spendingCategoriesStatements = SpendCategories.query.schema.createStatements.mkString("", ";\n", ";")
   val allStatements = List(
     creditCardStatements,
-    creditCardStatementsStatements,
-    spendingCategoriesStatements
+    spendingCategoriesStatements,
+    creditCardStatementsStatements
   ).mkString("\n")
 
   val creditCardDropStatements = CreditCards.query.schema.dropStatements.mkString("", ";\n", ";")
   val creditCardStatementsDropStatements = CreditCardStatements.query.schema.dropStatements.mkString("", ";\n", ";")
   val spendingCategoriesDropStatements = SpendCategories.query.schema.dropStatements.mkString("", ";\n", ";")
   val allDropStatements = List(
-    creditCardDropStatements,
     creditCardStatementsDropStatements,
+    creditCardDropStatements,
     spendingCategoriesDropStatements
   ).mkString("\n")
 }

@@ -9,16 +9,18 @@ import org.joda.time.{DateTime, Interval}
 import scala.concurrent.ExecutionContext.Implicits._
 import scala.concurrent.Future
 
-case class CreditCardStatement(id: Int, userId: UserId, creditCardId: CreditCardId, amount: Int, timestamp: DateTime)
+case class CreditCardStatement(id: Int, userId: UserId, creditCardId: CreditCardId, categoryId: SpendCategoryId, amount: Int, timestamp: DateTime)
+case class RichCreditCardStatement(creditCardName: String, categoryName: String, amount: Int, timestamp: DateTime)
 
 class CreditCardStatements(tag: DBTag) extends Table[CreditCardStatement](tag, "credit_card_statements") {
   def id = column[Int]("id")
   def userId = column[UserId]("user_id")
   def creditCardId = column[CreditCardId]("card_id")
-  def availableCredit = column[Int]("available_credit")
+  def categoryId = column[SpendCategoryId]("category_id")
+  def amount = column[Int]("amount")
   def timestamp = column[DateTime]("timestamp")
 
-  def * = (id, userId, creditCardId, availableCredit, timestamp) <> (CreditCardStatement.apply _ tupled, CreditCardStatement.unapply)
+  def * = (id, userId, creditCardId, categoryId, amount, timestamp) <> (CreditCardStatement.apply _ tupled, CreditCardStatement.unapply)
 
   def cardIdFK = foreignKey("credit_card_statement_card_id_fk", creditCardId, CreditCards.query)(_.creditCardId, onUpdate = ForeignKeyAction.Cascade, onDelete = ForeignKeyAction.Cascade)
   def userIdFK = foreignKey("credit_card_statement_uid_fk", userId, Users.query)(_.id, onUpdate = ForeignKeyAction.Cascade, onDelete = ForeignKeyAction.Cascade)
@@ -30,6 +32,7 @@ object CreditCardStatements {
 
 trait CreditCardStatementsDAO {
   def findByUserId(userId: UserId, interval: Interval): Future[Seq[CreditCardStatement]]
+  def findRichByUserId(userId: UserId, interval: Interval): Future[Seq[RichCreditCardStatement]]
   def saveStatement(creditCard: CreditCardStatement): Future[Boolean]
 }
 
@@ -40,10 +43,27 @@ class PostgresCreditCardStatementsDAO(database: Database) extends CreditCardStat
     } yield statement
   }
 
+  private def byUserIntervalRich(userId: Rep[UserId], from: Rep[DateTime], to: Rep[DateTime]) = {
+    byUserInterval(userId, from, to).join(SpendCategories.query).on(_.categoryId === _.id).map({
+      case (statement, category) =>
+        (statement.creditCardId, category.name, statement.amount, statement.timestamp)
+    }).join(CreditCards.query).on(_._1 === _.creditCardId).map({
+      case ((_, categoryName, amount, timestamp), creditCard) =>
+        (creditCard.name, categoryName, amount, timestamp)
+    })
+  }
+
   private val byUserIntervalCompiled = Compiled(byUserInterval _)
+  private val byUserIntervalRichCompiled = Compiled(byUserIntervalRich _)
 
   def findByUserId(userId: UserId, interval: Interval): Future[Seq[CreditCardStatement]] = {
     database.run(byUserIntervalCompiled(userId, interval.getStart, interval.getEnd).result)
+  }
+
+  def findRichByUserId(userId: UserId, interval: Interval): Future[Seq[RichCreditCardStatement]] = {
+    database
+      .run(byUserIntervalRichCompiled(userId, interval.getStart, interval.getEnd).result)
+      .map(_.map(RichCreditCardStatement.apply _ tupled))
   }
 
   def saveStatement(creditCard: CreditCardStatement): Future[Boolean] = {
