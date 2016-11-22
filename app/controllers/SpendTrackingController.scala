@@ -92,6 +92,22 @@ class SpendTrackingController @Inject()(val env: AuthenticationEnvironment, val 
     }
   }
 
+  def saveCategory(category: String) = Action async withMenusAndUser(menuService) { (request, menus, user) =>
+    implicit val (m, r, u) = (menus, request, user)
+    user.fold(Future.successful(BadRequest("""no user logged in"""))) { loggedInUser =>
+      Json.fromJson[SpendCategory](Json.parse(category)).map { categoryValue =>
+        daoProvider.spendCategoriesDAO.saveSpendCategory(categoryValue.copy(
+          userId = loggedInUser.id
+        )).map({
+          case true => Ok("success")
+          case false => Ok("couldn't save category for user " + loggedInUser.id)
+        })
+      }.getOrElse(
+        Future.successful(BadRequest("couldn't parse category json " + category))
+      )
+    }
+  }
+
   def creditCards() = Action async withMenusAndUser(menuService) { (request, menus, user) =>
     implicit val (m,r,u) = (menus, request, user)
     for {
@@ -101,6 +117,22 @@ class SpendTrackingController @Inject()(val env: AuthenticationEnvironment, val 
         case Nil => NotFound("not found credit cards for user with id " + user.map(_.id))
         case cs => Ok(Json.obj("cards" -> Json.toJson(cs)))
       }
+    }
+  }
+
+  def saveCreditCard(card: String) = Action async withMenusAndUser(menuService) { (request, menus, user) =>
+    implicit val (m, r, u) = (menus, request, user)
+    user.fold(Future.successful(BadRequest("""no user logged in"""))) { loggedInUser =>
+      Json.fromJson[CreditCard](Json.parse(card)).map { cardValue =>
+        daoProvider.creditCardsDAO.saveCreditCard(cardValue.copy(
+          userId = loggedInUser.id
+        )).map({
+          case true => Ok("success")
+          case false => Ok("couldn't save credit card for user " + loggedInUser.id)
+        })
+      }.getOrElse(
+        Future.successful(BadRequest("couldn't parse credit card json " + card))
+      )
     }
   }
 
@@ -114,6 +146,22 @@ class SpendTrackingController @Inject()(val env: AuthenticationEnvironment, val 
         case Nil => NotFound("not found credit card statements for user with id " + user.map(_.id))
         case cs => Ok(Json.obj("statements" -> Json.toJson(cs)))
       }
+    }
+  }
+
+  def saveCreditCardStatement(statement: String) = Action async withMenusAndUser(menuService) { (request, menus, user) =>
+    implicit val (m, r, u) = (menus, request, user)
+    user.fold(Future.successful(BadRequest("""no user logged in"""))) { loggedInUser =>
+      Json.fromJson[CreditCardStatement](Json.parse(statement)).map { cardValue =>
+        daoProvider.creditCardStatementsDAO.saveStatement(cardValue.copy(
+          userId = loggedInUser.id
+        )).map({
+          case true => Ok("success")
+          case false => Ok("couldn't save credit card statement for user " + loggedInUser.id)
+        })
+      }.getOrElse(
+        Future.successful(BadRequest("couldn't parse credit card statement json " + statement))
+      )
     }
   }
 }
