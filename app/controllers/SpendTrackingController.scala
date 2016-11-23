@@ -62,7 +62,6 @@ object SpendTrackingJsMapping {
     (JsPath \ "id").readNullable[Int].map(_.getOrElse(0)) ~
     (JsPath \ "user_id").readNullable[Int].map(_.fold(UserId.empty)(UserId.apply)) ~
     (JsPath \ "card_id").read[Int].map(CreditCardId.apply) ~
-    (JsPath \ "category_id").read[Int].map(SpendCategoryId.apply) ~
     (JsPath \ "available").read[Double].map(available => (available * 100).toInt) ~
     (JsPath \ "added").readNullable[Long].map(_.fold(DateTime.now(DateTimeZone.UTC))(ms => new DateTime(ms, DateTimeZone.UTC)))
   )(CreditCardStatement.apply _)
@@ -71,7 +70,6 @@ object SpendTrackingJsMapping {
     (JsPath \ "id").write[Int] ~
     (JsPath \ "user_id").write[Int].contramap[UserId](_.id) ~
     (JsPath \ "card_id").write[Int].contramap[CreditCardId](_.id) ~
-    (JsPath \ "category_id").write[Int].contramap[SpendCategoryId](_.id) ~
     (JsPath \ "amount").write[Int] ~
     (JsPath \ "timestamp").write[Long].contramap[DateTime](_.getMillis)
   )(unlift(CreditCardStatement.unapply))
@@ -79,10 +77,35 @@ object SpendTrackingJsMapping {
   implicit val creditCardRichStatementWrites = (
     (JsPath \ "card_vendor").write[String] ~
     (JsPath \ "card_name").write[String] ~
-    (JsPath \ "category").write[String] ~
     (JsPath \ "amount").write[Double].contramap[Int](_.toDouble / 100) ~
     (JsPath \ "timestamp").write[Long].contramap[DateTime](_.getMillis)
   )(unlift(RichCreditCardStatement.unapply))
+
+  implicit val creditCardSpendingsReads = (
+    (JsPath \ "id").readNullable[Int].map(_.getOrElse(0)) ~
+    (JsPath \ "user_id").readNullable[Int].map(_.fold(UserId.empty)(UserId.apply)) ~
+    (JsPath \ "card_id").read[Int].map(CreditCardId.apply) ~
+    (JsPath \ "category_id").read[Int].map(SpendCategoryId.apply) ~
+    (JsPath \ "available").read[Double].map(available => (available * 100).toInt) ~
+    (JsPath \ "added").readNullable[Long].map(_.fold(DateTime.now(DateTimeZone.UTC))(ms => new DateTime(ms, DateTimeZone.UTC)))
+  )(CreditCardSpending.apply _)
+
+  implicit val creditCardSpendingsWrites = (
+    (JsPath \ "id").write[Int] ~
+    (JsPath \ "user_id").write[Int].contramap[UserId](_.id) ~
+    (JsPath \ "card_id").write[Int].contramap[CreditCardId](_.id) ~
+    (JsPath \ "category_id").write[Int].contramap[SpendCategoryId](_.id) ~
+    (JsPath \ "amount").write[Int] ~
+    (JsPath \ "timestamp").write[Long].contramap[DateTime](_.getMillis)
+  )(unlift(CreditCardSpending.unapply))
+
+  implicit val creditCardRichSpendingsWrites = (
+    (JsPath \ "card_vendor").write[String] ~
+    (JsPath \ "card_name").write[String] ~
+    (JsPath \ "category").write[String] ~
+    (JsPath \ "amount").write[Double].contramap[Int](_.toDouble / 100) ~
+    (JsPath \ "timestamp").write[Long].contramap[DateTime](_.getMillis)
+  )(unlift(RichCreditCardSpending.unapply))
 }
 
 class SpendTrackingController @Inject()(val env: AuthenticationEnvironment, val messagesApi: MessagesApi, val daoProvider: DAOProvider, menuService: MenuService) extends AuthenticationController {

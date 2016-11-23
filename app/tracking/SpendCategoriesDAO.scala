@@ -16,7 +16,7 @@ object SpendCategoryId {
 case class SpendCategory(id: SpendCategoryId, userId: UserId, name: String, description: String, recommendedLimit: Int)
 
 class SpendCategories(tag: DBTag) extends Table[SpendCategory](tag, "spend_categories") {
-  def id = column[SpendCategoryId]("id")
+  def id = column[SpendCategoryId]("id", O.PrimaryKey, O.AutoInc)
   def userId = column[UserId]("user_id")
   def name = column[String]("name")
   def description = column[String]("description")
