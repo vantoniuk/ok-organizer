@@ -10,10 +10,10 @@ import scala.concurrent.ExecutionContext.Implicits._
 import scala.concurrent.Future
 
 case class CreditCardStatement(id: Int, userId: UserId, creditCardId: CreditCardId, amount: Int, timestamp: DateTime)
-case class RichCreditCardStatement(creditCardVendor: String, creditCardName: String, amount: Int, timestamp: DateTime)
+case class RichCreditCardStatement(id: Int, creditCardVendor: String, creditCardName: String, amount: Int, timestamp: DateTime)
 
 class CreditCardStatements(tag: DBTag) extends Table[CreditCardStatement](tag, "credit_card_statements") {
-  def id = column[Int]("id")
+  def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
   def userId = column[UserId]("user_id")
   def creditCardId = column[CreditCardId]("card_id")
   def amount = column[Int]("amount")
@@ -45,7 +45,7 @@ class PostgresCreditCardStatementsDAO(database: Database) extends CreditCardStat
   private def byUserIntervalRich(userId: Rep[UserId], from: Rep[DateTime], to: Rep[DateTime]) = {
     byUserInterval(userId, from, to).join(CreditCards.query).on(_.creditCardId === _.creditCardId).map({
       case (statement, creditCard) =>
-        (creditCard.vendor, creditCard.name, statement.amount, statement.timestamp)
+        (statement.id, creditCard.vendor, creditCard.name, statement.amount, statement.timestamp)
     })
   }
 

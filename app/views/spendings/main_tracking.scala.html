@@ -3,91 +3,7 @@
 @views.html.templates.logged(title = "Content editor", tab = "editor") {
   <h2>@Messages("spendings.tracking")</h2>
   <div class="row">
-    <!--<div class="col-md-3 col-md-offset-3">-->
-    <div class="col-md-4">
-      <div id="spending-category" class="spending-tracking-form">
-        <table class="table table-striped table-hover">
-          <thead>
-            <tr>
-              <th>@Messages("spendings.category.name")</th>
-              <th>@Messages("spendings.category.description")</th>
-              <th>@Messages("spendings.category.limit")</th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-        <div><a href="#" class="add-new">@Messages("spendings.add.category")</a></div>
-        <form id="add-category" class="form-vertical hidden" role="form">
-          <fieldset>
-            <legend>@Messages("spendings.categories")</legend>
-            <div class="form-group" id="category-name_field">
-              <label class="control-label sr-only" for="category-name">@Messages("spendings.category.name")</label>
-              <input type="text" id="category-name" value="" class="form-control" placeholder="@Messages("spendings.category.name")">
-            </div>
-            <div class="form-group  " id="category-description_field">
-              <label class="control-label sr-only" for="category-name">@Messages("spendings.category.description")</label>
-              <input type="text" id="category-description" value="" class="form-control" placeholder="@Messages("spendings.category.description")">
-            </div>
-            <div class="form-group  " id="category-limit_field">
-              <label class="control-label sr-only" for="category-name">@Messages("spendings.category.limit")</label>
-              <input type="number" id="category-limit" value="" class="form-control" placeholder="@Messages("spendings.category.limit")">
-            </div>
-            <div class="form-group">
-              <button type="submit" class="btn btn-primary btn-block"> @Messages("submit")</button>
-            </div>
-          </fieldset>
-        </form>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div id="spending-card" class="spending-tracking-form">
-        <table class="table table-striped table-hover">
-          <thead>
-          <tr>
-            <th>@Messages("spendings.card.vendor")</th>
-            <th>@Messages("spendings.card.name")</th>
-            <th>@Messages("spendings.card.description")</th>
-            <th>@Messages("spendings.card.available")</th>
-            <th>@Messages("spendings.card.total")</th>
-          </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-        <div><a href="#" class="add-new">@Messages("spendings.add.card")</a></div>
-        <form id="add-card" method="POST" class="form-vertical hidden" role="form">
-          <fieldset>
-            <legend>@Messages("spendings.cards")</legend>
-            <div class="form-group  " id="card-vendor_field">
-              <label class="control-label sr-only" for="category-name">@Messages("spendings.card.vendor")</label>
-              <input type="text" id="card-vendor" value="" class="form-control" placeholder="@Messages("spendings.card.vendor")">
-            </div>
-            <div class="form-group  " id="card-name_field">
-              <label class="control-label sr-only" for="category-name">@Messages("spendings.card.name")</label>
-              <input type="text" id="card-name" value="" class="form-control" placeholder="@Messages("spendings.card.name")">
-            </div>
-            <div class="form-group  " id="card-description_field">
-              <label class="control-label sr-only" for="category-name">@Messages("spendings.card.description")</label>
-              <input type="text" id="card-description" value="" class="form-control" placeholder="@Messages("spendings.card.description")">
-            </div>
-            <div class="form-group  " id="card-available_field">
-              <label class="control-label sr-only" for="category-name">@Messages("spendings.card.available")</label>
-              <input type="text" id="card-available" value="" class="form-control" placeholder="@Messages("spendings.card.available")">
-            </div>
-            <div class="form-group  " id="card-total_field">
-              <label class="control-label sr-only" for="category-name">@Messages("spendings.card.total")</label>
-              <input type="text" id="card-total" value="" class="form-control" placeholder="@Messages("spendings.card.total")">
-            </div>
-            <div class="form-group">
-              <button type="submit" class="btn btn-primary btn-block"> @Messages("submit")</button>
-            </div>
-          </fieldset>
-        </form>
-      </div>
-    </div>
-    <div class="col-md-4">
+    <div class="col-md-3 col-md-offset-3">
       <div id="spending-statement" class="spending-tracking-form">
         <table class="table table-striped table-hover">
           <thead>
@@ -137,22 +53,22 @@
           <!--</tbody>-->
         <!--</table>-->
         <!--<div><a href="#" class="add-new">@Messages("spendings.add.spending")</a></div>-->
-        <!--<form id="add-spending" method="POST" class="form-vertical hidden" role="form">-->
+        <!--<form id="add-spending-action" method="POST" class="form-vertical hidden" role="form">-->
           <!--<fieldset>-->
             <!--<legend>@Messages("spendings.spendings")</legend>-->
-            <!--<div class="form-group  " id="spending-card_field">-->
+            <!--<div class="form-group  " id="spending-actions-card_field">-->
               <!--<label class="control-label sr-only" for="category-name">@Messages("spendings.cards")</label>-->
-              <!--<select id="spending-card" class="form-control">-->
+              <!--<select id="spending-actions-card" class="form-control">-->
               <!--</select>-->
             <!--</div>-->
-            <!--<div class="form-group  " id="spending-category_field">-->
-              <!--<label class="control-label sr-only" for="category-name">@Messages("spendings.categories")</label>-->
-              <!--<select id="spending-category" class="form-control">-->
+            <!--<div class="form-group  " id="spending-actions-category_field">-->
+              <!--<label class="control-label sr-only" for="spending-actions-category">@Messages("spendings.categories")</label>-->
+              <!--<select id="spending-actions-category" class="form-control">-->
               <!--</select>-->
             <!--</div>-->
-            <!--<div class="form-group  " id="spending-amount_field">-->
-              <!--<label class="control-label sr-only" for="category-name">@Messages("spendings.spending.amount")</label>-->
-              <!--<input type="text" id="spending-amount" value="" class="form-control" placeholder="@Messages("spendings.spending.amount")">-->
+            <!--<div class="form-group  " id="spending-actions-amount_field">-->
+              <!--<label class="control-label sr-only" for="spending-actions-amount">@Messages("spendings.spending.amount")</label>-->
+              <!--<input type="text" id="spending-actions-amount" value="" class="form-control" placeholder="@Messages("spendings.spending.amount")">-->
             <!--</div>-->
             <!--<div class="form-group">-->
               <!--<button type="submit" class="btn btn-primary btn-block"> @Messages("submit")</button>-->

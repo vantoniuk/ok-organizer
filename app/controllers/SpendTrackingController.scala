@@ -75,6 +75,7 @@ object SpendTrackingJsMapping {
   )(unlift(CreditCardStatement.unapply))
 
   implicit val creditCardRichStatementWrites = (
+    (JsPath \ "id").write[Int] ~
     (JsPath \ "card_vendor").write[String] ~
     (JsPath \ "card_name").write[String] ~
     (JsPath \ "amount").write[Double].contramap[Int](_.toDouble / 100) ~
@@ -114,6 +115,11 @@ class SpendTrackingController @Inject()(val env: AuthenticationEnvironment, val 
   def mainTracking() = SecuredAction async withMenusSecured(menuService) { (request, menus) =>
     implicit val (m, r) = (menus, request)
     Future.successful(Ok(views.html.spendings.main_tracking()))
+  }
+
+  def metaTracking() = SecuredAction async withMenusSecured(menuService) { (request, menus) =>
+    implicit val (m, r) = (menus, request)
+    Future.successful(Ok(views.html.spendings.meta_tracking()))
   }
 
   def categories() = Action async withMenusAndUser(menuService) { (request, menus, user) =>

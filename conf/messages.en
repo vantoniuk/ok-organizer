@@ -2,6 +2,7 @@
 ################################################################################################
 # SPENDING TRACKING
 spendings.tracking=Spending Tracking
+spendings.meta=Categories & cards
 spendings.add.category=Add category
 spendings.categories=Spending Category
 spendings.category.name=Category name

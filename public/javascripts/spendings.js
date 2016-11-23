@@ -98,7 +98,8 @@ function creditCardToHtml(card) {
 }
 
 function statementToHtml(statement) {
-  return '<tr>' +
+  console.log(statement)
+  return '<tr id="statement-' + statement.id + '">' +
     '<td>' + statement.card_vendor + '</td>' +
     '<td>' + statement.card_name + '</td>' +
     '<td>' + statement.amount  + '</td>' +
@@ -106,13 +107,13 @@ function statementToHtml(statement) {
   '</tr>';
 }
 
-function spendingToHtml(statement) {
-  return '<tr>' +
-    '<td>' + statement.card_vendor + '</td>' +
-    '<td>' + statement.card_name + '</td>' +
-    '<td>' + statement.category + '</td>' +
-    '<td>' + statement.amount  + '</td>' +
-    '<td>' + formatDate(statement.timestamp) + '</td>' +
+function spendingToHtml(spending) {
+  return '<tr id="spending-' + spending.id + '">' +
+    '<td>' + spending.card_vendor + '</td>' +
+    '<td>' + spending.card_name + '</td>' +
+    '<td>' + spending.category + '</td>' +
+    '<td>' + spending.amount  + '</td>' +
+    '<td>' + formatDate(spending.timestamp) + '</td>' +
   '</tr>';
 }
 
@@ -145,7 +146,7 @@ function showCreditCards() {
      }
   },
   {
-    "selector": "#spending-card",
+    "selector": "#spending-actions-card",
      "toHtml": function(card){
        return dataToOption({"id": card.card_id, "name": card.vendor + " " + card.name});
      }

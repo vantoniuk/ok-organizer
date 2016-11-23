@@ -2,6 +2,7 @@
 ################################################################################################
 # SPENDING TRACKING
 spendings.tracking=Учет Расходов
+spendings.meta=Категории и карты
 spendings.add.category=Добавить категорию
 spendings.category.name=Название категории
 spendings.category.description=Описание категории

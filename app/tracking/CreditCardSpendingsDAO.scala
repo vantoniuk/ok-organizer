@@ -13,7 +13,7 @@ case class CreditCardSpending(id: Int, userId: UserId, creditCardId: CreditCardI
 case class RichCreditCardSpending(creditCardVendor: String, creditCardName: String, categoryName: String, amount: Int, timestamp: DateTime)
 
 class CreditCardSpendings(tag: DBTag) extends Table[CreditCardSpending](tag, "credit_card_spendings") {
-  def id = column[Int]("id")
+  def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
   def userId = column[UserId]("user_id")
   def creditCardId = column[CreditCardId]("card_id")
   def categoryId = column[SpendCategoryId]("category_id")
