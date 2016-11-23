@@ -16,6 +16,7 @@ spendings.card.description=Card description
 spendings.card.available=Available credit
 spendings.card.total=Card total
 spendings.add.statement=Add statement
+spendings.statements.filter=Filter statements
 spendings.statements=Statements
 spendings.statement.amount=Statement amount
 spendings.statement.timestamp=Timestamp
@@ -32,6 +33,7 @@ field.password.repeat=Repeat password
 field.role=Role
 
 submit=Submit
+show=Show
 reset=Reset
 back=Back
 go.index=Go to index

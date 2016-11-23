@@ -4,16 +4,20 @@
 spendings.tracking=Учет Расходов
 spendings.meta=Категории и карты
 spendings.add.category=Добавить категорию
+spendings.categories=Категория растрат
 spendings.category.name=Название категории
 spendings.category.description=Описание категории
 spendings.category.limit=Рекомендованный лимит
 spendings.add.card=Добавить карту
+spendings.cards=Кредитные карты
 spendings.card.name=Название карты
 spendings.card.vendor=Компания, выпустившая карту
 spendings.card.description=Описание карты
 spendings.card.available=Доступно средст на карте
 spendings.card.total=Лимит карты
 spendings.add.statement=Добавить расход
+spendings.statements.filter=Filter statements
+spendings.statements=Statements
 spendings.statement.amount=Размер расхода
 spendings.statement.timestamp=Дата
 
@@ -29,6 +33,7 @@ field.password.repeat=Повторите пароль
 field.role=Роль
 
 submit=отправить
+show=показать
 reset=сбросить
 back=назад
 go.index=на главную

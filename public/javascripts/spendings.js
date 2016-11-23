@@ -57,7 +57,12 @@ $(document).ready(function(){
   showCreditCards();
 })
 
+/*********************** STATEMENTS *****************/
 $(document).ready(function(){
+  var d = new Date();
+  var from = Date.UTC(d.getFullYear()-1, d.getMonth(), d.getDay(), d.getHours(), d.getMinutes(), d.getSeconds(), d.getMilliseconds());
+  var to = Date.UTC(d.getFullYear() + 1, d.getMonth(), d.getDay(), d.getHours(), d.getMinutes(), d.getSeconds(), d.getMilliseconds());
+
   $("#add-statement").on("submit", function(e){
     e.preventDefault();
     var data = {
@@ -71,12 +76,34 @@ $(document).ready(function(){
         "statement": JSON.stringify(data)
       },
       function(e){
-        showStatements();
+        showStatements(from, to);
       }
     );
   })
 
-  showStatements();
+  $("#filter-statement").on("submit", function(e){
+    e.preventDefault();
+    var cardQuery = $("#statement-filter-card").val() != "" ? {"card_id" : Number($("#statement-filter-card").val())} : {};
+
+    var query = $.extend({"from": from, "to": to}, cardQuery);
+    showStatementsForQuery(query);
+  });
+
+  showCreditCardsForTransformers([
+    {
+      "selector": "#statement-filter-card",
+       "toHtml": function(card){
+         return dataToOption({"id": card.card_id, "name": card.vendor + " " + card.name});
+       }
+    },
+    {
+      "selector": "#statement-card",
+       "toHtml": function(card){
+         return dataToOption({"id": card.card_id, "name": card.vendor + " " + card.name});
+       }
+    }
+  ],'<option value=""> ... </option>');
+  showStatements(from, to);
 })
 
 function categoryToHtml(cat) {
@@ -125,25 +152,30 @@ function dataToOption(data) {
   return '<option value="' + data.id + '">' + data.name + '</option>';
 }
 
-function genericShow(url, successMessage, transformers, sendData) {
-  $.get(url, sendData, function(data){
-    transformers.forEach(function(transformer){
-      $(transformer.selector).html(data.items.map(transformer.toHtml).join("\n"));
+function genericShow(config) {
+  var emptyElement = config.empty_element ? config.empty_element : "";
+  $.get(config.url, config.send_data, function(data){
+    config.transformers.forEach(function(transformer){
+      $(transformer.selector).html(emptyElement + data.items.map(transformer.toHtml).join("\n"));
     });
-    console.log(successMessage, data);
+    console.log(config.success_message, data);
   });
 }
 
+function showCreditCardsForTransformers(transformers, emptyElement) {
+   genericShow({
+     "url": "/spendings/cards",
+     "success_message": "got cards",
+     "transformers": transformers,
+     "empty_element": emptyElement
+    });
+
+}
+
 function showCreditCards() {
-  genericShow("/spendings/cards", "got cards", [{
+  showCreditCardsForTransformers([{
     "selector": "#spending-card tbody",
      "toHtml": creditCardToHtml
-  },
-  {
-    "selector": "#statement-card",
-     "toHtml": function(card){
-       return dataToOption({"id": card.card_id, "name": card.vendor + " " + card.name});
-     }
   },
   {
     "selector": "#spending-actions-card",
@@ -154,27 +186,40 @@ function showCreditCards() {
 }
 
 function showCategories() {
-  genericShow("/spendings/categories", "got categories", [{
-    "selector": "#spending-category tbody",
-    "toHtml": categoryToHtml
-  },
-  {
-    "selector": "#statement-category",
-     "toHtml": function(statement){
-       return dataToOption(statement);
-     }
-  }]);
+  genericShow({
+    "url": "/spendings/categories",
+    "success_message": "got categories",
+    "transformers": [
+      {
+        "selector": "#spending-category tbody",
+        "toHtml": categoryToHtml
+      },
+      {
+        "selector": "#statement-category",
+         "toHtml": function(statement){
+           return dataToOption(statement);
+         }
+      }
+    ]
+  });
 }
 
-function showStatements() {
-  var d = new Date();
-  var from = Date.UTC(d.getFullYear()-1, d.getMonth(), d.getDay(), d.getHours(), d.getMinutes(), d.getSeconds(), d.getMilliseconds());
-  var to = Date.UTC(d.getFullYear() + 1, d.getMonth(), d.getDay(), d.getHours(), d.getMinutes(), d.getSeconds(), d.getMilliseconds());
-  genericShow("/spendings/statements", "got statements", [{
-    "selector": "#spending-statement tbody",
-    "toHtml": statementToHtml
-  }],
-  {
+function showStatementsForQuery(query) {
+  genericShow({
+      "url": "/spendings/statements",
+      "success_message": "got statements",
+      "transformers": [
+        {
+          "selector": "#spending-statement tbody",
+          "toHtml": statementToHtml
+        }
+      ],
+      "send_data": query
+    });
+}
+
+function showStatements(from, to) {
+  showStatementsForQuery({
     "from": from,
     "to": to
   });

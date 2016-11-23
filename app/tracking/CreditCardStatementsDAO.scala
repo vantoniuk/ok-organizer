@@ -32,6 +32,7 @@ object CreditCardStatements {
 trait CreditCardStatementsDAO {
   def findByUserId(userId: UserId, interval: Interval): Future[Seq[CreditCardStatement]]
   def findRichByUserId(userId: UserId, interval: Interval): Future[Seq[RichCreditCardStatement]]
+  def findRichByCardId(cardId: CreditCardId, interval: Interval): Future[Seq[RichCreditCardStatement]]
   def saveStatement(creditCard: CreditCardStatement): Future[Boolean]
 }
 
@@ -39,6 +40,11 @@ class PostgresCreditCardStatementsDAO(database: Database) extends CreditCardStat
   private def byUserInterval(userId: Rep[UserId], from: Rep[DateTime], to: Rep[DateTime]) = {
     for {
       statement <- CreditCardStatements.query if statement.userId === userId && statement.timestamp >= from && statement.timestamp <= to
+    } yield statement
+  }
+  private def byCardInterval(creditCardId: Rep[CreditCardId], from: Rep[DateTime], to: Rep[DateTime]) = {
+    for {
+      statement <- CreditCardStatements.query if statement.creditCardId === creditCardId && statement.timestamp >= from && statement.timestamp <= to
     } yield statement
   }
 
@@ -49,8 +55,16 @@ class PostgresCreditCardStatementsDAO(database: Database) extends CreditCardStat
     })
   }
 
+  private def byCardIntervalRich(cardId: Rep[CreditCardId], from: Rep[DateTime], to: Rep[DateTime]) = {
+    byCardInterval(cardId, from, to).join(CreditCards.query).on(_.creditCardId === _.creditCardId).map({
+      case (statement, creditCard) =>
+        (statement.id, creditCard.vendor, creditCard.name, statement.amount, statement.timestamp)
+    })
+  }
+
   private val byUserIntervalCompiled = Compiled(byUserInterval _)
   private val byUserIntervalRichCompiled = Compiled(byUserIntervalRich _)
+  private val byCardIntervalRichCompiled = Compiled(byCardIntervalRich _)
 
   def findByUserId(userId: UserId, interval: Interval): Future[Seq[CreditCardStatement]] = {
     database.run(byUserIntervalCompiled(userId, interval.getStart, interval.getEnd).result)
@@ -59,6 +73,12 @@ class PostgresCreditCardStatementsDAO(database: Database) extends CreditCardStat
   def findRichByUserId(userId: UserId, interval: Interval): Future[Seq[RichCreditCardStatement]] = {
     database
       .run(byUserIntervalRichCompiled(userId, interval.getStart, interval.getEnd).result)
+      .map(_.map(RichCreditCardStatement.apply _ tupled))
+  }
+
+  def findRichByCardId(cardId: CreditCardId, interval: Interval): Future[Seq[RichCreditCardStatement]] = {
+    database
+      .run(byCardIntervalRichCompiled(cardId, interval.getStart, interval.getEnd).result)
       .map(_.map(RichCreditCardStatement.apply _ tupled))
   }
 

@@ -3,8 +3,22 @@
 @views.html.templates.logged(title = "Content editor", tab = "editor") {
   <h2>@Messages("spendings.tracking")</h2>
   <div class="row">
-    <div class="col-md-3 col-md-offset-3">
+    <div class="col-md-6 col-md-offset-3">
       <div id="spending-statement" class="spending-tracking-form">
+        <form id="filter-statement" class="form-vertical" role="form">
+          <fieldset>
+            <legend>@Messages("spendings.statements.filter")</legend>
+            <div class="form-group  " id="statement-filter-card_field">
+              <label class="control-label sr-only" for="statement-filter-card">@Messages("spendings.cards")</label>
+              <select id="statement-filter-card" class="form-control">
+              </select>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary btn-block"> @Messages("show")</button>
+            </div>
+          </fieldset>
+        </form>
+
         <table class="table table-striped table-hover">
           <thead>
           <tr>

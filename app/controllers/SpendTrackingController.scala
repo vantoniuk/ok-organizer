@@ -179,14 +179,20 @@ class SpendTrackingController @Inject()(val env: AuthenticationEnvironment, val 
     }
   }
 
-  def statements(start: Long, end: Long) = Action async withMenusAndUser(menuService) { (request, menus, user) =>
+  def statements(start: Long, end: Long, cardId: Option[Int]) = Action async withMenusAndUser(menuService) { (request, menus, user) =>
     implicit val (m,r,u) = (menus, request, user)
     val interval = new Interval(start, end, DateTimeZone.UTC)
+    val statementFuture = cardId match {
+      case Some(id) =>
+        daoProvider.creditCardStatementsDAO.findRichByCardId(CreditCardId(id), interval)
+      case _ =>
+        Future.traverse(user.toList)(u1 => daoProvider.creditCardStatementsDAO.findRichByUserId(u1.id, interval)).map(_.flatten)
+    }
     for {
-      statements <- Future.traverse(user.toList)(u1 => daoProvider.creditCardStatementsDAO.findRichByUserId(u1.id, interval))
+      statements <- statementFuture
     } yield {
-      statements.flatten match {
-        case Nil => NotFound("not found credit card statements for user with id " + user.map(_.id))
+      statements match {
+        case cs if cs.isEmpty => NotFound("not found credit card statements for user with id " + user.map(_.id))
         case cs => Ok(Json.obj("items" -> Json.toJson(cs)))
       }
     }
