@@ -39,12 +39,12 @@ trait CreditCardStatementsDAO {
 class PostgresCreditCardStatementsDAO(database: Database) extends CreditCardStatementsDAO {
   private def byUserInterval(userId: Rep[UserId], from: Rep[DateTime], to: Rep[DateTime]) = {
     for {
-      statement <- CreditCardStatements.query if statement.userId === userId && statement.timestamp >= from && statement.timestamp <= to
+      statement <- CreditCardStatements.query.sortBy(_.timestamp) if statement.userId === userId && statement.timestamp >= from && statement.timestamp <= to
     } yield statement
   }
   private def byCardInterval(creditCardId: Rep[CreditCardId], from: Rep[DateTime], to: Rep[DateTime]) = {
     for {
-      statement <- CreditCardStatements.query if statement.creditCardId === creditCardId && statement.timestamp >= from && statement.timestamp <= to
+      statement <- CreditCardStatements.query.sortBy(_.timestamp) if statement.creditCardId === creditCardId && statement.timestamp >= from && statement.timestamp <= to
     } yield statement
   }
 

@@ -20,6 +20,8 @@ spendings.statements.filter=Filter statements
 spendings.statements=Statements
 spendings.statement.amount=Размер расхода
 spendings.statement.timestamp=Дата
+spendings.statement.from=от
+spendings.statement.to=до
 
 ################################################################################################
 # COMMON

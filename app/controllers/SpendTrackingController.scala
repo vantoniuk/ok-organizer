@@ -63,7 +63,7 @@ object SpendTrackingJsMapping {
     (JsPath \ "user_id").readNullable[Int].map(_.fold(UserId.empty)(UserId.apply)) ~
     (JsPath \ "card_id").read[Int].map(CreditCardId.apply) ~
     (JsPath \ "available").read[Double].map(available => (available * 100).toInt) ~
-    (JsPath \ "added").readNullable[Long].map(_.fold(DateTime.now(DateTimeZone.UTC))(ms => new DateTime(ms, DateTimeZone.UTC)))
+    (JsPath \ "timestamp").readNullable[Long].map(_.fold(DateTime.now(DateTimeZone.UTC))(ms => new DateTime(ms, DateTimeZone.UTC)))
   )(CreditCardStatement.apply _)
 
   implicit val creditCardStatementWrites = (
@@ -88,7 +88,7 @@ object SpendTrackingJsMapping {
     (JsPath \ "card_id").read[Int].map(CreditCardId.apply) ~
     (JsPath \ "category_id").read[Int].map(SpendCategoryId.apply) ~
     (JsPath \ "available").read[Double].map(available => (available * 100).toInt) ~
-    (JsPath \ "added").readNullable[Long].map(_.fold(DateTime.now(DateTimeZone.UTC))(ms => new DateTime(ms, DateTimeZone.UTC)))
+    (JsPath \ "timestamp").readNullable[Long].map(_.fold(DateTime.now(DateTimeZone.UTC))(ms => new DateTime(ms, DateTimeZone.UTC)))
   )(CreditCardSpending.apply _)
 
   implicit val creditCardSpendingsWrites = (
@@ -191,14 +191,12 @@ class SpendTrackingController @Inject()(val env: AuthenticationEnvironment, val 
     for {
       statements <- statementFuture
     } yield {
-      statements match {
-        case cs if cs.isEmpty => NotFound("not found credit card statements for user with id " + user.map(_.id))
-        case cs => Ok(Json.obj("items" -> Json.toJson(cs)))
-      }
+      Ok(Json.obj("items" -> Json.toJson(statements)))
     }
   }
 
   def saveCreditCardStatement(statement: String) = Action async withMenusAndUser(menuService) { (request, menus, user) =>
+    println("------------------ " + statement)
     implicit val (m, r, u) = (menus, request, user)
     user.fold(Future.successful(BadRequest("""no user logged in"""))) { loggedInUser =>
       Json.fromJson[CreditCardStatement](Json.parse(statement)).map { cardValue =>

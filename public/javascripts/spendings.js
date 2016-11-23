@@ -59,35 +59,40 @@ $(document).ready(function(){
 
 /*********************** STATEMENTS *****************/
 $(document).ready(function(){
-  var d = new Date();
-  var from = Date.UTC(d.getFullYear()-1, d.getMonth(), d.getDay(), d.getHours(), d.getMinutes(), d.getSeconds(), d.getMilliseconds());
-  var to = Date.UTC(d.getFullYear() + 1, d.getMonth(), d.getDay(), d.getHours(), d.getMinutes(), d.getSeconds(), d.getMilliseconds());
-
   $("#add-statement").on("submit", function(e){
+    var $this = $(this);
     e.preventDefault();
-    var data = {
-      "card_id": Number($("#statement-card").val()),
-      "category_id": Number($("#statement-category").val()),
-      "available": Number($("#statement-amount").val())
-    };
+    var cardId = $("#statement-card").val();
+    if(!isNaN(cardId) && $("#statement-card").val() != "") {
+      var data = {
+        "card_id": Number($("#statement-card").val()),
+        "available": Number($("#statement-amount").val()),
+        "timestamp": datePickerDateToMillis({"date": $("#statement-date").val(), "ignore_empty": true})
+      };
 
-    $.get(
-      "/spendings/statements/save", {
-        "statement": JSON.stringify(data)
-      },
-      function(e){
-        showStatements(from, to);
-      }
-    );
+      $.get(
+        "/spendings/statements/save", {
+          "statement": JSON.stringify(data)
+        },
+        function(e){
+          showStatementsForQuery(queryForStatements());
+          hideTheForm($this);
+        }
+      );
+    } else {
+      alert("select a card");
+    }
   })
 
   $("#filter-statement").on("submit", function(e){
     e.preventDefault();
-    var cardQuery = $("#statement-filter-card").val() != "" ? {"card_id" : Number($("#statement-filter-card").val())} : {};
-
-    var query = $.extend({"from": from, "to": to}, cardQuery);
-    showStatementsForQuery(query);
+    showStatementsForQuery(queryForStatements());
   });
+
+  /* date picker setup */
+  $("#statement-to").datepicker();
+  $("#statement-from").datepicker();
+  $("#statement-date").datepicker();
 
   showCreditCardsForTransformers([
     {
@@ -103,8 +108,33 @@ $(document).ready(function(){
        }
     }
   ],'<option value=""> ... </option>');
-  showStatements(from, to);
+
+  showStatementsForQuery(queryForStatements());
 })
+
+function queryForStatements(){
+  var cardQuery = $("#statement-filter-card").val() != "" && $("#statement-filter-card").val() != null  ? {"card_id" : Number($("#statement-filter-card").val())} : {};
+
+  return $.extend({
+    "from": datePickerDateToMillis({"date": $("#statement-from").val()}),
+    "to": datePickerDateToMillis({"date": $("#statement-to").val(), "end_of_the_day": true})
+  }, cardQuery);
+}
+
+function datePickerDateToMillis(config) {
+  var dateArray = config.date.split("/").map(x => Number(x));
+  var timeArray = config.end_of_the_day ? [23,59,59] : [0, 0, 0];
+  if(dateArray.length != 3) {
+    if(config.ignore_empty) {
+      return null;
+    } else {
+      var d = new Date();
+      return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate(), timeArray[0], timeArray[1], timeArray[2]);
+    }
+  } else {
+    return Date.UTC(dateArray[2], dateArray[0] - 1, dateArray[1], timeArray[0], timeArray[1], timeArray[2]);
+  }
+}
 
 function categoryToHtml(cat) {
   return '<tr>' +
@@ -210,7 +240,7 @@ function showStatementsForQuery(query) {
       "success_message": "got statements",
       "transformers": [
         {
-          "selector": "#spending-statement tbody",
+          "selector": "#spending-statement-table tbody",
           "toHtml": statementToHtml
         }
       ],
@@ -223,4 +253,10 @@ function showStatements(from, to) {
     "from": from,
     "to": to
   });
+}
+
+function hideTheForm($form) {
+  $form.find("input").each(function(i, input){$(input).val("")});
+  $form.find("textarea").each(function(i, input){$(input).val("")});
+  $form.addClass("hidden")
 }

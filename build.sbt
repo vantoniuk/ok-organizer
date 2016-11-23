@@ -2,7 +2,7 @@ name := """ok-note"""
 
 version := "1.0-SNAPSHOT"
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
+lazy val root = (project in file(".")).enablePlugins(PlayScala).enablePlugins(JavaAppPackaging)
 
 scalaVersion := "2.11.8"
 

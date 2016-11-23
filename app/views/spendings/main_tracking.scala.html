@@ -4,12 +4,20 @@
   <h2>@Messages("spendings.tracking")</h2>
   <div class="row">
     <div class="col-md-6 col-md-offset-3">
-      <div id="spending-statement" class="spending-tracking-form">
-        <form id="filter-statement" class="form-vertical" role="form">
+      <div id="spending-filter-statement" class="spending-tracking-form">
+          <form id="filter-statement" class="form-vertical" role="form">
           <fieldset>
             <legend>@Messages("spendings.statements.filter")</legend>
+            <div class="form-group  " id="statement-from_field">
+              <label class="control-label" for="statement-from">@Messages("spendings.statement.timestamp") @Messages("spendings.statement.from")</label>
+              <input type="text" id="statement-from" value="" class="form-control" placeholder="@Messages("spendings.statement.timestamp") @Messages("spendings.statement.from")">
+            </div>
+            <div class="form-group  " id="statement-to_field">
+              <label class="control-label" for="statement-from">@Messages("spendings.statement.timestamp") @Messages("spendings.statement.to")</label>
+              <input type="text" id="statement-to" value="" class="form-control" placeholder="@Messages("spendings.statement.timestamp") @Messages("spendings.statement.to")">
+            </div>
             <div class="form-group  " id="statement-filter-card_field">
-              <label class="control-label sr-only" for="statement-filter-card">@Messages("spendings.cards")</label>
+              <label class="control-label" for="statement-filter-card">@Messages("spendings.cards")</label>
               <select id="statement-filter-card" class="form-control">
               </select>
             </div>
@@ -18,31 +26,38 @@
             </div>
           </fieldset>
         </form>
+      </div>
 
-        <table class="table table-striped table-hover">
-          <thead>
-          <tr>
-            <th>@Messages("spendings.card.vendor")</th>
-            <th>@Messages("spendings.card.name")</th>
-            <th>@Messages("spendings.statement.amount")</th>
-            <th>@Messages("spendings.statement.timestamp")</th>
-          </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
+      <table  id="spending-statement-table" class="table table-striped table-hover">
+        <thead>
+        <tr>
+          <th>@Messages("spendings.card.vendor")</th>
+          <th>@Messages("spendings.card.name")</th>
+          <th>@Messages("spendings.statement.amount")</th>
+          <th>@Messages("spendings.statement.timestamp")</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+
+      <div id="spending-statement" class="spending-tracking-form">
         <div><a href="#" class="add-new">@Messages("spendings.add.statement")</a></div>
         <form id="add-statement" method="POST" class="form-vertical hidden" role="form">
           <fieldset>
             <legend>@Messages("spendings.statements")</legend>
             <div class="form-group  " id="statement-card_field">
-              <label class="control-label sr-only" for="category-name">@Messages("spendings.cards")</label>
+              <label class="control-label sr-only" for="statement-card">@Messages("spendings.cards")</label>
               <select id="statement-card" class="form-control">
               </select>
             </div>
             <div class="form-group  " id="statement-amount_field">
-              <label class="control-label sr-only" for="category-name">@Messages("spendings.statement.amount")</label>
+              <label class="control-label sr-only" for="statement-amount">@Messages("spendings.statement.amount")</label>
               <input type="text" id="statement-amount" value="" class="form-control" placeholder="@Messages("spendings.statement.amount")">
+            </div>
+            <div class="form-group  " id="statement-date_field">
+              <label class="control-label sr-only" for="statement-date">@Messages("spendings.statement.timestamp")</label>
+              <input type="text" id="statement-date" value="" class="form-control" placeholder="@Messages("spendings.statement.timestamp")">
             </div>
             <div class="form-group">
               <button type="submit" class="btn btn-primary btn-block"> @Messages("submit")</button>

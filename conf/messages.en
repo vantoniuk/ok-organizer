@@ -20,6 +20,8 @@ spendings.statements.filter=Filter statements
 spendings.statements=Statements
 spendings.statement.amount=Statement amount
 spendings.statement.timestamp=Timestamp
+spendings.statement.from=from
+spendings.statement.to=to
 
 ################################################################################################
 # COMMON
