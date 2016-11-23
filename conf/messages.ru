@@ -14,6 +14,7 @@ spendings.card.available=Доступно средст на карте
 spendings.card.total=Лимит карты
 spendings.add.statement=Добавить расход
 spendings.statement.amount=Размер расхода
+spendings.statement.timestamp=Дата
 
 ################################################################################################
 # COMMON

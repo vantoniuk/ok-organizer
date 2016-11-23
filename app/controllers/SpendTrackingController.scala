@@ -25,7 +25,7 @@ object SpendTrackingJsMapping {
     (JsPath \ "user_id").readNullable[Int].fmap(x => x.map(UserId.apply).getOrElse(UserId.empty)) ~
     (JsPath \ "name").read[String] ~
     (JsPath \ "description").read[String] ~
-    (JsPath \ "limit").read[Int]
+    (JsPath \ "limit").read[Double].map(l => (l * 100).toInt)
   )(SpendCategory.apply _)
 
   implicit val categoriesWrites = (
@@ -33,7 +33,7 @@ object SpendTrackingJsMapping {
     (JsPath \ "user_id").write[Int].contramap[UserId](_.id) ~
     (JsPath \ "name").write[String] ~
     (JsPath \ "description").write[String] ~
-    (JsPath \ "limit").write[Int]
+    (JsPath \ "limit").write[Double].contramap[Int](l => l.toDouble / 100)
   )(unlift(SpendCategory.unapply))
 
   implicit val creditCardReads = (
@@ -42,8 +42,8 @@ object SpendTrackingJsMapping {
     (JsPath \ "vendor").read[String] ~
     (JsPath \ "name").read[String] ~
     (JsPath \ "description").read[String] ~
-    (JsPath \ "available").read[Int] ~
-    (JsPath \ "total").read[Int] ~
+    (JsPath \ "available").read[Double].map(available => (available * 100).toInt) ~
+    (JsPath \ "total").read[Double].map(total => (total * 100).toInt) ~
     (JsPath \ "added").readNullable[Long].map(_.fold(DateTime.now(DateTimeZone.UTC))(ms => new DateTime(ms, DateTimeZone.UTC)))
   )(CreditCard.apply _)
 
@@ -53,8 +53,8 @@ object SpendTrackingJsMapping {
     (JsPath \ "vendor").write[String] ~
     (JsPath \ "name").write[String] ~
     (JsPath \ "description").write[String] ~
-    (JsPath \ "available").write[Int] ~
-    (JsPath \ "total").write[Int] ~
+    (JsPath \ "available").write[Double].contramap[Int](a => a.toDouble / 100) ~
+    (JsPath \ "total").write[Double].contramap[Int](t => t.toDouble / 100) ~
     (JsPath \ "added").write[Long].contramap[DateTime](_.getMillis)
   )(unlift(CreditCard.unapply))
 
@@ -63,7 +63,7 @@ object SpendTrackingJsMapping {
     (JsPath \ "user_id").readNullable[Int].map(_.fold(UserId.empty)(UserId.apply)) ~
     (JsPath \ "card_id").read[Int].map(CreditCardId.apply) ~
     (JsPath \ "category_id").read[Int].map(SpendCategoryId.apply) ~
-    (JsPath \ "available").read[Int] ~
+    (JsPath \ "available").read[Double].map(available => (available * 100).toInt) ~
     (JsPath \ "added").readNullable[Long].map(_.fold(DateTime.now(DateTimeZone.UTC))(ms => new DateTime(ms, DateTimeZone.UTC)))
   )(CreditCardStatement.apply _)
 
@@ -77,9 +77,10 @@ object SpendTrackingJsMapping {
   )(unlift(CreditCardStatement.unapply))
 
   implicit val creditCardRichStatementWrites = (
-    (JsPath \ "card").write[String] ~
+    (JsPath \ "card_vendor").write[String] ~
+    (JsPath \ "card_name").write[String] ~
     (JsPath \ "category").write[String] ~
-    (JsPath \ "amount").write[Int] ~
+    (JsPath \ "amount").write[Double].contramap[Int](_.toDouble / 100) ~
     (JsPath \ "timestamp").write[Long].contramap[DateTime](_.getMillis)
   )(unlift(RichCreditCardStatement.unapply))
 }
@@ -99,7 +100,7 @@ class SpendTrackingController @Inject()(val env: AuthenticationEnvironment, val 
     } yield {
       categories.flatten match {
         case Nil => NotFound("not found spending categories for user with id " + user.map(_.id))
-        case cs => Ok(Json.obj("categories" -> Json.toJson(cs)))
+        case cs => Ok(Json.obj("items" -> Json.toJson(cs)))
       }
     }
   }
@@ -128,7 +129,7 @@ class SpendTrackingController @Inject()(val env: AuthenticationEnvironment, val 
     } yield {
       cards.flatten match {
         case Nil => NotFound("not found credit cards for user with id " + user.map(_.id))
-        case cs => Ok(Json.obj("cards" -> Json.toJson(cs)))
+        case cs => Ok(Json.obj("items" -> Json.toJson(cs)))
       }
     }
   }
@@ -157,7 +158,7 @@ class SpendTrackingController @Inject()(val env: AuthenticationEnvironment, val 
     } yield {
       statements.flatten match {
         case Nil => NotFound("not found credit card statements for user with id " + user.map(_.id))
-        case cs => Ok(Json.obj("statements" -> Json.toJson(cs)))
+        case cs => Ok(Json.obj("items" -> Json.toJson(cs)))
       }
     }
   }

@@ -20,7 +20,7 @@
         <div><a href="#" class="add-new">@Messages("spendings.add.category")</a></div>
         <form id="add-category" class="form-vertical hidden" role="form">
           <fieldset>
-            <legend>@Messages("spendings.add.category")</legend>
+            <legend>@Messages("spendings.categories")</legend>
             <div class="form-group" id="category-name_field">
               <label class="control-label sr-only" for="category-name">@Messages("spendings.category.name")</label>
               <input type="text" id="category-name" value="" class="form-control" placeholder="@Messages("spendings.category.name")">
@@ -59,18 +59,18 @@
         <div><a href="#" class="add-new">@Messages("spendings.add.card")</a></div>
         <form id="add-card" method="POST" class="form-vertical hidden" role="form">
           <fieldset>
-            <legend>@Messages("spendings.add.card")</legend>
-            <div class="form-group  " id="card-name_field">
-              <label class="control-label sr-only" for="category-name">@Messages("spendings.card.name")</label>
-              <input type="text" id="card-name" value="" class="form-control" placeholder="@Messages("spendings.card.name")">
-            </div>
+            <legend>@Messages("spendings.cards")</legend>
             <div class="form-group  " id="card-vendor_field">
               <label class="control-label sr-only" for="category-name">@Messages("spendings.card.vendor")</label>
               <input type="text" id="card-vendor" value="" class="form-control" placeholder="@Messages("spendings.card.vendor")">
             </div>
+            <div class="form-group  " id="card-name_field">
+              <label class="control-label sr-only" for="category-name">@Messages("spendings.card.name")</label>
+              <input type="text" id="card-name" value="" class="form-control" placeholder="@Messages("spendings.card.name")">
+            </div>
             <div class="form-group  " id="card-description_field">
               <label class="control-label sr-only" for="category-name">@Messages("spendings.card.description")</label>
-              <input type="text" id="category-card" value="" class="form-control" placeholder="@Messages("spendings.card.description")">
+              <input type="text" id="card-description" value="" class="form-control" placeholder="@Messages("spendings.card.description")">
             </div>
             <div class="form-group  " id="card-available_field">
               <label class="control-label sr-only" for="category-name">@Messages("spendings.card.available")</label>
@@ -94,18 +94,28 @@
           <tr>
             <th>@Messages("spendings.card.vendor")</th>
             <th>@Messages("spendings.card.name")</th>
-            <th>@Messages("spendings.card.description")</th>
-            <th>@Messages("spendings.card.available")</th>
-            <th>@Messages("spendings.card.total")</th>
+            <th>@Messages("spendings.category.name")</th>
+            <th>@Messages("spendings.statement.amount")</th>
+            <th>@Messages("spendings.statement.timestamp")</th>
           </tr>
           </thead>
           <tbody>
           </tbody>
         </table>
-        <div><a href="#" class="add-new">@Messages("spendings.add.card")</a></div>
+        <div><a href="#" class="add-new">@Messages("spendings.add.statement")</a></div>
         <form id="add-statement" method="POST" class="form-vertical hidden" role="form">
           <fieldset>
-            <legend>@Messages("spendings.add.statement")</legend>
+            <legend>@Messages("spendings.statements")</legend>
+            <div class="form-group  " id="statement-card_field">
+              <label class="control-label sr-only" for="category-name">@Messages("spendings.cards")</label>
+              <select id="statement-card" class="form-control">
+              </select>
+            </div>
+            <div class="form-group  " id="statement-category_field">
+              <label class="control-label sr-only" for="category-name">@Messages("spendings.categories")</label>
+              <select id="statement-category" class="form-control">
+              </select>
+            </div>
             <div class="form-group  " id="statement-amount_field">
               <label class="control-label sr-only" for="category-name">@Messages("spendings.statement.amount")</label>
               <input type="text" id="statement-amount" value="" class="form-control" placeholder="@Messages("spendings.statement.amount")">
