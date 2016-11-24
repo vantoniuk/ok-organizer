@@ -66,7 +66,7 @@ $(document).ready(function(){
     if(!isNaN(cardId) && $("#statement-card").val() != "") {
       var data = {
         "card_id": Number($("#statement-card").val()),
-        "available": Number($("#statement-statement-available").val()),
+        "available": Number($("#statement-available").val()),
         "amount_paid": Number($("#statement-amount_paid").val()),
         "timestamp": datePickerDateToMillis({"date": $("#statement-date").val(), "ignore_empty": true})
       };

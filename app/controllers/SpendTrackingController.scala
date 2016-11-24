@@ -6,6 +6,7 @@ import models.UserId
 import models.db.DAOProvider
 import models.note.NodeId
 import org.joda.time.{Interval, DateTimeZone, DateTime}
+import play.api.Logger
 import play.api.http.Writeable
 import play.api.i18n.MessagesApi
 import play.api.mvc.{Action, Result}
@@ -139,7 +140,7 @@ class SpendTrackingController @Inject()(val env: AuthenticationEnvironment, val 
 
   def saveCategory(category: String) = Action async withMenusAndUser(menuService) { (request, menus, user) =>
     implicit val (m, r, u) = (menus, request, user)
-    logger.info("saving category " + category)
+    Logger.logger.info("saving category " + category)
     user.fold(Future.successful(BadRequest("""no user logged in"""))) { loggedInUser =>
       Json.fromJson[SpendCategory](Json.parse(category)).map { categoryValue =>
         daoProvider.spendCategoriesDAO.saveSpendCategory(categoryValue.copy(
@@ -199,7 +200,6 @@ class SpendTrackingController @Inject()(val env: AuthenticationEnvironment, val 
   }
 
   def saveCreditCardStatement(statement: String) = Action async withMenusAndUser(menuService) { (request, menus, user) =>
-    println("------------------ " + statement)
     implicit val (m, r, u) = (menus, request, user)
     user.fold(Future.successful(BadRequest("""no user logged in"""))) { loggedInUser =>
       Json.fromJson[CreditCardStatement](Json.parse(statement)).map { cardValue =>
