@@ -177,7 +177,9 @@ function spendingToHtml(spending) {
 }
 
 function formatDate(dateString) {
-  return new Date(dateString).toLocaleDateString();
+  var d = new Date(dateString);
+
+  return (d.getUTCMonth() + 1) + "/" + d.getUTCDate() + "/" + d.getUTCFullYear();
 }
 
 function dataToOption(data) {
