@@ -30,6 +30,7 @@ case class User(
     firstName: String,
     lastName: String,
 		role: UserRole) extends IdentitySilhouette {
+  def userId: UserId = id
   def key = email
   def fullName: String = firstName + " " + lastName
 }

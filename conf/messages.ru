@@ -3,11 +3,13 @@
 # SPENDING TRACKING
 spendings.tracking=Учет Расходов
 spendings.meta=Категории и карты
+
 spendings.add.category=Добавить категорию
 spendings.categories=Категория растрат
 spendings.category.name=Название категории
 spendings.category.description=Описание категории
 spendings.category.limit=Рекомендованный лимит
+
 spendings.add.card=Добавить карту
 spendings.cards=Кредитные карты
 spendings.card.name=Название карты
@@ -15,14 +17,21 @@ spendings.card.vendor=Компания, выпустившая карту
 spendings.card.description=Описание карты
 spendings.card.available=Доступно средст на карте
 spendings.card.total=Лимит карты
+
 spendings.add.statement=Добавить расход
-spendings.statements.filter=Фильтр щетов
+spendings.statements.filter=Фильтр счетов
 spendings.statements=Счета
 spendings.statement.available=Доступный кредит
 spendings.statement.amount=Размер оплаты
 spendings.statement.timestamp=Дата
 spendings.statement.from=от
 spendings.statement.to=до
+
+spendings.reports=Отчеты о расходах
+spendings.report.weekly=Еженедельный отчет
+spendings.report.from=от
+spendings.report.to=до
+spendings.report.amount=сумма
 
 ################################################################################################
 # COMMON

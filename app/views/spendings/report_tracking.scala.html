@@ -1,0 +1,24 @@
+@()(implicit user: User, messages: Messages, menus: List[utils.services.data.Menu])
+
+@views.html.templates.logged(title = "Content editor", tab = "editor") {
+  <h2>@Messages("spendings.reports")</h2>
+  <div class="row">
+    <!--<div class="col-md-3 col-md-offset-3">-->
+    <div class="col-md-6">
+      <div id="spending-weekly-report" class="report-table">
+        <div><a href="#" class="report-switch">@Messages("spendings.report.weekly")</a></div>
+        <table class="table table-striped table-hover hidden">
+          <thead>
+            <tr>
+              <th>@Messages("spendings.report.from")</th>
+              <th>@Messages("spendings.report.to")</th>
+              <th>@Messages("spendings.report.amount")</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+}

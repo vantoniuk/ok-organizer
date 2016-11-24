@@ -3,11 +3,13 @@
 # SPENDING TRACKING
 spendings.tracking=Spending Tracking
 spendings.meta=Categories & cards
+
 spendings.add.category=Add category
 spendings.categories=Spending Category
 spendings.category.name=Category name
 spendings.category.description=Category description
 spendings.category.limit=Recommended limit
+
 spendings.add.card=Add card
 spendings.cards=Credit cards
 spendings.card.name=Card name
@@ -15,6 +17,7 @@ spendings.card.vendor=Card vendor
 spendings.card.description=Card description
 spendings.card.available=Available credit
 spendings.card.total=Card total
+
 spendings.add.statement=Add statement
 spendings.statements.filter=Filter statements
 spendings.statements=Statements
@@ -23,6 +26,12 @@ spendings.statement.amount=Amount paid
 spendings.statement.timestamp=Timestamp
 spendings.statement.from=from
 spendings.statement.to=to
+
+spendings.reports=Spendings Reports
+spendings.report.weekly=Weekly summary
+spendings.report.from=from
+spendings.report.to=to
+spendings.report.amount=amount
 
 ################################################################################################
 # COMMON

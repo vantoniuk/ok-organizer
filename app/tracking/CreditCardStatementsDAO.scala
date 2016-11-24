@@ -8,6 +8,8 @@ import org.joda.time.{DateTime, Interval}
 
 import scala.concurrent.ExecutionContext.Implicits._
 import scala.concurrent.Future
+import play.api.libs.json._
+import play.api.libs.functional.syntax._
 
 case class CreditCardStatement(id: Int, userId: UserId, creditCardId: CreditCardId, available: Int, amountPaid: Int, timestamp: DateTime)
 case class RichCreditCardStatement(id: Int, creditCardVendor: String, creditCardName: String, available: Int, amountPaid: Int, timestamp: DateTime)
@@ -30,14 +32,38 @@ object CreditCardStatements {
   val query = TableQuery[CreditCardStatements]
 }
 
+case class CreditCardPaymentSummary(cardVendor: String, cardName: String, from: DateTime, to: DateTime, paidAmount: Int)
+
+object CreditCardPaymentSummary {
+  def weekly(cardVendor: String, cardName: String, weekStart: DateTime, paidAmount: Int): CreditCardPaymentSummary = {
+    CreditCardPaymentSummary(cardVendor, cardName, weekStart, weekStart.plusDays(7), paidAmount)
+  }
+}
+
+case class PaymentSummary(from: DateTime, to: DateTime, paidAmount: Int)
+
+object PaymentSummary {
+  def weekly(weekStart: DateTime, paidAmount: Int): PaymentSummary = {
+    PaymentSummary(weekStart, weekStart.plusDays(7), paidAmount)
+  }
+
+  implicit val summaryWrites = (
+    (JsPath \ "from").write[Long].contramap[DateTime](_.getMillis) ~
+    (JsPath \ "to").write[Long].contramap[DateTime](_.getMillis) ~
+    (JsPath \ "amount").write[Double].contramap[Int](_.toDouble / 100)
+  )(unlift(PaymentSummary.unapply))
+}
+
 trait CreditCardStatementsDAO {
   def findByUserId(userId: UserId, interval: Interval): Future[Seq[CreditCardStatement]]
   def findRichByUserId(userId: UserId, interval: Interval): Future[Seq[RichCreditCardStatement]]
   def findRichByCardId(cardId: CreditCardId, interval: Interval): Future[Seq[RichCreditCardStatement]]
   def saveStatement(creditCard: CreditCardStatement): Future[Boolean]
+  def weeklySummary(userId: UserId, interval: Interval): Future[Seq[PaymentSummary]]
 }
 
 class PostgresCreditCardStatementsDAO(database: Database) extends CreditCardStatementsDAO {
+  val date_trunc = SimpleFunction.binary[String, DateTime, DateTime]("date_trunc")
   private def byUserInterval(userId: Rep[UserId], from: Rep[DateTime], to: Rep[DateTime]) = {
     for {
       statement <- CreditCardStatements.query.sortBy(_.timestamp) if statement.userId === userId && statement.timestamp >= from && statement.timestamp <= to
@@ -63,9 +89,16 @@ class PostgresCreditCardStatementsDAO(database: Database) extends CreditCardStat
     })
   }
 
+  private def weeklySummaryQuery(userId: Rep[UserId], from: Rep[DateTime], to: Rep[DateTime]) = {
+    byUserIntervalRich(userId, from, to)
+      .groupBy(tuple => date_trunc("week", tuple._6))
+      .map({case(weekStart, seq) => (weekStart, seq.map(_._5).sum.getOrElse(0))})
+  }
+
   private val byUserIntervalCompiled = Compiled(byUserInterval _)
   private val byUserIntervalRichCompiled = Compiled(byUserIntervalRich _)
   private val byCardIntervalRichCompiled = Compiled(byCardIntervalRich _)
+  private val weeklySummaryQueryCompiled = Compiled(weeklySummaryQuery _)
 
   def findByUserId(userId: UserId, interval: Interval): Future[Seq[CreditCardStatement]] = {
     database.run(byUserIntervalCompiled(userId, interval.getStart, interval.getEnd).result)
@@ -85,6 +118,11 @@ class PostgresCreditCardStatementsDAO(database: Database) extends CreditCardStat
 
   def saveStatement(creditCard: CreditCardStatement): Future[Boolean] = {
     database.run(CreditCardStatements.query.+=(creditCard)).map(_ > 0)
+  }
 
+  def weeklySummary(userId: UserId, interval: Interval): Future[Seq[PaymentSummary]] = {
+    database
+      .run(weeklySummaryQueryCompiled(userId, interval.getStart, interval.getEnd).result)
+      .map(_.map(PaymentSummary.weekly _ tupled))
   }
 }

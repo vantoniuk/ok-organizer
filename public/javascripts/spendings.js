@@ -113,13 +113,46 @@ $(document).ready(function(){
   showStatementsForQuery(queryForStatements());
 })
 
-function queryForStatements(){
-  var cardQuery = $("#statement-filter-card").val() != "" && $("#statement-filter-card").val() != null  ? {"card_id" : Number($("#statement-filter-card").val())} : {};
+/*********************** REPORTS *****************/
 
-  return $.extend({
-    "from": datePickerDateToMillis({"date": $("#statement-from").val()}),
-    "to": datePickerDateToMillis({"date": $("#statement-to").val(), "end_of_the_day": true})
-  }, cardQuery);
+$(document).ready(function(){
+  $(".report-table").on("click", ".report-switch", function(e){
+    e.preventDefault();
+    $(this).closest(".report-table").find("table.hidden").removeClass("hidden");
+  });
+
+  $("#spending-weekly-report").on("click", function(e){
+    e.preventDefault();
+    showWeeklyReport()
+  });
+
+})
+
+function showWeeklyReport() {
+  genericShow({
+    "url": "/spendings/reports/weekly",
+    "success_message": "got reports",
+    "transformers": [
+      {
+        "selector": "#spending-weekly-report tbody",
+        "toHtml": reportToHtml
+      }
+    ]
+//    "send_data": query
+  });
+
+}
+
+function queryForStatements(){
+  if($("#statement-filter-card").length != 0) {
+    var cardQuery = $("#statement-filter-card").val() != "" && $("#statement-filter-card").val() != null  ? {"card_id" : Number($("#statement-filter-card").val())} : {};
+
+    return $.extend({
+      "from": datePickerDateToMillis({"date": $("#statement-from").val()}),
+      "to": datePickerDateToMillis({"date": $("#statement-to").val(), "end_of_the_day": true})
+    }, cardQuery);
+  } else return {};
+
 }
 
 function datePickerDateToMillis(config) {
@@ -135,6 +168,14 @@ function datePickerDateToMillis(config) {
   } else {
     return Date.UTC(dateArray[2], dateArray[0] - 1, dateArray[1], timeArray[0], timeArray[1], timeArray[2]);
   }
+}
+
+function reportToHtml(report) {
+  return '<tr>' +
+    '<td>' + formatDate(report.from) + '</td>' +
+    '<td>' + formatDate(report.to) + '</td>' +
+    '<td>' + report.amount + '</td>' +
+  '</tr>';
 }
 
 function categoryToHtml(cat) {
@@ -239,7 +280,8 @@ function showCategories() {
 }
 
 function showStatementsForQuery(query) {
-  genericShow({
+  if(!$.isEmptyObject(query)) {
+    genericShow({
       "url": "/spendings/statements",
       "success_message": "got statements",
       "transformers": [
@@ -250,6 +292,7 @@ function showStatementsForQuery(query) {
       ],
       "send_data": query
     });
+  }
 }
 
 function showStatements(from, to) {

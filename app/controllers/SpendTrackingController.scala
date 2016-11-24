@@ -2,7 +2,7 @@ package controllers
 
 import javax.inject.Inject
 
-import models.UserId
+import models.{User, UserId}
 import models.db.DAOProvider
 import models.note.NodeId
 import org.joda.time.{Interval, DateTimeZone, DateTime}
@@ -20,6 +20,25 @@ import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
 object SpendTrackingJsMapping {
+
+  case class IntervalQuery(from: DateTime, to: DateTime) {
+    def getInterval: Interval = new Interval(from, to)
+  }
+
+  object IntervalQuery {
+    def default: IntervalQuery = IntervalQuery(DateTime.now(DateTimeZone.UTC).minusMonths(3), DateTime.now(DateTimeZone.UTC))
+
+
+    implicit val intervalReads = (
+      (JsPath \ "from").read[Long].fmap(t => new DateTime(t, DateTimeZone.UTC)) ~
+        (JsPath \ "to").read[Long].fmap(t => new DateTime(t, DateTimeZone.UTC))
+      )(IntervalQuery.apply _)
+
+    implicit val intervalWrites = (
+      (JsPath \ "from").write[Long].contramap[DateTime](t => t.getMillis) ~
+        (JsPath \ "to").write[Long].contramap[DateTime](t => t.getMillis)
+      )(unlift(IntervalQuery.unapply))
+  }
 
   implicit val categoriesReads = (
     (JsPath \ "id").readNullable[Int].fmap[SpendCategoryId](x => x.map(SpendCategoryId.apply).getOrElse(SpendCategoryId.empty)) ~
@@ -126,6 +145,11 @@ class SpendTrackingController @Inject()(val env: AuthenticationEnvironment, val 
     Future.successful(Ok(views.html.spendings.meta_tracking()))
   }
 
+  def reportTracking() = SecuredAction async withMenusSecured(menuService) { (request, menus) =>
+    implicit val (m, r) = (menus, request)
+    Future.successful(Ok(views.html.spendings.report_tracking()))
+  }
+
   def categories() = Action async withMenusAndUser(menuService) { (request, menus, user) =>
     implicit val (m,r,u) = (menus, request, user)
     for {
@@ -213,5 +237,16 @@ class SpendTrackingController @Inject()(val env: AuthenticationEnvironment, val 
         Future.successful(BadRequest("couldn't parse credit card statement json " + statement))
       )
     }
+  }
+
+  def reportWeekly(query: Option[String]) = SecuredAction async withMenusSecured(menuService) { (request, menus) =>
+    val interval = query
+      .flatMap(q => Json.fromJson[IntervalQuery](Json.parse(q)).asOpt)
+      .getOrElse(IntervalQuery.default)
+      .getInterval
+
+    daoProvider
+      .creditCardStatementsDAO.weeklySummary(request.identity.id, interval)
+      .map(summarySeq => Ok(Json.obj("items" -> Json.toJson(summarySeq))))
   }
 }
