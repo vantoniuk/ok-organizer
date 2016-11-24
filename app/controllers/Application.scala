@@ -21,16 +21,9 @@ class Application @Inject() (val env: AuthenticationEnvironment, val messagesApi
     getMenus.map(menus => Ok(views.html.index()))
   }}
 
-
   def myAccount = SecuredAction async withMenusSecured(menuService){ (request, menus) =>
     implicit val (r,m) = (request, menus)
     Future.successful(Ok(views.html.myAccount()))
-  }
-
-  // REQUIRED ROLES: serviceA (or master)
-  def serviceA = SecuredAction(ForRole(UserRole.USER)) async withMenusSecured(menuService){ (request, menus) =>
-    implicit val (r,m) = (request, menus)
-    Future.successful(Ok(views.html.serviceA()))
   }
 
   // REQUIRED ROLES: master

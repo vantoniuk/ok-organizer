@@ -12,103 +12,10 @@
 			@loggedUser.map { user =>
 				@Html(Messages("index.intro.logged", user.fullName, routes.Application.myAccount, routes.Auth.signOut))
 			}.getOrElse {
-				@Html(Messages("index.intro.notlogged", routes.Auth.signIn, routes.Auth.startSignUp, routes.Auth.forgotPassword))
+				<h3>@Messages("signup.disabled")</h3>
+				<!--@Html(Messages("index.intro.notlogged", routes.Auth.signIn, routes.Auth.startSignUp, routes.Auth.forgotPassword))-->
 			}
 		</p>
-		<p>@Html(Messages("index.explanation"))</p>
-		<p>@Messages("index.example")</p>
-		<ul>
-			<li><span class="text-info">service A</span>: @Messages("index.example.serviceA")</li>
-			<li><span class="text-info">service A</span> @Messages("and") <span class="text-info">service B</span>: @Messages("index.example.serviceA_serviceB")</li>
-			<li><span class="text-warning">master</span>: @Messages("index.example.master")</li>
-		</ul>
-		@loggedUser.map { user =>
-			<p class="lead">@Html(Messages("index.auth.status", s"""<span class="text-success">${user.fullName}</span>""", s"""<span class="text-info">${user.role}</span>"""))</p>
-		}
-	
-		<table class="table table-striped table-hover">
-		  <thead>
-		    <tr>
-		      <th>@Messages("index.table.section")</th>
-		      <th>@Messages("index.table.authobject")</th>
-		      <th>@Messages("index.table.services")</th>
-					@if(loggedUser.isDefined) {
-						<th>@Messages("index.table.allowed")</th>
-					}
-		      <th>@Messages("index.table.go")</th>
-		    </tr>
-		  </thead>
-		  <tbody>
-			<tr>
-				<td>Index</td>
-				<td>None</td>
-				<td>any</td>
-				@if(loggedUser.isDefined) {
-					<td><span class="glyphicon glyphicon-ok"></span></td>
-				}
-				<td><a href="@routes.Application.index">Index</a></td>
-			</tr>
-			<tr>
-				<td>Guest area</td>
-				<td>forRole(UserRole.GUEST)</td>
-				<td><span class="text-info">service A</span> or <span class="text-warning">master</span></td>
-				@loggedUser.map { implicit user =>
-					<td>
-						@forRoleOrElse(UserRole.USER) {
-							<span class="glyphicon glyphicon-ok"></span>
-						}{
-							<span class="glyphicon glyphicon-remove"></span>
-						}
-					</td>
-				}
-				<td><a href="@routes.Application.serviceA">Service A area</a></td>
-			</tr>
-			<tr>
-				<td>ADMIN ONLY</td>
-				<td>forRole(UserRole.ADMIN)</td>
-				<td>(<span class="text-info">service A</span> or <span class="text-info">service B</span>) or <span class="text-warning">master</span></td>
-				@loggedUser.map { implicit user =>
-					<td>
-						@forRoleOrElse(UserRole.ADMIN) {
-							<span class="glyphicon glyphicon-ok"></span>
-						}{
-							<span class="glyphicon glyphicon-remove"></span>
-						}
-					</td>
-				}
-				<td></td>
-			</tr>
-			<tr>
-				<td>Service A && Service B</td>
-				<td><span class="text-primary">forRoles</span>UserRole.USER</td>
-				<td>(<span class="text-info">service A</span> and <span class="text-info">service B</span>) or <span class="text-warning">master</span></td>
-				@loggedUser.map { implicit user =>
-					<td>
-						@forRoleOrElse(UserRole.USER) {
-							<span class="glyphicon glyphicon-ok"></span>
-						}{
-							<span class="glyphicon glyphicon-remove"></span>
-						}
-					</td>
-				}
-				<td></td>
-			</tr>
-			<tr>
-				<td>Settings area</td>
-				<td>forRole(UserRole.MASTER)</td>
-				<td>only <span class="text-warning">master</span></td>
-				@loggedUser.map { implicit user =>
-					<td>
-						@forRoleOrElse(UserRole.MASTER) {
-							<span class="glyphicon glyphicon-ok"></span>
-						}{
-							<span class="glyphicon glyphicon-remove"></span>
-						}
-					</td>
-				}
-				<td><a href="@routes.Application.settings">Settings area</a></td>
-			</tr>
-		</table>
 
 	}
 	

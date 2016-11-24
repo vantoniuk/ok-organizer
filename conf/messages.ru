@@ -70,24 +70,11 @@ select.from.page.list=Выбрать из списка страниц
 ################################################################################################
 # INDEX
 
-index.title=Добро пожаловать
+index.title=Ok органайзер
 index.intro.logged=Вы вошли как <span class="text-success">{0}</span>, так что вы можете пойти в \
 <a href="{1}">Мой аккаунт</a> чтобы увидеть контактную информацию.<br>\
 Конечно вы можете <a href="{2}">выйти</a>.
-index.intro.notlogged=Now, you aren''t logged, so you can try to <a href="{0}">sign in</a> or <a href="{1}">sign up</a> and create your own account.<br>\
-If you don''t remember your password, you also can <a href="{2}">reset your password</a> with the traditional email mechanism.
-index.explanation=Each user has one or more services that indicate a specific area or hierarchical level.<br>\
-You can restrict sections to those users who match with a set of services (using logic OR or AND, you can choose).<br>\
-The <span class="text-warning">master</span> role has always full access to everywhere.
-index.example=Por ejemplo:
-index.example.serviceA=el usuario tiene acceso al área del ''serviceA''.
-index.example.serviceA_serviceB=el usuario tiene acceso a las áreas de ''service A'' and ''service B''.
-index.example.master=acceso total a cualquier punto de la página web
-index.auth.status=En este caso, estás registrado como {0} y tus servicios son: {1}
-index.table.section=Sección
-index.table.authobject=Objeto Authorization
-index.table.services=Servicios requeridos
-index.table.allowed=¿Estás autorizado?
+index.intro.notlogged=не авторезированный вход
 index.table.go=Посмотреть
 
 ################################################################################################
@@ -99,6 +86,7 @@ myaccount=Мой аккаунт
 ################################################################################################
 # AUTH
 
+signup.disabled=НАм жаль, но мы заблокировали возможность создать аккаунт
 signup=Регистрация
 signup.title=Создать новый аккаунт
 signup.signin.question=Есть аккаунт?

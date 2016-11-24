@@ -46,7 +46,7 @@ go.index=Go to index
 
 index.page=Index
 topbar.myaccount=My account
-topbar.hello=Hello {0}!<br>Your services are: {1}
+topbar.hello=Hello {0}!<br>You are: {1}
 menu.items=Menu items
 
 ################################################################################################
@@ -71,7 +71,7 @@ select.from.page.list=Select from list of pages
 ################################################################################################
 # INDEX
 
-index.title=Authorization example
+index.title=Ok organizer
 index.intro.logged=You are now logged as <span class="text-success">{0}</span>, so you can go to \
 <a href="{1}">My account</a> section to see your contact info.<br>\
 Of course you can <a href="{2}">sign out</a>.
@@ -80,15 +80,6 @@ If you don''t remember your password, you also can <a href="{2}">reset your pass
 index.explanation=Each user has one or more services that indicate a specific area or hierarchical level.<br>\
 You can restrict sections to those users who match with a set of services (using logic OR or AND, you can choose).<br>\
 The <span class="text-warning">master</span> role has always full access to everywhere.
-index.example=For example:
-index.example.serviceA=the user has access to the ''service A'' area.
-index.example.serviceA_serviceB=the user has access to ''service A'' and ''service B'' areas.
-index.example.master=full access to every point of the webpage.
-index.auth.status=In this case, you are logged as {0} and your services are: {1}
-index.table.section=Section
-index.table.authobject=Authorization object
-index.table.services=Services needed
-index.table.allowed=Are you allowed?
 index.table.go=Go there and check yourself
 
 ################################################################################################
@@ -100,6 +91,7 @@ myaccount=My account
 ################################################################################################
 # AUTH
 
+signup.disabled=We are sorry but we disabled signup functionality.
 signup=Sign up
 signup.title=Sign up for a new account
 signup.signin.question=Already a member?

@@ -20,7 +20,6 @@ GET		/denied									controllers.Auth.accessDenied
 
 # Home page
 GET		/												controllers.Application.index
-GET		/serviceA								controllers.Application.serviceA
 GET		/settings								controllers.Application.settings
 GET		/myaccount							controllers.Application.myAccount
 
