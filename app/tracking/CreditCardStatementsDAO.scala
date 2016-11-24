@@ -9,17 +9,18 @@ import org.joda.time.{DateTime, Interval}
 import scala.concurrent.ExecutionContext.Implicits._
 import scala.concurrent.Future
 
-case class CreditCardStatement(id: Int, userId: UserId, creditCardId: CreditCardId, amount: Int, timestamp: DateTime)
-case class RichCreditCardStatement(id: Int, creditCardVendor: String, creditCardName: String, amount: Int, timestamp: DateTime)
+case class CreditCardStatement(id: Int, userId: UserId, creditCardId: CreditCardId, available: Int, amountPaid: Int, timestamp: DateTime)
+case class RichCreditCardStatement(id: Int, creditCardVendor: String, creditCardName: String, available: Int, amountPaid: Int, timestamp: DateTime)
 
 class CreditCardStatements(tag: DBTag) extends Table[CreditCardStatement](tag, "credit_card_statements") {
   def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
   def userId = column[UserId]("user_id")
   def creditCardId = column[CreditCardId]("card_id")
-  def amount = column[Int]("amount")
+  def available = column[Int]("available")
+  def amountPaid = column[Int]("paid")
   def timestamp = column[DateTime]("timestamp")
 
-  def * = (id, userId, creditCardId, amount, timestamp) <> (CreditCardStatement.apply _ tupled, CreditCardStatement.unapply)
+  def * = (id, userId, creditCardId, available, amountPaid, timestamp) <> (CreditCardStatement.apply _ tupled, CreditCardStatement.unapply)
 
   def cardIdFK = foreignKey("credit_card_statement_card_id_fk", creditCardId, CreditCards.query)(_.creditCardId, onUpdate = ForeignKeyAction.Cascade, onDelete = ForeignKeyAction.Cascade)
   def userIdFK = foreignKey("credit_card_statement_uid_fk", userId, Users.query)(_.id, onUpdate = ForeignKeyAction.Cascade, onDelete = ForeignKeyAction.Cascade)
@@ -51,14 +52,14 @@ class PostgresCreditCardStatementsDAO(database: Database) extends CreditCardStat
   private def byUserIntervalRich(userId: Rep[UserId], from: Rep[DateTime], to: Rep[DateTime]) = {
     byUserInterval(userId, from, to).join(CreditCards.query).on(_.creditCardId === _.creditCardId).map({
       case (statement, creditCard) =>
-        (statement.id, creditCard.vendor, creditCard.name, statement.amount, statement.timestamp)
+        (statement.id, creditCard.vendor, creditCard.name, statement.available, statement.amountPaid, statement.timestamp)
     })
   }
 
   private def byCardIntervalRich(cardId: Rep[CreditCardId], from: Rep[DateTime], to: Rep[DateTime]) = {
     byCardInterval(cardId, from, to).join(CreditCards.query).on(_.creditCardId === _.creditCardId).map({
       case (statement, creditCard) =>
-        (statement.id, creditCard.vendor, creditCard.name, statement.amount, statement.timestamp)
+        (statement.id, creditCard.vendor, creditCard.name, statement.available, statement.amountPaid, statement.timestamp)
     })
   }
 

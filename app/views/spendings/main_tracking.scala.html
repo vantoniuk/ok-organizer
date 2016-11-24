@@ -33,6 +33,7 @@
         <tr>
           <th>@Messages("spendings.card.vendor")</th>
           <th>@Messages("spendings.card.name")</th>
+          <th>@Messages("spendings.statement.available")</th>
           <th>@Messages("spendings.statement.amount")</th>
           <th>@Messages("spendings.statement.timestamp")</th>
         </tr>
@@ -51,9 +52,13 @@
               <select id="statement-card" class="form-control">
               </select>
             </div>
+            <div class="form-group  " id="statement-available_field">
+              <label class="control-label sr-only" for="statement-available">@Messages("spendings.statement.available")</label>
+              <input type="text" id="statement-available" value="" class="form-control" placeholder="@Messages("spendings.statement.available")">
+            </div>
             <div class="form-group  " id="statement-amount_field">
-              <label class="control-label sr-only" for="statement-amount">@Messages("spendings.statement.amount")</label>
-              <input type="text" id="statement-amount" value="" class="form-control" placeholder="@Messages("spendings.statement.amount")">
+              <label class="control-label sr-only" for="statement-amount_paid">@Messages("spendings.statement.amount")</label>
+              <input type="text" id="statement-amount_paid" value="" class="form-control" placeholder="@Messages("spendings.statement.amount")">
             </div>
             <div class="form-group  " id="statement-date_field">
               <label class="control-label sr-only" for="statement-date">@Messages("spendings.statement.timestamp")</label>

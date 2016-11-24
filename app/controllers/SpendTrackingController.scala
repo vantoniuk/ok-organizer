@@ -63,6 +63,7 @@ object SpendTrackingJsMapping {
     (JsPath \ "user_id").readNullable[Int].map(_.fold(UserId.empty)(UserId.apply)) ~
     (JsPath \ "card_id").read[Int].map(CreditCardId.apply) ~
     (JsPath \ "available").read[Double].map(available => (available * 100).toInt) ~
+    (JsPath \ "amount_paid").readNullable[Double].map(paid => (paid.getOrElse(0D) * 100).toInt) ~
     (JsPath \ "timestamp").readNullable[Long].map(_.fold(DateTime.now(DateTimeZone.UTC))(ms => new DateTime(ms, DateTimeZone.UTC)))
   )(CreditCardStatement.apply _)
 
@@ -70,7 +71,8 @@ object SpendTrackingJsMapping {
     (JsPath \ "id").write[Int] ~
     (JsPath \ "user_id").write[Int].contramap[UserId](_.id) ~
     (JsPath \ "card_id").write[Int].contramap[CreditCardId](_.id) ~
-    (JsPath \ "amount").write[Int] ~
+    (JsPath \ "available").write[Int] ~
+    (JsPath \ "amount_paid").write[Int] ~
     (JsPath \ "timestamp").write[Long].contramap[DateTime](_.getMillis)
   )(unlift(CreditCardStatement.unapply))
 
@@ -78,7 +80,8 @@ object SpendTrackingJsMapping {
     (JsPath \ "id").write[Int] ~
     (JsPath \ "card_vendor").write[String] ~
     (JsPath \ "card_name").write[String] ~
-    (JsPath \ "amount").write[Double].contramap[Int](_.toDouble / 100) ~
+    (JsPath \ "available").write[Double].contramap[Int](_.toDouble / 100) ~
+    (JsPath \ "amount_paid").write[Double].contramap[Int](_.toDouble / 100) ~
     (JsPath \ "timestamp").write[Long].contramap[DateTime](_.getMillis)
   )(unlift(RichCreditCardStatement.unapply))
 

@@ -66,7 +66,8 @@ $(document).ready(function(){
     if(!isNaN(cardId) && $("#statement-card").val() != "") {
       var data = {
         "card_id": Number($("#statement-card").val()),
-        "available": Number($("#statement-amount").val()),
+        "available": Number($("#statement-statement-available").val()),
+        "amount_paid": Number($("#statement-amount_paid").val()),
         "timestamp": datePickerDateToMillis({"date": $("#statement-date").val(), "ignore_empty": true})
       };
 
@@ -159,7 +160,8 @@ function statementToHtml(statement) {
   return '<tr id="statement-' + statement.id + '">' +
     '<td>' + statement.card_vendor + '</td>' +
     '<td>' + statement.card_name + '</td>' +
-    '<td>' + statement.amount  + '</td>' +
+    '<td>' + statement.available  + '</td>' +
+    '<td>' + statement.amount_paid  + '</td>' +
     '<td>' + formatDate(statement.timestamp) + '</td>' +
   '</tr>';
 }
