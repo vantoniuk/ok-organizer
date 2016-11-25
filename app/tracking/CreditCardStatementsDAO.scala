@@ -93,6 +93,7 @@ class PostgresCreditCardStatementsDAO(database: Database) extends CreditCardStat
     byUserIntervalRich(userId, from, to)
       .groupBy(tuple => date_trunc("week", tuple._6))
       .map({case(weekStart, seq) => (weekStart, seq.map(_._5).sum.getOrElse(0))})
+      .sortBy(_._1)
   }
 
   private val byUserIntervalCompiled = Compiled(byUserInterval _)
