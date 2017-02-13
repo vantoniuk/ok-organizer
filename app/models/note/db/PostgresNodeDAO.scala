@@ -22,9 +22,10 @@ class Nodes(tag: DBTag) extends Table[Node](tag, "nodes") {
   def rating = column[Int]("rating")
   def author = column[UserId]("author")
   def created = column[DateTime]("created")
+  def expired = column[Option[DateTime]]("expired")
   def service = column[ServiceId]("service")
 
-  def * = (id, parentId, nodeType, title, description, icon, priority, rating, author, created, service) <> (Node.apply _ tupled, Node.unapply)
+  def * = (id, parentId, nodeType, title, description, icon, priority, rating, author, created, expired, service) <> (Node.apply _ tupled, Node.unapply)
 
   def userFK = foreignKey("user_id_fk", author, Users.query)(_.id, onUpdate = ForeignKeyAction.Cascade, onDelete = ForeignKeyAction.Cascade)
   def serviceFK = foreignKey("service_id_fk", service, Services.query)(_.id, onUpdate = ForeignKeyAction.Cascade, onDelete = ForeignKeyAction.Cascade)
@@ -36,6 +37,8 @@ class Nodes(tag: DBTag) extends Table[Node](tag, "nodes") {
 
 object Nodes {
   val query = TableQuery[Nodes]
+  query.schema.createStatements.foreach(println)
+
   val ratingSortedQuery = query.sortBy(_.rating)
 }
 

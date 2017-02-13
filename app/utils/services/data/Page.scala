@@ -55,6 +55,7 @@ object Page {
       rating = page.order,
       author = page.author.id,
       created = page.created,
+      expired = None, 
       service = serviceId
     )
 

@@ -18,5 +18,6 @@ case class Node(id: NodeId,
                 rating: Int,
                 author: UserId,
                 created: DateTime,
+                expired: Option[DateTime],
                 service: ServiceId
                )
