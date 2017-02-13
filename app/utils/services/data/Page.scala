@@ -16,7 +16,9 @@ case class Page(
                  previewIcon: String,
                  order: Int,
                  author: User,
-                 created: DateTime
+                 created: DateTime,
+                 completed: Option[DateTime],
+                 expired: Option[DateTime]
                )
 
 object Page {
@@ -39,7 +41,9 @@ object Page {
       previewIcon = node.icon.getOrElse(defaultPreview),
       order = node.rating,
       author = author,
-      created = node.created
+      created = node.created,
+      completed = node.completed,
+      expired = node.expired
     )
   }
 
@@ -55,7 +59,8 @@ object Page {
       rating = page.order,
       author = page.author.id,
       created = page.created,
-      expired = None, 
+      completed = page.completed,
+      expired = page.expired,
       service = serviceId
     )
 

@@ -40,6 +40,7 @@ object PagePart {
       rating = page.order,
       author = authorId,
       created = page.created,
+      completed = None,
       expired = None,
       service = serviceId
     )

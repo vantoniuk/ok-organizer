@@ -15,7 +15,9 @@ case class PageRecord(
     content: String,
     icon: Option[String],
     order: Int,
-    created: DateTime
+    created: DateTime,
+    completed: Option[DateTime],
+    expired: Option[DateTime]
 )
 
 object PageRecord {
@@ -30,7 +32,9 @@ object PageRecord {
       content = node.description,
       icon = node.icon,
       order = node.rating,
-      created = node.created
+      created = node.created,
+      completed = node.completed,
+      expired = node.expired
     )
   }
 
@@ -46,7 +50,8 @@ object PageRecord {
       rating = page.order,
       author = authorId,
       created = page.created,
-      expired = None,
+      completed = page.completed,
+      expired = page.expired,
       service = serviceId
     )
 

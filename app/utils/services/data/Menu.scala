@@ -42,6 +42,7 @@ object Menu {
         rating = menu.order,
         author = menu.author.id,
         created = menu.created,
+        completed = None,
         expired = None,
         service = service
       )

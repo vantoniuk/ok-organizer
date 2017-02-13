@@ -54,7 +54,9 @@ object EditorForms {
     "preview_icon" -> optional(text).transform(iconOpt => iconOpt.getOrElse(Page.defaultPreview), (icon: String) => Some(icon)),
     "order" -> number,
     "author" -> ignored[User](user),
-    "created" -> longNumber.transform[DateTime](l => new DateTime(l, DateTimeZone.UTC), _.getMillis)
+    "created" -> longNumber.transform[DateTime](l => new DateTime(l, DateTimeZone.UTC), _.getMillis),
+    "completed" -> optional(longNumber.transform[DateTime](l => new DateTime(l, DateTimeZone.UTC), _.getMillis)),
+    "expired" -> optional(longNumber.transform[DateTime](l => new DateTime(l, DateTimeZone.UTC), _.getMillis))
   )(Page.apply)(Page.unapply)
   )
 
@@ -66,7 +68,9 @@ object EditorForms {
     "content" -> text,
     "icon" -> optional(text),
     "order" -> number,
-    "created" -> longNumber.transform[DateTime](l => new DateTime(l, DateTimeZone.UTC), _.getMillis)
+    "created" -> longNumber.transform[DateTime](l => new DateTime(l, DateTimeZone.UTC), _.getMillis),
+    "completed" -> optional(longNumber.transform[DateTime](l => new DateTime(l, DateTimeZone.UTC), _.getMillis)),
+    "expired" -> optional(longNumber.transform[DateTime](l => new DateTime(l, DateTimeZone.UTC), _.getMillis))
   )(PageRecord.apply)(PageRecord.unapply))
 }
 
